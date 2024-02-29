@@ -116,7 +116,7 @@ def apply_calibration(
 
         The calibrated data frame.
     """
-    calibrated_data: np.ndarray = data.astype(np.float32)
+    calibrated_data: np.ndarray = data.astype(np.float32).copy()
 
     where_gain: List[np.ndarray] = [
         np.where((data & 2**14 == 0) & (data & 2**15 == 0)),
