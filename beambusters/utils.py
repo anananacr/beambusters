@@ -127,15 +127,15 @@ def apply_calibration(
     gain_mode: int
 
     if filter_data(data):
-        calibrated_data = np.zeros((data.shape), dtype=np.int32)
-    else:
-        for gain_mode in range(3):
-            calibrated_data[where_gain[gain_mode]] -= dark[gain_mode][
-                where_gain[gain_mode]
-            ]
-            calibrated_data[where_gain[gain_mode]] /= gain[gain_mode][
-                where_gain[gain_mode]
-            ]
-            calibrated_data[np.where(dark[0] == 0)] = 0
-
+        return np.zeros((data.shape), dtype=np.int32)
+    
+    for gain_mode in range(3):
+        calibrated_data[where_gain[gain_mode]] -= dark[gain_mode][
+            where_gain[gain_mode]
+        ]
+        calibrated_data[where_gain[gain_mode]] /= gain[gain_mode][
+            where_gain[gain_mode]
+        ]
+        calibrated_data[np.where(dark[0] == 0)] = 0
+    
     return calibrated_data.astype(np.int32)
