@@ -9,7 +9,6 @@ def read(path: str):
     config = yaml.safe_load(config)
     return config
 
-
 def parse(config: dict):
 
     return {

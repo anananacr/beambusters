@@ -127,7 +127,7 @@ def apply_calibration(
     gain_mode: int
 
     if filter_data(data):
-        calibrated_data = np.zeros((data.shape), dtype=np.float32)
+        calibrated_data = np.zeros((data.shape), dtype=np.int32)
     else:
         for gain_mode in range(3):
             calibrated_data[where_gain[gain_mode]] -= dark[gain_mode][
