@@ -1,10 +1,9 @@
-raw_data_list_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/lists/231208_LiMn_002_003_003_tmp.lst
+raw_data_list_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/lists/231208_LiMn_002_003_003_tmp_cut.lst
 geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/geom/JF_regae_v4_altered.geom
 
 calibration: 
-  on: true
-  mode: step
-  calibration_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
+  apply_calibration: true
+  calibration_files_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
 
 plots_flag: false
 force_center:
