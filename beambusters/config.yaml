@@ -7,7 +7,7 @@ calibration:
   calibration_files_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
 
 plots:
-  flag: true
+  flag: false
   file_name: 231208_LiMn_002_003_003_500
   folder_name: 231208_LiMn_002
   root_path: /home/rodria/bb

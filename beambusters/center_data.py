@@ -48,28 +48,26 @@ if config["plots"]["flag"]:
         "folder_name": config["plots"]["folder_name"],
         "root_path": config["plots"]["root_path"],
     }
-else:
-    config["plots_flag"] = False
-    plots_info = {"file_name": "", "folder_name": "", "root_path": ""}
-## Set peakfinder8 config
-PF8Config = settings.get_pf8_info(config)
-
-if config["plots"]["flag"]:
     number_of_frames = 20
     starting_frame = config["starting_frame"]
 else:
+    config["plots_flag"] = False
+    plots_info = {"file_name": "", "folder_name": "", "root_path": ""}
     number_of_frames = len(paths)
     starting_frame = 0
+
+## Set peakfinder8 config
+PF8Config = settings.get_pf8_info(config)
 
 try:
     list_index = int(config["raw_data_list_file"].split("lst")[-1])
 except ValueError:
     list_index = 0
 
-for index, path in enumerate(paths[starting_frame:starting_frame+number_of_frames]):
+for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
     file_name, frame_number = path.split(" //")
     frame_number = int(frame_number)
-    plots_info["file_name"]=config["plots"]["file_name"]+f"_{frame_number}"
+    plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
 
     with h5py.File(f"{file_name}", "r") as f:
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
@@ -148,7 +146,7 @@ for index, path in enumerate(paths[starting_frame:starting_frame+number_of_frame
         detector_center_from_minimize_peak_fwhm[index, :] = minimize_peak_fwhm_method(
             data=calibrated_data, initial_guess=initial_guess
         )
-        
+
         # update initial guess if converged
         if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
             initial_guess = detector_center_from_minimize_peak_fwhm[index]
