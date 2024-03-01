@@ -142,8 +142,10 @@ for index, path in enumerate(paths):
         detector_center_from_minimize_peak_fwhm[index, :] = minimize_peak_fwhm_method(
             data=calibrated_data, initial_guess=initial_guess
         )
-        # update initial guess
-        initial_guess = detector_center_from_minimize_peak_fwhm[index]
+        
+        # update initial guess if converged
+        if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
+            initial_guess = detector_center_from_minimize_peak_fwhm[index]
 
     if "friedel_pairs" not in config["skip_methods"]:
         friedel_pairs_method = FriedelPairs(
