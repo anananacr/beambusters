@@ -1,0 +1,62 @@
+raw_data_list_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/lists/231208_LiMn_002_003_003_500.lst
+geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/geom/JF_regae_v4_altered.geom
+output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/processed
+
+calibration: 
+  skip: false
+  calibration_files_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
+
+plots:
+  flag: false
+  file_name: 231208_LiMn_002_003_003_500
+  folder_name: 231208_LiMn_002
+  root_path: /home/rodria/bb
+
+force_center:
+  mode: true
+  x: 560
+  y: 532
+
+search_radius: 18
+
+pf8:
+  max_num_peaks: 10000
+  adc_threshold: 0
+  minimum_snr: 5
+  min_pixel_count: 5
+  max_pixel_count: 100000
+  local_bg_radius: 10
+  min_res: 20
+  max_res: 150
+
+starting_frame: 0
+
+offset:
+  x: 0
+  y: 0
+
+peak_region:
+  min: 0
+  max: 0
+
+outlier_distance: 20
+
+canny:
+  sigma: 0
+  low_threshold: 0
+  high_threshold: 0
+
+method: center_of_mass
+
+bragg_peaks_positions_for_center_of_mass_calculation: -1
+
+pixels_for_mask_of_bragg_peaks: 8
+
+skip_methods:
+  - minimize_peak_fwhm
+  - circle_detection
+
+polarization:
+  skip: true
+  axis: x
+  value: 0.99
