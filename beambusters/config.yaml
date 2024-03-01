@@ -2,14 +2,19 @@ raw_data_list_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_tes
 geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/geom/JF_regae_v4_altered.geom
 
 calibration: 
-  apply_calibration: true
+  skip: false
   calibration_files_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
 
-plots_flag: false
+plots:
+  flag: false
+  file_name: null
+  folder_name: null
+  root_path: null
+
 force_center:
   mode: true
-  x: 589
-  y: 529
+  x: 560
+  y: 532
 
 search_radius: 18
 
@@ -23,7 +28,7 @@ pf8:
   min_res: 20
   max_res: 250
 
-starting_frame: 200
+starting_frame: 0
 
 offset:
   x: 0
@@ -42,12 +47,16 @@ canny:
 
 method: center_of_mass
 
-bragg_pos_center_of_mass: -1
+bragg_peaks_positions_for_center_of_mass_calculation: -1
 
-pixels_per_peak: 8
+pixels_for_mask_of_bragg_peaks: 8
 
-skip_method:
+skip_methods:
   - minimize_peak_fwhm
   - circle_detection
+  - friedel_pairs
 
-skip_pol: true
+polarization:
+  skip: true
+  axis: x
+  value: 0.99

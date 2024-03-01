@@ -29,11 +29,13 @@ def parse(config: dict):
         "search_radius": config["search_radius"],
         "method": config["method"],
         "bragg_peaks_positions_for_center_of_mass_calculation": config[
-            "bragg_pos_center_of_mass"
+            "bragg_peaks_positions_for_center_of_mass_calculation"
         ],
-        "pixels_for_mask_of_bragg_peaks": config["pixels_per_peak"],
-        "skipped_methods": config["skip_method"],
-        "skipped_polarization": config["skip_pol"],
+        "pixels_for_mask_of_bragg_peaks": config["pixels_for_mask_of_bragg_peaks"],
+        "skipped_methods": config["skip_methods"],
+        "polarization_skip": config["polarization"]["skip"],
+        "polarization_axis": config["polarization"]["axis"],
+        "polarization_value": config["polarization"]["value"],
         "offset_x": config["offset"]["x"],
         "offset_y": config["offset"]["y"],
         "force_center_mode": config["force_center"]["mode"],

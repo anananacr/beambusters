@@ -4,6 +4,10 @@ import h5py
 import numpy as np
 from utils import open_dark_and_gain_files, apply_calibration
 import matplotlib.pyplot as plt
+import sys
+sys.path.append("/home/rodria/scripts/bblib")
+from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
+from bblib.models import PF8Info, PF8
 
 config = settings.read("config.yaml")
 
@@ -26,19 +30,117 @@ h5_path = [
     x.split(" = ")[-1][:-1] for x in geometry_txt if x.split(" = ")[0] == "data"
 ][0]
 
-if config["calibration"]["apply_calibration"]:
+if not config["calibration"]["skip"]:
     dark, gain = open_dark_and_gain_files(
         calibration_files_directory=config["calibration"]["calibration_files_directory"]
     )
 
-for path in paths:
+initialized_arrays = False
+## check plots info
+if config["plots"]["flag"]:
+    config["plots_flag"]=True
+    plots_info={
+	"file_name": config["plots"]["file_name"],
+	"folder_name": config["plots"]["folder_name"],
+	"root_path": config["plots"]["root_path"]
+    }
+else:
+    config["plots_flag"]=False
+    plots_info = None
+
+## Set peakfinder8 config
+PF8Config = settings.get_pf8_info(config)
+
+number_of_frames=len(paths)
+print(number_of_frames)
+for index, path in enumerate(paths):
     file_name, frame_number = path.split(" //")
     frame_number = int(frame_number)
 
     with h5py.File(f"{file_name}", "r") as f:
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
+        if not initialized_arrays:
+            _data_shape=data.shape
 
-    if config["calibration"]["apply_calibration"]:
+    if not initialized_arrays:
+        raw_dataset = np.ndarray((number_of_frames, *_data_shape), dtype=np.int32)
+        dataset = np.ndarray((number_of_frames, *_data_shape), dtype=np.int32)
+        refined_detector_center = np.ndarray((number_of_frames, 2), dtype=np.float32)
+        detector_center_from_center_of_mass = np.ndarray((number_of_frames, 2), dtype=np.int16)
+        detector_center_from_circle_detection = np.ndarray((number_of_frames, 2), dtype=np.int16)
+        detector_center_from_minimize_peak_fwhm = np.ndarray((number_of_frames, 2), dtype=np.int16)
+        detector_center_from_friedel_pairs = np.ndarray((number_of_frames, 2), dtype=np.float32)
+        shift_x_mm = np.ndarray((number_of_frames,), dtype=np.float32)
+        shift_y_mm = np.ndarray((number_of_frames,), dtype=np.float32)
+        initialized_arrays = True
+
+    raw_dataset[index, :,:] = data
+
+    if not config["calibration"]["skip"]:
         calibrated_data = apply_calibration(data=data, dark=dark, gain=gain)
     else:
         calibrated_data = data
+    
+    dataset[index, :,:] = calibrated_data
+
+    ## Refine the detector center
+    ## Set geometry in PF8
+
+    PF8Config.set_geometry_from_file(config["geometry_file"])
+
+    if "center_of_mass" not in config["skip_methods"]:
+        center_of_mass_method = CenterOfMass(
+                        config=config, PF8Config=PF8Config, plots_info=plots_info
+                    )
+        detector_center_from_center_of_mass[index, :] = center_of_mass_method(data=calibrated_data)
+    
+    if "circle_detection" not in config["skip_methods"]:
+        circle_detection_method = CircleDetection(
+                        config=config, PF8Config=PF8Config, plots_info=plots_info
+                    )
+        detector_center_from_circle_detection[index,:] = circle_detection_method(data=calibrated_data)
+
+    ## define initial_guess
+
+    if config["force_center"]["mode"]:
+        initial_guess=[config["force_center"]["x"],config["force_center"]["y"]]
+    elif config["method"]=="center_of_mass":
+        initial_guess=detector_center_from_center_of_mass[index]
+    elif config["method"]=="circle_detection":
+        initial_guess=detector_center_from_circle_detection[index]
+    else:
+        initial_guess=PF8Config.detector_center_from_geom
+    
+    ## final refinement
+
+    if "minimize_peak_fwhm" not in config["skip_methods"]:
+        minimize_peak_fwhm_method = MinimizePeakFWHM(
+                        config=config, PF8Config=PF8Config, plots_info=plots_info
+                    )
+        detector_center_from_minimize_peak_fwhm[index,:]=minimize_peak_fwhm_method(data=calibrated_data, initial_guess=initial_guess)
+        # update initial guess
+        initial_guess = detector_center_from_minimize_peak_fwhm[index]
+
+    if "friedel_pairs" not in config["skip_methods"]:
+        friedel_pairs_method = FriedelPairs(
+                        config=config, PF8Config=PF8Config, plots_info=plots_info
+                    )
+        detector_center_from_friedel_pairs[index,:] = friedel_pairs_method(data = calibrated_data, initial_guess=initial_guess)
+
+    ## Refined detector center assignement
+
+    if "friedel_pairs" not in config["skip_methods"] and detector_center_from_friedel_pairs[index]!=[-1,-1]:
+        refined_detector_center[index,:]=detector_center_from_friedel_pairs[index]
+    elif "minimize_peak_fwhm" not in config["skip_methods"] and detector_center_from_minimize_peak_fwhm[index]!=[-1,-1]:
+        refined_detector_center[index,:]=detector_center_from_minimize_peak_fwhm[index]
+    else:
+        refined_detector_center[index,:]=initial_guess
+    
+    beam_position_shift_in_pixels = refined_detector_center[index] - PF8Config.detector_center_from_geom
+
+    detector_shift_in_mm = [np.round(-1 * x *1e3 / PF8Config.pixel_resolution, 4) for x in beam_position_shift_in_pixels]
+    shift_x_mm[index] = detector_shift_in_mm[0]
+    shift_y_mm[index] = detector_shift_in_mm[1]
+
+
+    ## Write centered file
