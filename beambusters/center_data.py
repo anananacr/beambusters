@@ -149,7 +149,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 
         # update initial guess if converged
         if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
-            initial_guess = detector_center_from_minimize_peak_fwhm[index]
+            initial_guess = detector_center_from_minimize_peak_fwhm[index,:]
 
     if "friedel_pairs" not in config["skip_methods"]:
         friedel_pairs_method = FriedelPairs(
