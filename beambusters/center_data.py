@@ -54,16 +54,22 @@ else:
 ## Set peakfinder8 config
 PF8Config = settings.get_pf8_info(config)
 
-number_of_frames = len(paths)
+if config["plots"]["flag"]:
+    number_of_frames = 20
+    starting_frame = config["starting_frame"]
+else:
+    number_of_frames = len(paths)
+    starting_frame = 0
 
 try:
     list_index = int(config["raw_data_list_file"].split("lst")[-1])
 except ValueError:
     list_index = 0
 
-for index, path in enumerate(paths):
+for index, path in enumerate(paths[starting_frame:starting_frame+number_of_frames]):
     file_name, frame_number = path.split(" //")
     frame_number = int(frame_number)
+    plots_info["file_name"]=config["plots"]["file_name"]+f"_{frame_number}"
 
     with h5py.File(f"{file_name}", "r") as f:
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
