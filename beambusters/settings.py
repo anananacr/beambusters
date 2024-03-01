@@ -1,5 +1,8 @@
 import yaml
 from pathlib import Path
+import sys
+
+sys.path.append("/home/rodria/scripts/bblib")
 from bblib.models import PF8Info
 
 
@@ -8,6 +11,7 @@ def read(path: str):
     config = path.read_text()
     config = yaml.safe_load(config)
     return config
+
 
 def parse(config: dict):
 
@@ -40,6 +44,10 @@ def parse(config: dict):
         "offset_y": config["offset"]["y"],
         "force_center_mode": config["force_center"]["mode"],
         "force_center": [config["force_center"]["x"], config["force_center"]["y"]],
+        "calibration_skip": config["calibration"]["skip"],
+        "calibration_files_dir": config["calibration"]["calibration_files_directory"],
+        "output_path": config["output_path"],
+        "geometry_file": config["geometry_file"],
     }
 
 

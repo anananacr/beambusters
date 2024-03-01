@@ -69,8 +69,8 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
             gain_file.close()
             dark_file.close()
     else:
-        raise NameError("Unrecognised detector.")        
-    
+        raise NameError("Unrecognised detector.")
+
     return dark, gain
 
 
@@ -128,14 +128,17 @@ def apply_calibration(
 
     if filter_data(data):
         return np.zeros((data.shape), dtype=np.int32)
-    
+
     for gain_mode in range(3):
-        calibrated_data[where_gain[gain_mode]] -= dark[gain_mode][
-            where_gain[gain_mode]
-        ]
-        calibrated_data[where_gain[gain_mode]] /= gain[gain_mode][
-            where_gain[gain_mode]
-        ]
+        calibrated_data[where_gain[gain_mode]] -= dark[gain_mode][where_gain[gain_mode]]
+        calibrated_data[where_gain[gain_mode]] /= gain[gain_mode][where_gain[gain_mode]]
         calibrated_data[np.where(dark[0] == 0)] = 0
-    
+
     return calibrated_data.astype(np.int32)
+
+
+def centering_converged(center: tuple) -> bool:
+    if center[0] == -1 and center[1] == -1:
+        return False
+    else:
+        return True
