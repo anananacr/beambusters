@@ -1,19 +1,19 @@
-raw_data_list_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/lists/231208_LiMn_002_003_003_500.lst
-geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/geom/JF_regae_v4_altered.geom
-output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/processed
+raw_data_list_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/lists/fakp_a06_01_test.lst
+geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/geoms/jungfrau-1m.geom
+output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria
 
 calibration: 
   skip: false
-  calibration_files_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
+  calibration_files_directory: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/darks
 
 plots:
   flag: false
-  file_name: 231208_LiMn_002_003_003_500
-  folder_name: 231208_LiMn_002
-  root_path: /home/rodria/bb
+  file_name: beam_sweeping_test
+  folder_name: beam_sweeping_test
+  root_path: /home/rodria/beam_sweeping_test
 
 force_center:
-  mode: true
+  mode: false
   x: 560
   y: 532
 
@@ -55,6 +55,8 @@ pixels_for_mask_of_bragg_peaks: 8
 skip_methods:
   - minimize_peak_fwhm
   - circle_detection
+  - friedel_pairs
+  - center_of_mass
 
 polarization:
   skip: true

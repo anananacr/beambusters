@@ -36,7 +36,7 @@ h5_path = [
 
 if not config["calibration"]["skip"]:
     dark, gain = open_dark_and_gain_files(
-        calibration_files_directory=config["calibration"]["calibration_files_directory"]
+        calibration_files_directory=config["calibration"]["calibration_files_directory"], storage_cell_id=0
     )
 
 initialized_arrays = False
@@ -53,7 +53,8 @@ if config["plots"]["flag"]:
 else:
     config["plots_flag"] = False
     plots_info = {"file_name": "", "folder_name": "", "root_path": ""}
-    number_of_frames = len(paths)
+    #number_of_frames = len(paths)
+    number_of_frames = 20
     starting_frame = 0
 
 ## Set peakfinder8 config

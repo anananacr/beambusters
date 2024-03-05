@@ -1,8 +1,8 @@
 import numpy as np
 import h5py
+import glob
 
-
-def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
+def open_dark_and_gain_files(calibration_files_directory: str, storage_cell_id: int) -> tuple:
     calibration_config = open(
         f"{calibration_files_directory}/calibration_config.txt", "r"
     ).readlines()
@@ -11,6 +11,12 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
         for x in calibration_config
         if x.split(" = ")[0] == "detector_type"
     ][0]
+    burst_factor = [
+        float(x.split(" = ")[-1][:-1])
+        for x in calibration_config
+        if x.split(" = ")[0] == "burst_factor"
+    ][0]
+
     if detector_type == "jungfrau1M":
         num_panels: int = 2
         pedestal_d0 = (
@@ -22,7 +28,9 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
                 if x.split(" = ")[0] == "pedestal_d0"
             ][0]
         )
-        pedestal_d1 = (
+        pedestal_d0_filenames = glob.glob(f"{pedestal_d0_pattern}").sort()
+
+        pedestal_d1_pattern = (
             calibration_files_directory
             + "/"
             + [
@@ -31,7 +39,9 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
                 if x.split(" = ")[0] == "pedestal_d1"
             ][0]
         )
-        gain_d0 = (
+        pedestal_d1_filenames = glob.glob(f"{pedestal_d1_pattern}").sort()
+
+        gain_d0_pattern = (
             calibration_files_directory
             + "/"
             + [
@@ -40,7 +50,9 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
                 if x.split(" = ")[0] == "gain_d0"
             ][0]
         )
-        gain_d1 = (
+        gain_d0_filenames = glob.glob(f"{gain_d0_pattern}").sort()
+
+        gain_d1_pattern = (
             calibration_files_directory
             + "/"
             + [
@@ -49,8 +61,12 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
                 if x.split(" = ")[0] == "gain_d1"
             ][0]
         )
-        dark_filenames = [pedestal_d0, pedestal_d1]
-        gain_filenames = [gain_d0, gain_d1]
+        gain_d1_filenames = glob.glob(f"{gain_d1_pattern}").sort()
+        print(f"Pedestals: {pedestal_d0_filenames[storage_cell_id], pedestal_d1_filenames[storage_cell_id]}")
+        print(f"Gain map: {gain_d0_filenames[storage_cell_id], gain_d1_filenames[storage_cell_id]}")
+
+        dark_filenames = [pedestal_d0_filenames[storage_cell_id], pedestal_d1_filenames[storage_cell_id]]
+        gain_filenames = [gain_d0_filenames[storage_cell_id], gain_d1_filenames[storage_cell_id]]
         dark = np.ndarray((3, 512 * num_panels, 1024), dtype=np.float32)
         gain = np.ndarray((3, 512 * num_panels, 1024), dtype=np.float64)
         panel_id: int
@@ -63,8 +79,8 @@ def open_dark_and_gain_files(calibration_files_directory: str) -> tuple:
                 dark[gain_mode, 512 * panel_id : 512 * (panel_id + 1), :] = dark_file[
                     "gain%d" % gain_mode
                 ][:]
-                gain[gain_mode, 512 * panel_id : 512 * (panel_id + 1), :] = np.fromfile(
-                    gain_file, dtype=np.float64, count=1024 * 512
+                gain[gain_mode, 512 * panel_id : 512 * (panel_id + 1), :] = (np.fromfile(
+                    gain_file, dtype=np.float64, count=1024 * 512)/burst_factor
                 ).reshape(512, 1024)
             gain_file.close()
             dark_file.close()
