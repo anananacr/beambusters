@@ -1,64 +1,62 @@
-raw_data_list_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/lists/fakp_a06_01_test.lst
-geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/geoms/jungfrau-1m.geom
-output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria
+raw_data_list_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/lists/split_lyso_02_events.lst05
+geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v0-70mm.geom
+output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
 
 calibration: 
-  skip: false
+  skip: true
   calibration_files_directory: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/darks
 
 plots:
-  flag: false
-  file_name: beam_sweeping_test
-  folder_name: beam_sweeping_test
-  root_path: /home/rodria/beam_sweeping_test
+  flag: true
+  file_name: beam_sweeping_test_lyso_02
+  folder_name: beam_sweeping_test_lyso_02
+  root_path: /home/rodria/bb
 
 force_center:
-  mode: false
-  x: 560
-  y: 532
+  mode: true
+  x: 556
+  y: 522
 
-search_radius: 18
+search_radius: 7
 
 pf8:
   max_num_peaks: 10000
   adc_threshold: 0
-  minimum_snr: 5
-  min_pixel_count: 5
+  minimum_snr: 4
+  min_pixel_count: 2
   max_pixel_count: 100000
-  local_bg_radius: 10
-  min_res: 20
-  max_res: 150
+  local_bg_radius: 3
+  min_res: 0
+  max_res: 1200
 
-starting_frame: 0
+starting_frame: 400
 
 offset:
   x: 0
   y: 0
 
 peak_region:
-  min: 0
-  max: 0
+  min: 80
+  max: 100
 
 outlier_distance: 20
 
 canny:
-  sigma: 0
-  low_threshold: 0
-  high_threshold: 0
+  sigma: 3
+  low_threshold: 0.98
+  high_threshold: 0.99
 
-method: center_of_mass
+method: circle_detection
 
-bragg_peaks_positions_for_center_of_mass_calculation: -1
+bragg_peaks_positions_for_center_of_mass_calculation: 0
 
-pixels_for_mask_of_bragg_peaks: 8
+pixels_for_mask_of_bragg_peaks: 4
 
 skip_methods:
   - minimize_peak_fwhm
-  - circle_detection
-  - friedel_pairs
-  - center_of_mass
+  
 
 polarization:
-  skip: true
+  skip: false
   axis: x
   value: 0.99

@@ -4,12 +4,12 @@
 #SBATCH --time=2-00:00:00
 #SBATCH --requeue
 #SBATCH --nodes=1
-#SBATCH --mincpus=128
+#SBATCH --mincpus=32
 #SBATCH --mem=10G
 #SBATCH --nice=100
 #SBATCH --job-name  bb
-#SBATCH --output   /home/rodria/error/bb-%N-%j.out
-#SBATCH --error    /home/rodria/error/bb-%N-%j.err
+#SBATCH --output   /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/error/bb-%N-%j.out
+#SBATCH --error    /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/error/bb-%N-%j.err
 
 source /etc/profile.d/modules.sh
 source /home/rodria/software/beambusters-dev-env/bin/activate

@@ -53,8 +53,8 @@ if config["plots"]["flag"]:
 else:
     config["plots_flag"] = False
     plots_info = {"file_name": "", "folder_name": "", "root_path": ""}
-    #number_of_frames = len(paths)
-    number_of_frames = 20
+    number_of_frames = len(paths)
+    #number_of_frames = 20
     starting_frame = 0
 
 ## Set peakfinder8 config
@@ -65,7 +65,9 @@ try:
 except ValueError:
     list_index = 0
 
+raw_file_id=[]
 for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
+    raw_file_id.append(path)
     file_name, frame_number = path.split(" //")
     frame_number = int(frame_number)
     plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
@@ -187,7 +189,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 
 ## Create output path
 file_label = os.path.basename(file_name).split(".")[0]
-root_directory, path_on_raw = os.path.dirname(file_name).split("/raw/")
+root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
 output_path = config["output_path"] + "/centered/" + path_on_raw
 path = pathlib.Path(output_path)
 path.mkdir(parents=True, exist_ok=True)
@@ -202,8 +204,9 @@ with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
     entry.attrs["NX_class"] = "NXentry"
     grp_data = entry.create_group("data")
     grp_data.attrs["NX_class"] = "NXdata"
-    grp_data.create_dataset("data", data=dataset, compression="gzip")
-    grp_data.create_dataset("raw_data", data=raw_dataset, compression="gzip")
+    grp_data.create_dataset("data", data=dataset)
+    #grp_data.create_dataset("raw_data", data=raw_dataset)
+    grp_data.create_dataset("raw_file_id", data=raw_file_id)
     grp_shots = entry.create_group("shots")
     grp_shots.attrs["NX_class"] = "NXdata"
     grp_shots.create_dataset(
