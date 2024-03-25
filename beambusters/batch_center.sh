@@ -10,8 +10,8 @@
 #SBATCH --job-name  bb
 #SBATCH --output   /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/error/bb-%N-%j.out
 #SBATCH --error    /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/error/bb-%N-%j.err
-
+ROOT=/gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/
 source /etc/profile.d/modules.sh
 source /home/rodria/software/beambusters-dev-env/bin/activate
 
-python /home/rodria/scripts/beambusters/beambusters/center_data.py
+python /home/rodria/scripts/beambusters/beambusters/center_data.py $ROOT/lists/split_FAKP_apo_01_events.lst11

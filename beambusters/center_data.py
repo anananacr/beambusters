@@ -15,7 +15,7 @@ from bblib.models import PF8Info, PF8
 
 config = settings.read("config.yaml")
 BeambustersParam = settings.parse(config)
-files = open(config["raw_data_list_file"], "r")
+files = open(sys.argv[1], "r")
 paths = files.readlines()
 files.close()
 
@@ -61,7 +61,7 @@ else:
 PF8Config = settings.get_pf8_info(config)
 
 try:
-    list_index = int(config["raw_data_list_file"].split("lst")[-1])
+    list_index = int(sys.argv[1].split("lst")[-1])
 except ValueError:
     list_index = 0
 
@@ -78,24 +78,24 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
             _data_shape = data.shape
 
     if not initialized_arrays:
-        raw_dataset = np.ndarray((number_of_frames, *_data_shape), dtype=np.int32)
-        dataset = np.ndarray((number_of_frames, *_data_shape), dtype=np.int32)
-        refined_detector_center = np.ndarray((number_of_frames, 2), dtype=np.float32)
-        initial_guess_center = np.ndarray((number_of_frames, 2), dtype=np.float32)
-        detector_center_from_center_of_mass = np.ndarray(
+        raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
+        dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
+        refined_detector_center = np.zeros((number_of_frames, 2), dtype=np.float32)
+        initial_guess_center = np.zeros((number_of_frames, 2), dtype=np.float32)
+        detector_center_from_center_of_mass = np.zeros(
             (number_of_frames, 2), dtype=np.int16
         )
-        detector_center_from_circle_detection = np.ndarray(
+        detector_center_from_circle_detection = np.zeros(
             (number_of_frames, 2), dtype=np.int16
         )
-        detector_center_from_minimize_peak_fwhm = np.ndarray(
+        detector_center_from_minimize_peak_fwhm = np.zeros(
             (number_of_frames, 2), dtype=np.int16
         )
-        detector_center_from_friedel_pairs = np.ndarray(
+        detector_center_from_friedel_pairs = np.zeros(
             (number_of_frames, 2), dtype=np.float32
         )
-        shift_x_mm = np.ndarray((number_of_frames,), dtype=np.float32)
-        shift_y_mm = np.ndarray((number_of_frames,), dtype=np.float32)
+        shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
+        shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
         initialized_arrays = True
 
     raw_dataset[index, :, :] = data
@@ -140,39 +140,51 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         initial_guess = PF8Config.detector_center_from_geom
 
     initial_guess_center[index, :] = initial_guess
-    ## final refinement
 
-    if "minimize_peak_fwhm" not in config["skip_methods"]:
-        minimize_peak_fwhm_method = MinimizePeakFWHM(
-            config=config, PF8Config=PF8Config, plots_info=plots_info
-        )
-        detector_center_from_minimize_peak_fwhm[index, :] = minimize_peak_fwhm_method(
-            data=calibrated_data, initial_guess=initial_guess
-        )
+    PF8Config.update_pixel_maps(
+        initial_guess[0] - PF8Config.detector_center_from_geom[0],
+        initial_guess[1] - PF8Config.detector_center_from_geom[1],
+    )
 
-        # update initial guess if converged
-        if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
-            initial_guess = detector_center_from_minimize_peak_fwhm[index,:]
+    pf8 = PF8(PF8Config)
+    peak_list = pf8.get_peaks_pf8(data=calibrated_data)
+    PF8Config.set_geometry_from_file(config["geometry_file"])
+        
+    if peak_list["num_peaks"]>10:
+        ## final refinement if is a hit
+        if "minimize_peak_fwhm" not in config["skip_methods"]:
+            minimize_peak_fwhm_method = MinimizePeakFWHM(
+                config=config, PF8Config=PF8Config, plots_info=plots_info
+            )
+            detector_center_from_minimize_peak_fwhm[index, :] = minimize_peak_fwhm_method(
+                data=calibrated_data, initial_guess=initial_guess
+            )
 
-    if "friedel_pairs" not in config["skip_methods"]:
-        friedel_pairs_method = FriedelPairs(
-            config=config, PF8Config=PF8Config, plots_info=plots_info
-        )
-        detector_center_from_friedel_pairs[index, :] = friedel_pairs_method(
-            data=calibrated_data, initial_guess=initial_guess
-        )
+            # update initial guess if converged
+            if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
+                initial_guess = detector_center_from_minimize_peak_fwhm[index,:]
 
-    ## Refined detector center assignement
-    if "friedel_pairs" not in config["skip_methods"] and centering_converged(
-        detector_center_from_friedel_pairs[index, :]
-    ):
-        refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
-    elif "minimize_peak_fwhm" not in config["skip_methods"] and centering_converged(
-        detector_center_from_minimize_peak_fwhm[index, :]
-    ):
-        refined_detector_center[index, :] = detector_center_from_minimize_peak_fwhm[
-            index, :
-        ]
+        if "friedel_pairs" not in config["skip_methods"]:
+            friedel_pairs_method = FriedelPairs(
+                config=config, PF8Config=PF8Config, plots_info=plots_info
+            )
+            detector_center_from_friedel_pairs[index, :] = friedel_pairs_method(
+                data=calibrated_data, initial_guess=initial_guess
+            )
+
+        ## Refined detector center assignement
+        if "friedel_pairs" not in config["skip_methods"] and centering_converged(
+            detector_center_from_friedel_pairs[index, :]
+        ):
+            refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
+        elif "minimize_peak_fwhm" not in config["skip_methods"] and centering_converged(
+            detector_center_from_minimize_peak_fwhm[index, :]
+        ):
+            refined_detector_center[index, :] = detector_center_from_minimize_peak_fwhm[
+                index, :
+            ]
+        else:
+            refined_detector_center[index, :] = initial_guess
     else:
         refined_detector_center[index, :] = initial_guess
 

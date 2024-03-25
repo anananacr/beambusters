@@ -13,9 +13,7 @@ for i in $(seq $START 1 $END); do
     else 
         LIST_NAME=${INPUT}.lst${i}
     fi
-    RAW_DATA_PATH="raw_data_list_file: ${ROOT}/lists/${LIST_NAME}"
-    echo $RAW_DATA_PATH
-    sed -i "1s|.*|$RAW_DATA_PATH|" /home/rodria/scripts/beambusters/beambusters/config.yaml
+    
     LABEL=center_${i}
     JNAME="center_${i}"
     NAME="center_${i}"
@@ -32,19 +30,17 @@ for i in $(seq $START 1 $END); do
     echo "#SBATCH --output    /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/error/${NAME}-%N-%j.out" >> $SLURMFILE
     echo "#SBATCH --error     /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/error/${NAME}-%N-%j.err" >> $SLURMFILE
     echo "#SBATCH --nice=100" >> $SLURMFILE
-    echo "#SBATCH --mincpus=128" >> $SLURMFILE
-    echo "#SBATCH --mem=10G" >> $SLURMFILE
+    echo "#SBATCH --mincpus=64" >> $SLURMFILE
+    echo "#SBATCH --mem=20G" >> $SLURMFILE
     echo >> $SLURMFILE
     echo "unset LD_PRELOAD" >> $SLURMFILE
     echo "source /etc/profile.d/modules.sh" >> $SLURMFILE
     echo "module purge" >> $SLURMFILE
     echo "source /home/rodria/software/beambusters-dev-env/bin/activate" >> $SLURMFILE
     echo >> $SLURMFILE
-    command="python /home/rodria/scripts/beambusters/beambusters/center_data.py;"
+    command="python /home/rodria/scripts/beambusters/beambusters/center_data.py ${ROOT}/lists/${LIST_NAME};"
     echo $command >> $SLURMFILE
     echo "chmod a+rw $PWD" >> $SLURMFILE
     sbatch $SLURMFILE 
     mv $SLURMFILE ${ROOT}/shell
 done
-
-mv /home/rodria/scripts/beambusters/beambusters/config_backup.yaml /home/rodria/scripts/beambusters/beambusters/config.yaml 
