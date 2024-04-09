@@ -1,5 +1,4 @@
-raw_data_list_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/lists/split_lyso_02_events.lst05
-geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v0-70mm.geom
+geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-70mm-predrefine-pink-no-check.geom
 output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
 
 calibration: 
@@ -8,16 +7,16 @@ calibration:
 
 plots:
   flag: false
-  file_name: test_lyso_02
-  folder_name: lyso_02
+  file_name: fakp_apo_01_11
+  folder_name: fakp_apo_01
   root_path: /home/rodria/bb
 
 force_center:
-  mode: true
+  mode: false
   x: 556
   y: 522
 
-search_radius: 7
+search_radius: 12
 
 pf8:
   max_num_peaks: 10000
@@ -25,9 +24,9 @@ pf8:
   minimum_snr: 4
   min_pixel_count: 2
   max_pixel_count: 100000
-  local_bg_radius: 3
+  local_bg_radius: 5
   min_res: 0
-  max_res: 1200
+  max_res: 250
 
 starting_frame: 400
 

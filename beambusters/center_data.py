@@ -13,7 +13,7 @@ from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDe
 from bblib.models import PF8Info, PF8
 
 
-config = settings.read("config.yaml")
+config = settings.read("config_regae.yaml")
 BeambustersParam = settings.parse(config)
 files = open(sys.argv[1], "r")
 paths = files.readlines()
@@ -21,12 +21,12 @@ files.close()
 
 if len(paths[0][:-1].split(" //")) == 1:
     # Not listed events
-    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel; list_events -i {config['raw_data_list_file']} -o {config['raw_data_list_file'][:-4]}_tmp.lst -g {config['geometry_file']}"
+    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel; list_events -i {sys.argv[1]} -o {sys.argv[1][:-4]}_tmp.lst -g {config['geometry_file']}"
     sub.call(command, shell=True)
-    files = open(f"{config['raw_data_list_file'][:-4]}_tmp.lst", "r")
+    files = open(f"{sys.argv[1][:-4]}_tmp.lst", "r")
     paths = files.readlines()
     files.close()
-    command = f"rm {config['raw_data_list_file'][:-4]}_tmp.lst"
+    command = f"rm {sys.argv[1][:-4]}_tmp.lst"
     sub.call(command, shell=True)
 
 geometry_txt = open(config["geometry_file"], "r").readlines()

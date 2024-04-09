@@ -4,7 +4,6 @@ INPUT=$1
 START=$2
 END=$3
 ROOT=/gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
-cp /home/rodria/scripts/beambusters/beambusters/config.yaml /home/rodria/scripts/beambusters/beambusters/config_backup.yaml 
 
 for i in $(seq $START 1 $END); do
     if [ "$i" -le 9 ];
