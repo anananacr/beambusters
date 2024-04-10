@@ -7,16 +7,16 @@ calibration:
 
 plots:
   flag: false
-  file_name: fakp_apo_01_11
-  folder_name: fakp_apo_01
+  file_name: lyso
+  folder_name: lyso_02
   root_path: /home/rodria/bb
 
 force_center:
-  mode: false
-  x: 556
+  mode: true
+  x: 552
   y: 522
 
-search_radius: 12
+search_radius: 4
 
 pf8:
   max_num_peaks: 10000
@@ -28,7 +28,7 @@ pf8:
   min_res: 0
   max_res: 250
 
-starting_frame: 400
+starting_frame: 0
 
 offset:
   x: 0
