@@ -1,6 +1,7 @@
 # beambusters
 
 Application developed for detector center refinement in serial crystallography experiments.
+
 It uses the methods implemented in bblib to callculate the detector center of each diffractionn pattern.
 
 :loudspeaker: :construction: Work in progress! :loudspeaker: :construction:
