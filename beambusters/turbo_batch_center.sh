@@ -37,7 +37,7 @@ for i in $(seq $START 1 $END); do
     echo "module purge" >> $SLURMFILE
     echo "source /home/rodria/software/beambusters-dev-env/bin/activate" >> $SLURMFILE
     echo >> $SLURMFILE
-    command="python /home/rodria/scripts/beambusters/beambusters/center_data.py ${ROOT}/lists/${LIST_NAME};"
+    command="python /home/rodria/scripts/beambusters/beambusters/center_data.py ${ROOT}/lists/${LIST_NAME} config.yaml;"
     echo $command >> $SLURMFILE
     echo "chmod a+rw $PWD" >> $SLURMFILE
     sbatch $SLURMFILE 
