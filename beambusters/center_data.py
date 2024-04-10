@@ -13,7 +13,7 @@ from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDe
 from bblib.models import PF8Info, PF8
 
 
-config = settings.read("config_regae.yaml")
+config = settings.read(sys.argv[2])
 BeambustersParam = settings.parse(config)
 files = open(sys.argv[1], "r")
 paths = files.readlines()
@@ -26,7 +26,7 @@ if len(paths[0][:-1].split(" //")) == 1:
     files = open(f"{sys.argv[1][:-4]}_tmp.lst", "r")
     paths = files.readlines()
     files.close()
-    command = f"rm {sys.argv[1][:-4]}_tmp.lst"
+    #command = f"rm {sys.argv[1][:-4]}_tmp.lst"
     sub.call(command, shell=True)
 
 geometry_txt = open(config["geometry_file"], "r").readlines()
@@ -54,7 +54,6 @@ else:
     config["plots_flag"] = False
     plots_info = {"file_name": "", "folder_name": "", "root_path": ""}
     number_of_frames = len(paths)
-    #number_of_frames = 20
     starting_frame = 0
 
 ## Set peakfinder8 config
@@ -66,6 +65,7 @@ except ValueError:
     list_index = 0
 
 raw_file_id=[]
+print(number_of_frames)
 for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
     raw_file_id.append(path)
     file_name, frame_number = path.split(" //")

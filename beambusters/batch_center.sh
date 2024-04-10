@@ -14,4 +14,4 @@ ROOT=/gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodri
 source /etc/profile.d/modules.sh
 source /home/rodria/software/beambusters-dev-env/bin/activate
 
-python /home/rodria/scripts/beambusters/beambusters/center_data.py $ROOT/lists/split_FAKP_apo_01_events.lst11
+python /home/rodria/scripts/beambusters/beambusters/center_data.py $ROOT/lists/split_lyso_02_events.lst12 config.yaml
