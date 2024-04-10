@@ -18,7 +18,8 @@ The center_data.py uses a config.yaml file and an input list containing the h5 f
 Example:
 python center_data.py /path/to/list/file /path/to/config/file
 
+## Contact
 
 Author: Ana Carolina Rodrigues (2021 -)
 
-Contact: sc.anarodrigues@gmail.com
+sc.anarodrigues@gmail.com
