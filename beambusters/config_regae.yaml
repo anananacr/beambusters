@@ -6,15 +6,15 @@ calibration:
   calibration_files_directory: /folder/to/darks
 
 plots:
-  flag: true
-  file_name: mos_bb
-  folder_name: 2023_mos
+  flag: false
+  file_name: mica_dez
+  folder_name: mica_dez
   root_path: /home/rodria/bb
 
 force_center:
   mode: true
-  x: 480
-  y: 543
+  x: 481
+  y: 544
 
 search_radius: 12
 
@@ -28,7 +28,7 @@ pf8:
   min_res: 0
   max_res: 250
 
-starting_frame: 400
+starting_frame: 0
 
 offset:
   x: 0
