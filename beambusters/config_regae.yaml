@@ -1,5 +1,5 @@
-geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/geoms/JF_regae_v0.geom
-output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/
+geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/geoms/JF_regae_v2.geom
+output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/test
 
 calibration: 
   skip: true
@@ -8,27 +8,27 @@ calibration:
 plots:
   flag: false
   file_name: mica_dez
-  folder_name: mica_dez
+  folder_name: mica_dez_flip
   root_path: /home/rodria/bb
 
 force_center:
   mode: true
-  x: 481
-  y: 544
+  x: 454
+  y: 538
 
-search_radius: 12
+search_radius: 8
 
 pf8:
   max_num_peaks: 10000
   adc_threshold: 0
   minimum_snr: 5
-  min_pixel_count: 2
+  min_pixel_count: 4
   max_pixel_count: 100000
-  local_bg_radius: 5
+  local_bg_radius: 9
   min_res: 0
   max_res: 250
 
-starting_frame: 0
+starting_frame: 600
 
 offset:
   x: 0
@@ -45,7 +45,7 @@ canny:
   low_threshold: 0.0
   high_threshold: 0.0
 
-method: center_of_massŝ
+method: center_of_mass
 
 bragg_peaks_positions_for_center_of_mass_calculation: -1
 

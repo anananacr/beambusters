@@ -1,4 +1,4 @@
-geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-70mm-predrefine-pink-no-check.geom
+geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v0-100mm.geom
 output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
 
 calibration: 
@@ -7,13 +7,13 @@ calibration:
 
 plots:
   flag: false
-  file_name: lyso
-  folder_name: lyso_02
+  file_name: fakp
+  folder_name: fakp
   root_path: /home/rodria/bb
 
 force_center:
   mode: true
-  x: 552
+  x: 554
   y: 522
 
 search_radius: 4
@@ -21,29 +21,29 @@ search_radius: 4
 pf8:
   max_num_peaks: 10000
   adc_threshold: 0
-  minimum_snr: 4
+  minimum_snr: 3
   min_pixel_count: 2
   max_pixel_count: 100000
   local_bg_radius: 5
   min_res: 0
-  max_res: 250
+  max_res: 300
 
-starting_frame: 0
+starting_frame: 600
 
 offset:
   x: 0
   y: 0
 
 peak_region:
-  min: 80
-  max: 100
+  min: 130
+  max: 150
 
 outlier_distance: 20
 
 canny:
   sigma: 3
-  low_threshold: 0.98
-  high_threshold: 0.99
+  low_threshold: 0.95
+  high_threshold: 0.98
 
 method: circle_detection
 

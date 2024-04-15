@@ -21,7 +21,7 @@ files.close()
 
 if len(paths[0][:-1].split(" //")) == 1:
     # Not listed events
-    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel; list_events -i {sys.argv[1]} -o {sys.argv[1][:-4]}_tmp.lst -g {config['geometry_file']}"
+    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0-devel; list_events -i {sys.argv[1]} -o {sys.argv[1][:-4]}_tmp.lst -g {config['geometry_file']}"
     sub.call(command, shell=True)
     files = open(f"{sys.argv[1][:-4]}_tmp.lst", "r")
     paths = files.readlines()

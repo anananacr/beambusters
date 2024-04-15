@@ -13,5 +13,6 @@
 ROOT=/asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/
 source /etc/profile.d/modules.sh
 source /home/rodria/software/beambusters-dev-env/bin/activate
-module load maxwell cyrstfel
-python /home/rodria/scripts/beambusters/beambusters/center_data.py $ROOT/lists/231215_mica020_003_merged.lst config_regae.yaml
+module purge
+module load maxwell crystfel/0-devel
+python /home/rodria/scripts/beambusters/beambusters/center_data.py $ROOT/lists/231221_c4_tas_b05_001_merged.lst config_regae.yaml
