@@ -1,4 +1,4 @@
-geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v0-100mm.geom
+geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-100mm.geom
 output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
 
 calibration: 
@@ -7,53 +7,52 @@ calibration:
 
 plots:
   flag: false
-  file_name: fakp
-  folder_name: fakp
+  file_name: lyso
+  folder_name: lyso_sweep
   root_path: /home/rodria/bb
 
 force_center:
-  mode: true
-  x: 554
-  y: 522
+  mode: false
+  x: 572
+  y: 465
 
 search_radius: 4
 
 pf8:
   max_num_peaks: 10000
   adc_threshold: 0
-  minimum_snr: 3
-  min_pixel_count: 2
-  max_pixel_count: 100000
+  minimum_snr: 4
+  min_pixel_count: 3
+  max_pixel_count: 1000
   local_bg_radius: 5
   min_res: 0
-  max_res: 300
+  max_res: 600
 
-starting_frame: 600
+starting_frame: 500
 
 offset:
   x: 0
   y: 0
 
 peak_region:
-  min: 130
-  max: 150
+  min: 40
+  max: 60
 
-outlier_distance: 20
+outlier_distance: 35
 
 canny:
   sigma: 3
   low_threshold: 0.95
-  high_threshold: 0.98
+  high_threshold: 0.99
 
 method: circle_detection
 
-bragg_peaks_positions_for_center_of_mass_calculation: 0
+bragg_peaks_positions_for_center_of_mass_calculation: -1
 
-pixels_for_mask_of_bragg_peaks: 4
+pixels_for_mask_of_bragg_peaks: 5
 
 skip_methods:
   - minimize_peak_fwhm
-  
 
 polarization:
   skip: false

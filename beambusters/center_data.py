@@ -4,12 +4,13 @@ import h5py
 import numpy as np
 from utils import open_dark_and_gain_files, apply_calibration, centering_converged
 import matplotlib.pyplot as plt
+import math
 import sys
-
+#import bblib
 sys.path.append("/home/rodria/scripts/bblib")
 import os
 import pathlib
-from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
+from bblib.methods import CenterOfMass, FriedelPairs, FriedelPairsFast, MinimizePeakFWHM, CircleDetection
 from bblib.models import PF8Info, PF8
 
 
@@ -81,6 +82,8 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
         dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
         refined_detector_center = np.zeros((number_of_frames, 2), dtype=np.float32)
+        refined_center_flag = np.zeros(number_of_frames, dtype=bool)
+
         initial_guess_center = np.zeros((number_of_frames, 2), dtype=np.float32)
         detector_center_from_center_of_mass = np.zeros(
             (number_of_frames, 2), dtype=np.int16
@@ -141,52 +144,45 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 
     initial_guess_center[index, :] = initial_guess
 
-    PF8Config.update_pixel_maps(
-        initial_guess[0] - PF8Config.detector_center_from_geom[0],
-        initial_guess[1] - PF8Config.detector_center_from_geom[1],
-    )
+    distance = math.sqrt((initial_guess[0] - config["force_center"]["x"])**2 + (initial_guess[1] - config["force_center"]["y"])**2)
+    
+    if distance < config["outlier_distance"]:
+        ## ok for refinement
+        PF8Config.update_pixel_maps(
+            initial_guess[0] - PF8Config.detector_center_from_geom[0],
+            initial_guess[1] - PF8Config.detector_center_from_geom[1],
+        )
 
-    pf8 = PF8(PF8Config)
-    peak_list = pf8.get_peaks_pf8(data=calibrated_data)
-    PF8Config.set_geometry_from_file(config["geometry_file"])
+        pf8 = PF8(PF8Config)
+        peak_list = pf8.get_peaks_pf8(data=calibrated_data)
+        PF8Config.set_geometry_from_file(config["geometry_file"])
         
-    if peak_list["num_peaks"]>10:
-        ## final refinement if is a hit
-        if "minimize_peak_fwhm" not in config["skip_methods"]:
-            minimize_peak_fwhm_method = MinimizePeakFWHM(
-                config=config, PF8Config=PF8Config, plots_info=plots_info
-            )
-            detector_center_from_minimize_peak_fwhm[index, :] = minimize_peak_fwhm_method(
-                data=calibrated_data, initial_guess=initial_guess
-            )
-
-            # update initial guess if converged
-            if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
-                initial_guess = detector_center_from_minimize_peak_fwhm[index,:]
-
         if "friedel_pairs" not in config["skip_methods"]:
-            friedel_pairs_method = FriedelPairs(
+            PF8Config.set_geometry_from_file(config["geometry_file"])
+            #friedel_pairs_method = FriedelPairs(
+            #    config=config, PF8Config=PF8Config, plots_info=plots_info
+            #)
+            friedel_pairs_method = FriedelPairsFast(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
             detector_center_from_friedel_pairs[index, :] = friedel_pairs_method(
                 data=calibrated_data, initial_guess=initial_guess
             )
-
-        ## Refined detector center assignement
-        if "friedel_pairs" not in config["skip_methods"] and centering_converged(
-            detector_center_from_friedel_pairs[index, :]
-        ):
-            refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
-        elif "minimize_peak_fwhm" not in config["skip_methods"] and centering_converged(
-            detector_center_from_minimize_peak_fwhm[index, :]
-        ):
-            refined_detector_center[index, :] = detector_center_from_minimize_peak_fwhm[
-                index, :
-            ]
-        else:
-            refined_detector_center[index, :] = initial_guess
+            if centering_converged(detector_center_from_friedel_pairs[index, :]):
+                center_is_refined = True
+            else:
+                center_is_refined = False
     else:
-        refined_detector_center[index, :] = initial_guess
+        center_is_refined = False
+        
+    ## Refined detector center assignement
+    if center_is_refined:    
+        refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
+        refined_center_flag[index] = 1
+
+    else:
+        refined_detector_center[index, :] = [-1,-1]        
+        refined_center_flag[index] = 0
 
     beam_position_shift_in_pixels = (
         refined_detector_center[index] - PF8Config.detector_center_from_geom
@@ -202,6 +198,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 ## Create output path
 file_label = os.path.basename(file_name).split(".")[0]
 root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
+#root_directory, path_on_raw = os.path.dirname(file_name).split("/centered/")
 output_path = config["output_path"] + "/centered/" + path_on_raw
 path = pathlib.Path(output_path)
 path.mkdir(parents=True, exist_ok=True)
@@ -222,10 +219,13 @@ with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
     grp_shots = entry.create_group("shots")
     grp_shots.attrs["NX_class"] = "NXdata"
     grp_shots.create_dataset(
-        "detector_shift_x_in_mm", data=shift_x_mm, compression="gzip"
+        "detector_shift_x_in_mm", data=shift_x_mm
     )
     grp_shots.create_dataset(
-        "detector_shift_y_in_mm", data=shift_y_mm, compression="gzip"
+        "detector_shift_y_in_mm", data=shift_y_mm
+    )
+    grp_shots.create_dataset(
+        "refined_center_flag", data=refined_center_flag
     )
     grp_proc = f.create_group("pre_processing")
     grp_proc.attrs["NX_class"] = "NXdata"
