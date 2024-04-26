@@ -38,14 +38,6 @@ h5_path = [
     x.split(" = ")[-1][:-1] for x in geometry_txt if x.split(" = ")[0] == "data"
 ][0]
 
-if not config["calibration"]["skip"]:
-    dark, gain = open_dark_and_gain_files(
-        calibration_files_directory=config["calibration"][
-            "calibration_files_directory"
-        ],
-        storage_cell_id=0,
-    )
-
 initialized_arrays = False
 ## check plots info
 if config["plots"]["flag"]:
@@ -130,10 +122,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
     storage_cell_number[index] = storage_cell_number_of_frame
     debug_from_raw[index, :] = debug_from_raw_of_frame
 
-    if not config["calibration"]["skip"]:
-        calibrated_data = apply_calibration(data=data, dark=dark, gain=gain)
-    else:
-        calibrated_data = data
+    calibrated_data = data
 
     dataset[index, :, :] = calibrated_data
 
@@ -225,7 +214,6 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 ## Create output path
 file_label = os.path.basename(file_name).split("/")[-1][:-3]
 root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
-# root_directory, path_on_raw = os.path.dirname(file_name).split("/centered/")
 output_path = config["output_path"] + "/centered/" + path_on_raw
 path = pathlib.Path(output_path)
 path.mkdir(parents=True, exist_ok=True)

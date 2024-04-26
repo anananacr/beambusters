@@ -1,16 +1,20 @@
 geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/geoms/JF_regae_v2.geom
 output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/test
 
-calibration: 
-  skip: true
-  calibration_files_directory: /folder/to/darks
-
 plots:
   flag: false
   file_name: mica_dez
   folder_name: mica_dez_flip
   root_path: /home/rodria/bb
-
+  value_auto: True
+  value_min: 0
+  value_max: 0
+  axis_lim_auto: True
+  xlim_min: 0
+  xlim_max: 0
+  ylim_min: 0 
+  ylim_max: 0
+  
 force_center:
   mode: true
   x: 454

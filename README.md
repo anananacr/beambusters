@@ -20,6 +20,6 @@ python center_data.py /path/to/list/file /path/to/config/file
 
 ## Contact
 
-Author: Ana Carolina Rodrigues (2021 -)
+Author: Ana Carolina Rodrigues (2021 - 2024)
 
 sc.anarodrigues@gmail.com

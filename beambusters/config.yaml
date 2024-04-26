@@ -1,10 +1,6 @@
 geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-100mm.geom
 output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/test
 
-calibration: 
-  skip: true
-  calibration_files_directory: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/scratch_cc/rodria/darks
-
 plots:
   flag: false
   file_name: lyso
