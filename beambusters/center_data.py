@@ -10,7 +10,7 @@ import sys
 sys.path.append("/home/rodria/scripts/bblib")
 import os
 import pathlib
-from bblib.methods import CenterOfMass, FriedelPairs, FriedelPairsFast, MinimizePeakFWHM, CircleDetection
+from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
 from bblib.models import PF8Info, PF8
 
 
@@ -22,12 +22,13 @@ files.close()
 
 if len(paths[0][:-1].split(" //")) == 1:
     # Not listed events
-    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0-devel; list_events -i {sys.argv[1]} -o {sys.argv[1][:-4]}_tmp.lst -g {config['geometry_file']}"
+    list_name=sys.argv[1]
+    events_list_file=f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
+    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0.11.0; list_events -i {list_name} -o {events_list_file} -g {config['geometry_file']}"
     sub.call(command, shell=True)
-    files = open(f"{sys.argv[1][:-4]}_tmp.lst", "r")
+    files = open(events_list_file, "r")
     paths = files.readlines()
     files.close()
-    #command = f"rm {sys.argv[1][:-4]}_tmp.lst"
     sub.call(command, shell=True)
 
 geometry_txt = open(config["geometry_file"], "r").readlines()
@@ -66,10 +67,12 @@ except ValueError:
     list_index = 0
 
 raw_file_id=[]
-print(number_of_frames)
+
 for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
     raw_file_id.append(path)
     file_name, frame_number = path.split(" //")
+    print(f"Image filename: {file_name}")
+    print(f"Event: //{frame_number}")
     frame_number = int(frame_number)
     plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
 
@@ -77,12 +80,15 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
         if not initialized_arrays:
             _data_shape = data.shape
+        ## comment the next two lines if not in burst mode
+        storage_cell_number_of_frame = int(f["/entry/data/storage_cell_number"][frame_number])
+        debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
 
     if not initialized_arrays:
         raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
         dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
         refined_detector_center = np.zeros((number_of_frames, 2), dtype=np.float32)
-        refined_center_flag = np.zeros(number_of_frames, dtype=bool)
+        refined_center_flag = np.zeros(number_of_frames, dtype=np.int16)
 
         initial_guess_center = np.zeros((number_of_frames, 2), dtype=np.float32)
         detector_center_from_center_of_mass = np.zeros(
@@ -99,9 +105,13 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         )
         shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
         shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
+        storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
+        debug_from_raw = np.zeros((number_of_frames,2), dtype=np.int16)
         initialized_arrays = True
 
     raw_dataset[index, :, :] = data
+    storage_cell_number[index] = storage_cell_number_of_frame
+    debug_from_raw[index, :] = debug_from_raw_of_frame
 
     if not config["calibration"]["skip"]:
         calibrated_data = apply_calibration(data=data, dark=dark, gain=gain)
@@ -159,10 +169,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         
         if "friedel_pairs" not in config["skip_methods"]:
             PF8Config.set_geometry_from_file(config["geometry_file"])
-            #friedel_pairs_method = FriedelPairs(
-            #    config=config, PF8Config=PF8Config, plots_info=plots_info
-            #)
-            friedel_pairs_method = FriedelPairsFast(
+            friedel_pairs_method = FriedelPairs(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
             detector_center_from_friedel_pairs[index, :] = friedel_pairs_method(
@@ -181,7 +188,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         refined_center_flag[index] = 1
 
     else:
-        refined_detector_center[index, :] = [-1,-1]        
+        refined_detector_center[index, :] = initial_guess
         refined_center_flag[index] = 0
 
     beam_position_shift_in_pixels = (
@@ -196,7 +203,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
     shift_y_mm[index] = detector_shift_in_mm[1]
 
 ## Create output path
-file_label = os.path.basename(file_name).split(".")[0]
+file_label = os.path.basename(file_name).split("/")[-1][:-3]
 root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
 #root_directory, path_on_raw = os.path.dirname(file_name).split("/centered/")
 output_path = config["output_path"] + "/centered/" + path_on_raw
@@ -216,6 +223,8 @@ with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
     grp_data.create_dataset("data", data=dataset)
     #grp_data.create_dataset("raw_data", data=raw_dataset)
     grp_data.create_dataset("raw_file_id", data=raw_file_id)
+    grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
+    grp_data.create_dataset("debug", data=debug_from_raw)
     grp_shots = entry.create_group("shots")
     grp_shots.attrs["NX_class"] = "NXdata"
     grp_shots.create_dataset(
