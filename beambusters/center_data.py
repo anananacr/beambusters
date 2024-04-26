@@ -6,13 +6,13 @@ from utils import open_dark_and_gain_files, apply_calibration, centering_converg
 import matplotlib.pyplot as plt
 import math
 import sys
-#import bblib
+
+# import bblib
 sys.path.append("/home/rodria/scripts/bblib")
 import os
 import pathlib
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
 from bblib.models import PF8Info, PF8
-
 
 config = settings.read(sys.argv[2])
 BeambustersParam = settings.parse(config)
@@ -22,8 +22,10 @@ files.close()
 
 if len(paths[0][:-1].split(" //")) == 1:
     # Not listed events
-    list_name=sys.argv[1]
-    events_list_file=f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
+    list_name = sys.argv[1]
+    events_list_file = (
+        f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
+    )
     command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0.11.0; list_events -i {list_name} -o {events_list_file} -g {config['geometry_file']}"
     sub.call(command, shell=True)
     files = open(events_list_file, "r")
@@ -38,7 +40,10 @@ h5_path = [
 
 if not config["calibration"]["skip"]:
     dark, gain = open_dark_and_gain_files(
-        calibration_files_directory=config["calibration"]["calibration_files_directory"], storage_cell_id=0
+        calibration_files_directory=config["calibration"][
+            "calibration_files_directory"
+        ],
+        storage_cell_id=0,
     )
 
 initialized_arrays = False
@@ -55,9 +60,9 @@ if config["plots"]["flag"]:
         "root_path": config["plots"]["xlim_min"],
         "root_path": config["plots"]["xlim_max"],
         "root_path": config["plots"]["ylim_min"],
-        "root_path": config["plots"]["ylim_max"]
+        "root_path": config["plots"]["ylim_max"],
     }
-    
+
     number_of_frames = 20
     starting_frame = config["starting_frame"]
 else:
@@ -74,7 +79,7 @@ try:
 except ValueError:
     list_index = 0
 
-raw_file_id=[]
+raw_file_id = []
 
 for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
     raw_file_id.append(path)
@@ -91,7 +96,9 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         if not initialized_arrays:
             _data_shape = data.shape
         ## comment the next two lines if not in burst mode
-        storage_cell_number_of_frame = int(f["/entry/data/storage_cell_number"][frame_number])
+        storage_cell_number_of_frame = int(
+            f["/entry/data/storage_cell_number"][frame_number]
+        )
         debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
 
     if not initialized_arrays:
@@ -116,7 +123,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
         shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
         storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
-        debug_from_raw = np.zeros((number_of_frames,2), dtype=np.int16)
+        debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
         initialized_arrays = True
 
     raw_dataset[index, :, :] = data
@@ -164,8 +171,11 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 
     initial_guess_center[index, :] = initial_guess
 
-    distance = math.sqrt((initial_guess[0] - config["force_center"]["x"])**2 + (initial_guess[1] - config["force_center"]["y"])**2)
-    
+    distance = math.sqrt(
+        (initial_guess[0] - config["force_center"]["x"]) ** 2
+        + (initial_guess[1] - config["force_center"]["y"]) ** 2
+    )
+
     if distance < config["outlier_distance"]:
         ## ok for refinement
         PF8Config.update_pixel_maps(
@@ -176,7 +186,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         pf8 = PF8(PF8Config)
         peak_list = pf8.get_peaks_pf8(data=calibrated_data)
         PF8Config.set_geometry_from_file(config["geometry_file"])
-        
+
         if "friedel_pairs" not in config["skip_methods"]:
             PF8Config.set_geometry_from_file(config["geometry_file"])
             friedel_pairs_method = FriedelPairs(
@@ -191,9 +201,9 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
                 center_is_refined = False
     else:
         center_is_refined = False
-        
+
     ## Refined detector center assignement
-    if center_is_refined:    
+    if center_is_refined:
         refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
         refined_center_flag[index] = 1
 
@@ -215,7 +225,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
 ## Create output path
 file_label = os.path.basename(file_name).split("/")[-1][:-3]
 root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
-#root_directory, path_on_raw = os.path.dirname(file_name).split("/centered/")
+# root_directory, path_on_raw = os.path.dirname(file_name).split("/centered/")
 output_path = config["output_path"] + "/centered/" + path_on_raw
 path = pathlib.Path(output_path)
 path.mkdir(parents=True, exist_ok=True)
@@ -231,21 +241,15 @@ with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
     grp_data = entry.create_group("data")
     grp_data.attrs["NX_class"] = "NXdata"
     grp_data.create_dataset("data", data=dataset)
-    #grp_data.create_dataset("raw_data", data=raw_dataset)
+    # grp_data.create_dataset("raw_data", data=raw_dataset)
     grp_data.create_dataset("raw_file_id", data=raw_file_id)
     grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
     grp_data.create_dataset("debug", data=debug_from_raw)
     grp_shots = entry.create_group("shots")
     grp_shots.attrs["NX_class"] = "NXdata"
-    grp_shots.create_dataset(
-        "detector_shift_x_in_mm", data=shift_x_mm
-    )
-    grp_shots.create_dataset(
-        "detector_shift_y_in_mm", data=shift_y_mm
-    )
-    grp_shots.create_dataset(
-        "refined_center_flag", data=refined_center_flag
-    )
+    grp_shots.create_dataset("detector_shift_x_in_mm", data=shift_x_mm)
+    grp_shots.create_dataset("detector_shift_y_in_mm", data=shift_y_mm)
+    grp_shots.create_dataset("refined_center_flag", data=refined_center_flag)
     grp_proc = f.create_group("pre_processing")
     grp_proc.attrs["NX_class"] = "NXdata"
     for key, value in BeambustersParam.items():
