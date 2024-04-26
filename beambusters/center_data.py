@@ -48,8 +48,16 @@ if config["plots"]["flag"]:
     plots_info = {
         "file_name": config["plots"]["file_name"],
         "folder_name": config["plots"]["folder_name"],
-        "root_path": config["plots"]["root_path"],
+        "root_path": config["plots"]["value_auto"],
+        "root_path": config["plots"]["value_max"],
+        "root_path": config["plots"]["value_min"],
+        "root_path": config["plots"]["axis_lim_auto"],
+        "root_path": config["plots"]["xlim_min"],
+        "root_path": config["plots"]["xlim_max"],
+        "root_path": config["plots"]["ylim_min"],
+        "root_path": config["plots"]["ylim_max"]
     }
+    
     number_of_frames = 20
     starting_frame = config["starting_frame"]
 else:
@@ -74,7 +82,9 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
     print(f"Image filename: {file_name}")
     print(f"Event: //{frame_number}")
     frame_number = int(frame_number)
-    plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
+
+    if config["plots_flag"]:
+        plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
 
     with h5py.File(f"{file_name}", "r") as f:
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
