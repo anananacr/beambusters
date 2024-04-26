@@ -1,6 +1,6 @@
 abstract==2022.7.10
 base32hex==1.0.2
-bblib==1.2.1
+bblib==2.0.0
 black==24.1.1
 build==1.0.3
 CacheControl==0.14.0
