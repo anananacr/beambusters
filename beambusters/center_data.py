@@ -2,13 +2,13 @@ import settings
 import subprocess as sub
 import h5py
 import numpy as np
-from utils import open_dark_and_gain_files, apply_calibration, centering_converged
+from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import sys
-
 # import bblib
 sys.path.append("/home/rodria/scripts/bblib")
+
 import os
 import pathlib
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
@@ -21,7 +21,7 @@ paths = files.readlines()
 files.close()
 
 if len(paths[0][:-1].split(" //")) == 1:
-    # Not listed events
+    # Not listed events, you may need to change to your enviroment of CrystFEL
     list_name = sys.argv[1]
     events_list_file = (
         f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
@@ -39,7 +39,9 @@ h5_path = [
 ][0]
 
 initialized_arrays = False
-## check plots info
+
+## Check plots info
+
 if config["plots"]["flag"]:
     config["plots_flag"] = True
     plots_info = {
@@ -63,9 +65,10 @@ else:
     number_of_frames = len(paths)
     starting_frame = 0
 
-## Set peakfinder8 config
+## Set peakfinder8 configuration
 PF8Config = settings.get_pf8_info(config)
 
+## Check if is a splitted list of files
 try:
     list_index = int(sys.argv[1].split("lst")[-1])
 except ValueError:
@@ -87,7 +90,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
         if not initialized_arrays:
             _data_shape = data.shape
-        ## comment the next two lines if not in burst mode
+        ## Comment the next two lines if not in burst mode
         storage_cell_number_of_frame = int(
             f["/entry/data/storage_cell_number"][frame_number]
         )
@@ -147,7 +150,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
             data=calibrated_data
         )
 
-    ## define initial_guess
+    ## Define the initial_guess
 
     if config["force_center"]["mode"]:
         initial_guess = [config["force_center"]["x"], config["force_center"]["y"]]
@@ -166,7 +169,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
     )
 
     if distance < config["outlier_distance"]:
-        ## ok for refinement
+        ## Ready for detector center refinement
         PF8Config.update_pixel_maps(
             initial_guess[0] - PF8Config.detector_center_from_geom[0],
             initial_guess[1] - PF8Config.detector_center_from_geom[1],
@@ -229,7 +232,6 @@ with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
     grp_data = entry.create_group("data")
     grp_data.attrs["NX_class"] = "NXdata"
     grp_data.create_dataset("data", data=dataset)
-    # grp_data.create_dataset("raw_data", data=raw_dataset)
     grp_data.create_dataset("raw_file_id", data=raw_file_id)
     grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
     grp_data.create_dataset("debug", data=debug_from_raw)
