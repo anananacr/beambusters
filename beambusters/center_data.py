@@ -6,8 +6,6 @@ from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import sys
-import bblib
-
 import os
 import pathlib
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
