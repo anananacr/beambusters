@@ -1,19 +1,19 @@
 geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-100mm.geom
-output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/test
+output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
 
 plots:
   flag: false
   file_name: lyso
   folder_name: lyso_sweep
   root_path: /home/rodria/bb
-  value_auto: True
-  value_min: 0
-  value_max: 0
-  axis_lim_auto: True
-  xlim_min: 0
-  xlim_max: 0
-  ylim_min: 0 
-  ylim_max: 0
+  value_auto: False
+  value_min: 1e0
+  value_max: 1e4
+  axis_lim_auto: False
+  xlim_min: 200
+  xlim_max: 900
+  ylim_min: 200
+  ylim_max: 900
 
 force_center:
   mode: false
