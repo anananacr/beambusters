@@ -6,9 +6,7 @@ from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import sys
-
-# import bblib
-sys.path.append("/home/rodria/scripts/bblib")
+import bblib
 
 import os
 import pathlib
@@ -57,8 +55,7 @@ if config["plots"]["flag"]:
         "ylim_min": config["plots"]["ylim_min"],
         "ylim_max": config["plots"]["ylim_max"]
     }
-
-    number_of_frames = 20
+    number_of_frames = 50
     starting_frame = config["starting_frame"]
 else:
     config["plots_flag"] = False
@@ -70,10 +67,11 @@ else:
 PF8Config = settings.get_pf8_info(config)
 
 ## Check if is a splitted list of files
-try:
-    list_index = int(sys.argv[1].split("lst")[-1])
-except ValueError:
-    list_index = 0
+#try:
+#    list_index = "_"+str(sys.argv[1].split("lst")[-1])
+#except ValueError:
+#    list_index = "_"+str(0)
+list_index = ""
 
 raw_file_id = []
 
@@ -227,7 +225,7 @@ clen = float(np.mean(PF8Config.pixel_maps["z"]))
 
 ## Write centered file
 
-with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
+with h5py.File(f"{output_path}/{file_label}{list_index}.h5", "w") as f:
     entry = f.create_group("entry")
     entry.attrs["NX_class"] = "NXentry"
     grp_data = entry.create_group("data")
