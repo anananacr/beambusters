@@ -6,6 +6,7 @@ from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import sys
+
 # import bblib
 sys.path.append("/home/rodria/scripts/bblib")
 
@@ -221,7 +222,7 @@ output_path = config["output_path"] + "/centered/" + path_on_raw
 path = pathlib.Path(output_path)
 path.mkdir(parents=True, exist_ok=True)
 
-## get camera length from PF8 pixel maps
+## Get camera length from PF8 pixel maps
 clen = float(np.mean(PF8Config.pixel_maps["z"]))
 
 ## Write centered file
