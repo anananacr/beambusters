@@ -44,8 +44,6 @@ def parse(config: dict):
         "offset_y": config["offset"]["y"],
         "force_center_mode": config["force_center"]["mode"],
         "force_center": [config["force_center"]["x"], config["force_center"]["y"]],
-        "calibration_skip": config["calibration"]["skip"],
-        "calibration_files_dir": config["calibration"]["calibration_files_directory"],
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
     }

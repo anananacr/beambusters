@@ -6,9 +6,7 @@ from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import sys
-
-# import bblib
-sys.path.append("/home/rodria/scripts/bblib")
+import bblib
 
 import os
 import pathlib
@@ -32,7 +30,6 @@ if len(paths[0][:-1].split(" //")) == 1:
     files = open(events_list_file, "r")
     paths = files.readlines()
     files.close()
-    sub.call(command, shell=True)
 
 geometry_txt = open(config["geometry_file"], "r").readlines()
 h5_path = [
@@ -48,17 +45,17 @@ if config["plots"]["flag"]:
     plots_info = {
         "file_name": config["plots"]["file_name"],
         "folder_name": config["plots"]["folder_name"],
-        "root_path": config["plots"]["value_auto"],
-        "root_path": config["plots"]["value_max"],
-        "root_path": config["plots"]["value_min"],
-        "root_path": config["plots"]["axis_lim_auto"],
-        "root_path": config["plots"]["xlim_min"],
-        "root_path": config["plots"]["xlim_max"],
-        "root_path": config["plots"]["ylim_min"],
-        "root_path": config["plots"]["ylim_max"],
+        "root_path": config["plots"]["root_path"],
+        "value_auto": config["plots"]["value_auto"],
+        "value_max": config["plots"]["value_max"],
+        "value_min": config["plots"]["value_min"],
+        "axis_lim_auto": config["plots"]["axis_lim_auto"],
+        "xlim_min": config["plots"]["xlim_min"],
+        "xlim_max": config["plots"]["xlim_max"],
+        "ylim_min": config["plots"]["ylim_min"],
+        "ylim_max": config["plots"]["ylim_max"]
     }
-
-    number_of_frames = 20
+    number_of_frames = 50
     starting_frame = config["starting_frame"]
 else:
     config["plots_flag"] = False
@@ -70,10 +67,11 @@ else:
 PF8Config = settings.get_pf8_info(config)
 
 ## Check if is a splitted list of files
-try:
-    list_index = int(sys.argv[1].split("lst")[-1])
-except ValueError:
-    list_index = 0
+#try:
+#    list_index = "_"+str(sys.argv[1].split("lst")[-1])
+#except ValueError:
+#    list_index = "_"+str(0)
+list_index = ""
 
 raw_file_id = []
 
@@ -227,7 +225,7 @@ clen = float(np.mean(PF8Config.pixel_maps["z"]))
 
 ## Write centered file
 
-with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
+with h5py.File(f"{output_path}/{file_label}{list_index}.h5", "w") as f:
     entry = f.create_group("entry")
     entry.attrs["NX_class"] = "NXentry"
     grp_data = entry.create_group("data")
