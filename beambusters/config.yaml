@@ -1,62 +1,64 @@
-raw_data_list_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/lists/231208_LiMn_002_003_003_500.lst
-geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/geom/JF_regae_v4_altered.geom
-output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/bb_test/processed
-
-calibration: 
-  skip: false
-  calibration_files_directory: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/darks
+geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-100mm.geom
+output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/test
 
 plots:
   flag: false
-  file_name: 231208_LiMn_002_003_003_500
-  folder_name: 231208_LiMn_002
+  file_name: lyso
+  folder_name: lyso_sweep
   root_path: /home/rodria/bb
+  value_auto: True
+  value_min: 0
+  value_max: 0
+  axis_lim_auto: True
+  xlim_min: 0
+  xlim_max: 0
+  ylim_min: 0 
+  ylim_max: 0
 
 force_center:
-  mode: true
-  x: 560
-  y: 532
+  mode: false
+  x: 572
+  y: 465
 
-search_radius: 18
+search_radius: 4.5
 
 pf8:
   max_num_peaks: 10000
   adc_threshold: 0
-  minimum_snr: 5
-  min_pixel_count: 5
-  max_pixel_count: 100000
-  local_bg_radius: 10
-  min_res: 20
-  max_res: 150
+  minimum_snr: 4
+  min_pixel_count: 3
+  max_pixel_count: 1000
+  local_bg_radius: 5
+  min_res: 0
+  max_res: 600
 
-starting_frame: 0
+starting_frame: 500
 
 offset:
   x: 0
   y: 0
 
 peak_region:
-  min: 0
-  max: 0
+  min: 40
+  max: 60
 
-outlier_distance: 20
+outlier_distance: 35
 
 canny:
-  sigma: 0
-  low_threshold: 0
-  high_threshold: 0
+  sigma: 3
+  low_threshold: 0.95
+  high_threshold: 0.99
 
-method: center_of_mass
+method: circle_detection
 
 bragg_peaks_positions_for_center_of_mass_calculation: -1
 
-pixels_for_mask_of_bragg_peaks: 8
+pixels_for_mask_of_bragg_peaks: 5
 
 skip_methods:
   - minimize_peak_fwhm
-  - circle_detection
 
 polarization:
-  skip: true
+  skip: false
   axis: x
   value: 0.99

@@ -2,31 +2,36 @@ import settings
 import subprocess as sub
 import h5py
 import numpy as np
-from utils import open_dark_and_gain_files, apply_calibration, centering_converged
+from utils import centering_converged
 import matplotlib.pyplot as plt
+import math
 import sys
 
+# import bblib
 sys.path.append("/home/rodria/scripts/bblib")
+
 import os
 import pathlib
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
 from bblib.models import PF8Info, PF8
 
-
-config = settings.read("config.yaml")
+config = settings.read(sys.argv[2])
 BeambustersParam = settings.parse(config)
-files = open(config["raw_data_list_file"], "r")
+files = open(sys.argv[1], "r")
 paths = files.readlines()
 files.close()
 
 if len(paths[0][:-1].split(" //")) == 1:
-    # Not listed events
-    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel; list_events -i {config['raw_data_list_file']} -o {config['raw_data_list_file'][:-4]}_tmp.lst -g {config['geometry_file']}"
+    # Not listed events, you may need to change to your enviroment of CrystFEL
+    list_name = sys.argv[1]
+    events_list_file = (
+        f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
+    )
+    command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0.11.0; list_events -i {list_name} -o {events_list_file} -g {config['geometry_file']}"
     sub.call(command, shell=True)
-    files = open(f"{config['raw_data_list_file'][:-4]}_tmp.lst", "r")
+    files = open(events_list_file, "r")
     paths = files.readlines()
     files.close()
-    command = f"rm {config['raw_data_list_file'][:-4]}_tmp.lst"
     sub.call(command, shell=True)
 
 geometry_txt = open(config["geometry_file"], "r").readlines()
@@ -34,20 +39,25 @@ h5_path = [
     x.split(" = ")[-1][:-1] for x in geometry_txt if x.split(" = ")[0] == "data"
 ][0]
 
-if not config["calibration"]["skip"]:
-    dark, gain = open_dark_and_gain_files(
-        calibration_files_directory=config["calibration"]["calibration_files_directory"]
-    )
-
 initialized_arrays = False
-## check plots info
+
+## Check plots info
+
 if config["plots"]["flag"]:
     config["plots_flag"] = True
     plots_info = {
         "file_name": config["plots"]["file_name"],
         "folder_name": config["plots"]["folder_name"],
-        "root_path": config["plots"]["root_path"],
+        "root_path": config["plots"]["value_auto"],
+        "root_path": config["plots"]["value_max"],
+        "root_path": config["plots"]["value_min"],
+        "root_path": config["plots"]["axis_lim_auto"],
+        "root_path": config["plots"]["xlim_min"],
+        "root_path": config["plots"]["xlim_max"],
+        "root_path": config["plots"]["ylim_min"],
+        "root_path": config["plots"]["ylim_max"],
     }
+
     number_of_frames = 20
     starting_frame = config["starting_frame"]
 else:
@@ -56,51 +66,67 @@ else:
     number_of_frames = len(paths)
     starting_frame = 0
 
-## Set peakfinder8 config
+## Set peakfinder8 configuration
 PF8Config = settings.get_pf8_info(config)
 
+## Check if is a splitted list of files
 try:
-    list_index = int(config["raw_data_list_file"].split("lst")[-1])
+    list_index = int(sys.argv[1].split("lst")[-1])
 except ValueError:
     list_index = 0
 
+raw_file_id = []
+
 for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
+    raw_file_id.append(path)
     file_name, frame_number = path.split(" //")
+    print(f"Image filename: {file_name}")
+    print(f"Event: //{frame_number}")
     frame_number = int(frame_number)
-    plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
+
+    if config["plots_flag"]:
+        plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
 
     with h5py.File(f"{file_name}", "r") as f:
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
         if not initialized_arrays:
             _data_shape = data.shape
+        ## Comment the next two lines if not in burst mode
+        storage_cell_number_of_frame = int(
+            f["/entry/data/storage_cell_number"][frame_number]
+        )
+        debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
 
     if not initialized_arrays:
-        raw_dataset = np.ndarray((number_of_frames, *_data_shape), dtype=np.int32)
-        dataset = np.ndarray((number_of_frames, *_data_shape), dtype=np.int32)
-        refined_detector_center = np.ndarray((number_of_frames, 2), dtype=np.float32)
-        initial_guess_center = np.ndarray((number_of_frames, 2), dtype=np.float32)
-        detector_center_from_center_of_mass = np.ndarray(
+        raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
+        dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
+        refined_detector_center = np.zeros((number_of_frames, 2), dtype=np.float32)
+        refined_center_flag = np.zeros(number_of_frames, dtype=np.int16)
+
+        initial_guess_center = np.zeros((number_of_frames, 2), dtype=np.float32)
+        detector_center_from_center_of_mass = np.zeros(
             (number_of_frames, 2), dtype=np.int16
         )
-        detector_center_from_circle_detection = np.ndarray(
+        detector_center_from_circle_detection = np.zeros(
             (number_of_frames, 2), dtype=np.int16
         )
-        detector_center_from_minimize_peak_fwhm = np.ndarray(
+        detector_center_from_minimize_peak_fwhm = np.zeros(
             (number_of_frames, 2), dtype=np.int16
         )
-        detector_center_from_friedel_pairs = np.ndarray(
+        detector_center_from_friedel_pairs = np.zeros(
             (number_of_frames, 2), dtype=np.float32
         )
-        shift_x_mm = np.ndarray((number_of_frames,), dtype=np.float32)
-        shift_y_mm = np.ndarray((number_of_frames,), dtype=np.float32)
+        shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
+        shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
+        storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
+        debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
         initialized_arrays = True
 
     raw_dataset[index, :, :] = data
+    storage_cell_number[index] = storage_cell_number_of_frame
+    debug_from_raw[index, :] = debug_from_raw_of_frame
 
-    if not config["calibration"]["skip"]:
-        calibrated_data = apply_calibration(data=data, dark=dark, gain=gain)
-    else:
-        calibrated_data = data
+    calibrated_data = data
 
     dataset[index, :, :] = calibrated_data
 
@@ -125,7 +151,7 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
             data=calibrated_data
         )
 
-    ## define initial_guess
+    ## Define the initial_guess
 
     if config["force_center"]["mode"]:
         initial_guess = [config["force_center"]["x"], config["force_center"]["y"]]
@@ -137,41 +163,46 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         initial_guess = PF8Config.detector_center_from_geom
 
     initial_guess_center[index, :] = initial_guess
-    ## final refinement
 
-    if "minimize_peak_fwhm" not in config["skip_methods"]:
-        minimize_peak_fwhm_method = MinimizePeakFWHM(
-            config=config, PF8Config=PF8Config, plots_info=plots_info
-        )
-        detector_center_from_minimize_peak_fwhm[index, :] = minimize_peak_fwhm_method(
-            data=calibrated_data, initial_guess=initial_guess
+    distance = math.sqrt(
+        (initial_guess[0] - config["force_center"]["x"]) ** 2
+        + (initial_guess[1] - config["force_center"]["y"]) ** 2
+    )
+
+    if distance < config["outlier_distance"]:
+        ## Ready for detector center refinement
+        PF8Config.update_pixel_maps(
+            initial_guess[0] - PF8Config.detector_center_from_geom[0],
+            initial_guess[1] - PF8Config.detector_center_from_geom[1],
         )
 
-        # update initial guess if converged
-        if centering_converged(detector_center_from_minimize_peak_fwhm[index, :]):
-            initial_guess = detector_center_from_minimize_peak_fwhm[index,:]
+        pf8 = PF8(PF8Config)
+        peak_list = pf8.get_peaks_pf8(data=calibrated_data)
+        PF8Config.set_geometry_from_file(config["geometry_file"])
 
-    if "friedel_pairs" not in config["skip_methods"]:
-        friedel_pairs_method = FriedelPairs(
-            config=config, PF8Config=PF8Config, plots_info=plots_info
-        )
-        detector_center_from_friedel_pairs[index, :] = friedel_pairs_method(
-            data=calibrated_data, initial_guess=initial_guess
-        )
+        if "friedel_pairs" not in config["skip_methods"]:
+            PF8Config.set_geometry_from_file(config["geometry_file"])
+            friedel_pairs_method = FriedelPairs(
+                config=config, PF8Config=PF8Config, plots_info=plots_info
+            )
+            detector_center_from_friedel_pairs[index, :] = friedel_pairs_method(
+                data=calibrated_data, initial_guess=initial_guess
+            )
+            if centering_converged(detector_center_from_friedel_pairs[index, :]):
+                center_is_refined = True
+            else:
+                center_is_refined = False
+    else:
+        center_is_refined = False
 
     ## Refined detector center assignement
-    if "friedel_pairs" not in config["skip_methods"] and centering_converged(
-        detector_center_from_friedel_pairs[index, :]
-    ):
+    if center_is_refined:
         refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
-    elif "minimize_peak_fwhm" not in config["skip_methods"] and centering_converged(
-        detector_center_from_minimize_peak_fwhm[index, :]
-    ):
-        refined_detector_center[index, :] = detector_center_from_minimize_peak_fwhm[
-            index, :
-        ]
+        refined_center_flag[index] = 1
+
     else:
         refined_detector_center[index, :] = initial_guess
+        refined_center_flag[index] = 0
 
     beam_position_shift_in_pixels = (
         refined_detector_center[index] - PF8Config.detector_center_from_geom
@@ -185,13 +216,13 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
     shift_y_mm[index] = detector_shift_in_mm[1]
 
 ## Create output path
-file_label = os.path.basename(file_name).split(".")[0]
-root_directory, path_on_raw = os.path.dirname(file_name).split("/raw/")
+file_label = os.path.basename(file_name).split("/")[-1][:-3]
+root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
 output_path = config["output_path"] + "/centered/" + path_on_raw
 path = pathlib.Path(output_path)
 path.mkdir(parents=True, exist_ok=True)
 
-## get camera length from PF8 pixel maps
+## Get camera length from PF8 pixel maps
 clen = float(np.mean(PF8Config.pixel_maps["z"]))
 
 ## Write centered file
@@ -201,16 +232,15 @@ with h5py.File(f"{output_path}/{file_label}_{list_index}.h5", "w") as f:
     entry.attrs["NX_class"] = "NXentry"
     grp_data = entry.create_group("data")
     grp_data.attrs["NX_class"] = "NXdata"
-    grp_data.create_dataset("data", data=dataset, compression="gzip")
-    grp_data.create_dataset("raw_data", data=raw_dataset, compression="gzip")
+    grp_data.create_dataset("data", data=dataset)
+    grp_data.create_dataset("raw_file_id", data=raw_file_id)
+    grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
+    grp_data.create_dataset("debug", data=debug_from_raw)
     grp_shots = entry.create_group("shots")
     grp_shots.attrs["NX_class"] = "NXdata"
-    grp_shots.create_dataset(
-        "detector_shift_x_in_mm", data=shift_x_mm, compression="gzip"
-    )
-    grp_shots.create_dataset(
-        "detector_shift_y_in_mm", data=shift_y_mm, compression="gzip"
-    )
+    grp_shots.create_dataset("detector_shift_x_in_mm", data=shift_x_mm)
+    grp_shots.create_dataset("detector_shift_y_in_mm", data=shift_y_mm)
+    grp_shots.create_dataset("refined_center_flag", data=refined_center_flag)
     grp_proc = f.create_group("pre_processing")
     grp_proc.attrs["NX_class"] = "NXdata"
     for key, value in BeambustersParam.items():
