@@ -35,7 +35,7 @@ for i in $(seq $START 1 $END); do
     echo "unset LD_PRELOAD" >> $SLURMFILE
     echo "source /etc/profile.d/modules.sh" >> $SLURMFILE
     echo "module purge" >> $SLURMFILE
-    echo "source /home/rodria/software/beambusters-dev-env/bin/activate" >> $SLURMFILE
+    echo "source /gpfs/cfel/user/rodria/software/beambusters-dev-env/bin/activate" >> $SLURMFILE
     echo >> $SLURMFILE
     command="python /home/rodria/scripts/beambusters/beambusters/center_data.py ${ROOT}/lists/${LIST_NAME} config.yaml;"
     echo $command >> $SLURMFILE
