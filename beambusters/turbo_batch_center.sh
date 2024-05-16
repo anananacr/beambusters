@@ -15,7 +15,7 @@ for i in $(seq $START 1 $END); do
     
     LABEL=center_${i}
     JNAME="center_${i}"
-    NAME="center_${i}"
+    NAME="center_${i}_${INPUT}"
     SLURMFILE="${NAME}_${INPUT}.sh"
     echo "#!/bin/sh" > $SLURMFILE
     echo >> $SLURMFILE
