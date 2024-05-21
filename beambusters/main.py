@@ -17,7 +17,7 @@ app = typer.Typer()
 @app.command("run_centering")
 def run_centering(input: str, path_to_config:str, test_only:bool = False):
     """
-    Runs the centering.
+    Runs the detector center refinement.
     """
     
     config = settings.read(path_to_config)
