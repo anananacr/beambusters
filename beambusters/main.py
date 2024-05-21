@@ -18,6 +18,15 @@ app = typer.Typer()
 def run_centering(input: str, path_to_config:str, test_only:bool = False):
     """
     Runs the detector center refinement.
+
+    The centering receives an INPUT, that is a list (.lst) file containing the name of HDF5 files in which the centering will be applied.
+    
+    The configuration parameters for the centering are passed throug a config.yaml file indicated by PATH_TO_CONFIG
+
+    Options:
+    
+    --test-only     Use the test only if you don't want to save the output centered files.
+    
     """
     
     config = settings.read(path_to_config)
@@ -278,12 +287,7 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
 def main():
     """
     Beambusters performs the detector center refinement for serial crystallography.
-
-    The centering receives an INPUT, that is a list (.lst) file containing the name of HDF5 files in which the centering will be applied.
     
-    The configuration parameters for the centering are passed throug a config.yaml file indicated by PATH_TO_CONFIG
-    
-    Use the test option if you don't want to save the centered files (--test-only).
     """
 
 if __name__ == "__main__":
