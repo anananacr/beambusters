@@ -1,8 +1,8 @@
 # beambusters
 
-Application developed for detector center refinement in serial crystallography experiments.
+Application developed to refine the detector center of single diffraction patterns for serial crystallography experiments.
 
-It uses the methods implemented in bblib to calculate the detector center of each diffraction pattern.
+Beambusters uses the methods implemented in bblib to calculate the detector center shift of each diffraction pattern, according to your initial detector geometry.
 
 ## Dependencies:
 - Python 3.10.5
