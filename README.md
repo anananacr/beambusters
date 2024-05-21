@@ -16,6 +16,8 @@ pip install beambusters
 Example:
 beambusters run_centering /path/to/list/file /path/to/config/file
 
+The config file is a *.yaml file, you can find examples in the doc folder.
+
 ## Contact
 
 Author: Ana Carolina Rodrigues (2021 - 2024)

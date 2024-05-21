@@ -1,9 +1,9 @@
 import typer
-from . import settings
+from beambusters import settings
 import subprocess as sub
 import h5py
 import numpy as np
-from .utils import centering_converged
+from beambusters.utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import os
