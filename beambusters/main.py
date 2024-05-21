@@ -1,9 +1,9 @@
 import typer
-import settings
+from . import settings
 import subprocess as sub
 import h5py
 import numpy as np
-from utils import centering_converged
+from .utils import centering_converged
 import matplotlib.pyplot as plt
 import math
 import os
@@ -289,6 +289,3 @@ def main():
     Beambusters performs the detector center refinement for serial crystallography.
     
     """
-
-if __name__ == "__main__":
-    app()

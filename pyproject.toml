@@ -5,6 +5,9 @@ description = ""
 authors = ["Ana Rodrigues <anananacr@gmail.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+beambusters = "beambusters.main:app"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 typer = {extras = ["all"], version = "^0.12.3"}
