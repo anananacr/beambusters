@@ -286,6 +286,6 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
 @app.callback()
 def main():
     """
-    Beambusters performs the detector center refinement for serial crystallography.
+    Beambusters performs the detector center refinement of each diffraction patterns for serial crystallography.
     
     """
