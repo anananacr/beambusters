@@ -12,7 +12,7 @@ import sys
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
 from bblib.models import PF8Info, PF8
 
-def main(input: str, path_to_config:str, test_only:bool = True):
+def main(input: str, path_to_config:str, test_only:bool = False):
     """
     Beambusters performs the detector center refinement for serial crystallography.
 
