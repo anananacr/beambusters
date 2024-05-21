@@ -1,19 +1,17 @@
 import yaml
 from pathlib import Path
 import sys
-
-sys.path.append("/home/rodria/scripts/bblib")
 from bblib.models import PF8Info
 
 
-def read(path: str):
+def read(path: str)-> dict:
     path = Path(path)
     config = path.read_text()
     config = yaml.safe_load(config)
     return config
 
 
-def parse(config: dict):
+def parse(config: dict) -> dict:
 
     return {
         "pf8_max_num_peaks": config["pf8"]["max_num_peaks"],
@@ -46,6 +44,7 @@ def parse(config: dict):
         "force_center": [config["force_center"]["x"], config["force_center"]["y"]],
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
+        "burst_mode": config["burst_mode"],
     }
 
 
@@ -60,3 +59,19 @@ def get_pf8_info(config: dict):
         min_res=config["pf8"]["min_res"],
         max_res=config["pf8"]["max_res"],
     )
+
+def parse_plots_info(config: dict)-> dict:
+    return {
+        "file_name": config["plots"]["file_name"],
+        "folder_name": config["plots"]["folder_name"],
+        "root_path": config["plots"]["root_path"],
+        "value_auto": config["plots"]["value_auto"],
+        "value_max": config["plots"]["value_max"],
+        "value_min": config["plots"]["value_min"],
+        "axis_lim_auto": config["plots"]["axis_lim_auto"],
+        "xlim_min": config["plots"]["xlim_min"],
+        "xlim_max": config["plots"]["xlim_max"],
+        "ylim_min": config["plots"]["ylim_min"],
+        "ylim_max": config["plots"]["ylim_max"],
+        "color_map": config["plots"]["color_map"]
+    }
