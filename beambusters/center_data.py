@@ -5,9 +5,6 @@ import numpy as np
 from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
-import sys
-import bblib
-
 import os
 import pathlib
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
@@ -89,11 +86,11 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         data = np.array(f[h5_path][frame_number], dtype=np.int32)
         if not initialized_arrays:
             _data_shape = data.shape
-        ## Comment the next two lines if not in burst mode
-        storage_cell_number_of_frame = int(
-            f["/entry/data/storage_cell_number"][frame_number]
-        )
-        debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
+        ## Comment the next three lines if not in burst mode
+        #storage_cell_number_of_frame = int(
+        #    f["/entry/data/storage_cell_number"][frame_number]
+        #)
+        #debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
 
     if not initialized_arrays:
         raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
@@ -116,13 +113,13 @@ for index, path in enumerate(paths[starting_frame : starting_frame + number_of_f
         )
         shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
         shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
-        storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
-        debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
+        #storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
+        #debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
         initialized_arrays = True
 
     raw_dataset[index, :, :] = data
-    storage_cell_number[index] = storage_cell_number_of_frame
-    debug_from_raw[index, :] = debug_from_raw_of_frame
+    #storage_cell_number[index] = storage_cell_number_of_frame
+    #debug_from_raw[index, :] = debug_from_raw_of_frame
 
     calibrated_data = data
 
@@ -232,8 +229,8 @@ with h5py.File(f"{output_path}/{file_label}{list_index}.h5", "w") as f:
     grp_data.attrs["NX_class"] = "NXdata"
     grp_data.create_dataset("data", data=dataset)
     grp_data.create_dataset("raw_file_id", data=raw_file_id)
-    grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
-    grp_data.create_dataset("debug", data=debug_from_raw)
+    #grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
+    #grp_data.create_dataset("debug", data=debug_from_raw)
     grp_shots = entry.create_group("shots")
     grp_shots.attrs["NX_class"] = "NXdata"
     grp_shots.create_dataset("detector_shift_x_in_mm", data=shift_x_mm)
