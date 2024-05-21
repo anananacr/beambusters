@@ -5,8 +5,6 @@ import numpy as np
 from utils import centering_converged
 import matplotlib.pyplot as plt
 import math
-import sys
-sys.path.append("/home/rodria/scripts/bblib")
 import os
 import pathlib
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
