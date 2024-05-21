@@ -4,7 +4,6 @@ Application developed for detector center refinement in serial crystallography e
 
 It uses the methods implemented in bblib to callculate the detector center of each diffraction pattern.
 
-:loudspeaker: :construction: Work in progress! :loudspeaker: :construction:
 
 ## Dependencies:
 - Python 3.10.5
