@@ -12,7 +12,10 @@ import sys
 from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
 from bblib.models import PF8Info, PF8
 
-def main(input: str, path_to_config:str, test_only:bool = False):
+app = typer.Typer()
+
+@app.command()
+def center_data(input: str, path_to_config:str, test_only:bool = False):
     """
     Beambusters performs the detector center refinement for serial crystallography.
 
@@ -275,7 +278,3 @@ def main(input: str, path_to_config:str, test_only:bool = False):
             )
             grp_proc.create_dataset("pixel_resolution", data=PF8Config.pixel_resolution)
             grp_proc.create_dataset("camera_length", data=clen)
-
-
-if __name__ == "__main__":
-    typer.run(main)
