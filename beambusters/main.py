@@ -14,16 +14,10 @@ from bblib.models import PF8Info, PF8
 
 app = typer.Typer()
 
-@app.command()
-def center_data(input: str, path_to_config:str, test_only:bool = False):
+@app.command("run_centering")
+def run_centering(input: str, path_to_config:str, test_only:bool = False):
     """
-    Beambusters performs the detector center refinement for serial crystallography.
-
-    It expects an INPUT, that is a list filename containing the name of HDF5 files in which the centering will be applied.
-    
-    The configuration parameters for the centering are passed throug the config.yaml file indicated by PATH_TO_CONFIG
-    
-    Test option if you only want to run the centering, but not save centered files (--test-only).
+    Runs the centering.
     """
     
     config = settings.read(path_to_config)
@@ -278,3 +272,19 @@ def center_data(input: str, path_to_config:str, test_only:bool = False):
             )
             grp_proc.create_dataset("pixel_resolution", data=PF8Config.pixel_resolution)
             grp_proc.create_dataset("camera_length", data=clen)
+
+
+@app.callback()
+def main():
+    """
+    Beambusters performs the detector center refinement for serial crystallography.
+
+    The centering receives an INPUT, that is a list (.lst) file containing the name of HDF5 files in which the centering will be applied.
+    
+    The configuration parameters for the centering are passed throug a config.yaml file indicated by PATH_TO_CONFIG
+    
+    Use the test option if you don't want to save the centered files (--test-only).
+    """
+
+if __name__ == "__main__":
+    app()
