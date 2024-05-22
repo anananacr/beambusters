@@ -6,6 +6,7 @@ import numpy as np
 from beambusters.utils import centering_converged
 import matplotlib.pyplot as plt
 import math
+import hdf5plugin
 import os
 import pathlib
 import sys
