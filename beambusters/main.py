@@ -14,21 +14,22 @@ from bblib.models import PF8Info, PF8
 
 app = typer.Typer()
 
+
 @app.command("run_centering")
-def run_centering(input: str, path_to_config:str, test_only:bool = False):
+def run_centering(input: str, path_to_config: str, test_only: bool = False):
     """
     Runs the detector center refinement.
 
     The centering receives an INPUT, that is a list (.lst) file containing the name of HDF5 files in which the centering will be applied.
-    
+
     The configuration parameters for the centering are passed throug a config.yaml file indicated by PATH_TO_CONFIG
 
     Options:
-    
+
     --test-only     Use the test only if you don't want to save the output centered files.
-    
+
     """
-    
+
     config = settings.read(path_to_config)
     BeambustersParam = settings.parse(config)
     files = open(input, "r")
@@ -72,7 +73,9 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
 
     raw_file_id = []
 
-    for index, path in enumerate(paths[starting_frame : starting_frame + number_of_frames]):
+    for index, path in enumerate(
+        paths[starting_frame : starting_frame + number_of_frames]
+    ):
         raw_file_id.append(path)
         file_name, frame_number = path.split(" //")
         print(f"Image filename: {file_name}")
@@ -86,7 +89,7 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
             data = np.array(f[h5_path][frame_number], dtype=np.int32)
             if not initialized_arrays:
                 _data_shape = data.shape
-            
+
             if config["burst_mode"]:
                 storage_cell_number_of_frame = int(
                     f["/entry/data/storage_cell_number"][frame_number]
@@ -120,7 +123,7 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
             initialized_arrays = True
 
         raw_dataset[index, :, :] = data
-        
+
         if config["burst_mode"]:
             storage_cell_number[index] = storage_cell_number_of_frame
             debug_from_raw[index, :] = debug_from_raw_of_frame
@@ -196,7 +199,9 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
 
         ## Refined detector center assignement
         if center_is_refined:
-            refined_detector_center[index, :] = detector_center_from_friedel_pairs[index, :]
+            refined_detector_center[index, :] = detector_center_from_friedel_pairs[
+                index, :
+            ]
             refined_center_flag[index] = 1
 
         else:
@@ -231,7 +236,16 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
             entry.attrs["NX_class"] = "NXentry"
             grp_data = entry.create_group("data")
             grp_data.attrs["NX_class"] = "NXdata"
-            grp_data.create_dataset("data", data=dataset)
+            if not config["compression"]["compress_data"]:
+                grp_data.create_dataset("data", data=dataset)
+            else:
+                grp_data.create_dataset(
+                    "data",
+                    data=dataset,
+                    compression=config["compression"]["type"],
+                    compression_opts=config["compression"]["opts"]
+                )
+
             grp_data.create_dataset("raw_file_id", data=raw_file_id)
             if config["burst_mode"]:
                 grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
@@ -247,37 +261,26 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
                 grp_proc.create_dataset(key, data=value)
             grp_proc.create_dataset("raw_path", data=paths)
             grp_proc.create_dataset(
-                "refined_detector_center", data=refined_detector_center, compression="gzip"
+                "refined_detector_center", data=refined_detector_center
             )
             grp_proc.create_dataset(
-                "center_from_center_of_mass",
-                data=detector_center_from_center_of_mass,
-                compression="gzip",
+                "center_from_center_of_mass", data=detector_center_from_center_of_mass
             )
             grp_proc.create_dataset(
                 "center_from_circle_detection",
                 data=detector_center_from_circle_detection,
-                compression="gzip",
             )
             grp_proc.create_dataset(
                 "center_from_minimize_peak_fwhm",
                 data=detector_center_from_minimize_peak_fwhm,
-                compression="gzip",
             )
             grp_proc.create_dataset(
-                "center_from_friedel_pairs",
-                data=detector_center_from_friedel_pairs,
-                compression="gzip",
+                "center_from_friedel_pairs", data=detector_center_from_friedel_pairs
             )
-            grp_proc.create_dataset(
-                "initial_guess_center",
-                data=initial_guess_center,
-                compression="gzip",
-            )
+            grp_proc.create_dataset("initial_guess_center", data=initial_guess_center)
             grp_proc.create_dataset(
                 "detector_center_from_geometry_file",
                 data=PF8Config.detector_center_from_geom,
-                compression="gzip",
             )
             grp_proc.create_dataset("pixel_resolution", data=PF8Config.pixel_resolution)
             grp_proc.create_dataset("camera_length", data=clen)
@@ -287,5 +290,8 @@ def run_centering(input: str, path_to_config:str, test_only:bool = False):
 def main():
     """
     Beambusters performs the detector center refinement of each diffraction patterns for serial crystallography.
-    
+
+    For more information, type the following command:
+
+    beambusters run_centering --help
     """

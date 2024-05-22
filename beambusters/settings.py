@@ -4,7 +4,7 @@ import sys
 from bblib.models import PF8Info
 
 
-def read(path: str)-> dict:
+def read(path: str) -> dict:
     path = Path(path)
     config = path.read_text()
     config = yaml.safe_load(config)
@@ -60,7 +60,8 @@ def get_pf8_info(config: dict):
         max_res=config["pf8"]["max_res"],
     )
 
-def parse_plots_info(config: dict)-> dict:
+
+def parse_plots_info(config: dict) -> dict:
     return {
         "file_name": config["plots"]["file_name"],
         "folder_name": config["plots"]["folder_name"],
@@ -73,5 +74,5 @@ def parse_plots_info(config: dict)-> dict:
         "xlim_max": config["plots"]["xlim_max"],
         "ylim_min": config["plots"]["ylim_min"],
         "ylim_max": config["plots"]["ylim_max"],
-        "color_map": config["plots"]["color_map"]
+        "color_map": config["plots"]["color_map"],
     }
