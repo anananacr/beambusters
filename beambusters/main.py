@@ -38,7 +38,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
     if len(paths[0][:-1].split(" //")) == 1:
         # Not listed events. TODO test if CrystFEL not loaded sucessfully.
-        list_name = sys.argv[1]
+        list_name = input
         events_list_file = (
             f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
         )
