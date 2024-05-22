@@ -1,5 +1,11 @@
 geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/geoms/JF_regae_v2.geom
 output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/test
+burst_mode: False
+
+compression:
+  compress_data: False
+  type: gzip
+  opts: 6
 
 plots:
   flag: false
@@ -14,6 +20,7 @@ plots:
   xlim_max: 0
   ylim_min: 0 
   ylim_max: 0
+  color_map: viridis
   
 force_center:
   mode: true

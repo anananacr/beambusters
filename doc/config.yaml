@@ -2,6 +2,11 @@ geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/proce
 output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria
 burst_mode: False
 
+compression:
+  compress_data: False
+  type: gzip
+  opts: 6
+
 plots:
   flag: true
   file_name: fakp
