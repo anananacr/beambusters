@@ -1,0 +1,33 @@
+name: Release beambusters
+
+on:
+  push:
+    tags: "*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+
+    - name: Install poetry
+      run: |
+        pip install poetry
+
+    - name: Version bump
+      run: poetry version ${{ github.ref_name }}
+
+    - name: Build package
+      run: poetry build
+
+    - name: Set pypi token
+      run: poetry config pypi-token.pypi ${{ secrets.pypi_token }}
+
+    - name: Publish package
+      run: poetry publish

@@ -1,25 +1,25 @@
 # beambusters
 
-Application developed for detector center refinement in serial crystallography experiments.
+Application developed to refine the detector center of single diffraction patterns for serial crystallography experiments.
 
-It uses the methods implemented in bblib to callculate the detector center of each diffraction pattern.
-
-:loudspeaker: :construction: Work in progress! :loudspeaker: :construction:
+Beambusters uses the methods implemented in bblib to calculate the detector center shift of each diffraction pattern, according to your initial detector geometry.
 
 ## Dependencies:
-- Python 3.10.5
+- Python 3.10
 
-- requirements.txt
+
+## Installation
+pip install beambusters
 
 ## Usage
 
-The center_data.py uses a config.yaml file and an input list containing the h5 files in which the center will be calculated.
-
 Example:
-python center_data.py /path/to/list/file /path/to/config/file
+beambusters run_centering /path/to/list/file /path/to/config/file
+
+The config file is a *.yaml file, you can find examples in the doc folder.
 
 ## Contact
 
 Author: Ana Carolina Rodrigues (2021 - 2024)
 
-sc.anarodrigues@gmail.com
+Email: sc.anarodrigues@gmail.com
