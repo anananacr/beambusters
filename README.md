@@ -5,7 +5,7 @@ Application developed to refine the detector center of single diffraction patter
 Beambusters uses the methods implemented in bblib to calculate the detector center shift of each diffraction pattern, according to your initial detector geometry.
 
 ## Dependencies:
-- Python 3.10.5
+- Python 3.10
 
 
 ## Installation
