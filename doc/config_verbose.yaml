@@ -41,9 +41,9 @@ pf8: # peakfinder8 paratemers for Bragg peaks search. For more information, see:
   min_res: # Minimum resolution region, in pixels. Type: int
   max_res: # Maximum resolution region, in pixels. Type: int
 
-offset: # Add an overall offset to the initial guess after the pre-centering is done. It accepts positive and negative values.
-  x: # Initial guess offset in x, in pixels. Type: int
-  y: # Initial guess offset in y, in pixels. Type: int
+offset: # Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method.
+  x: # Offset in x, in pixels. Type: int
+  y: # Offset in y, in pixels. Type: int
 
 peak_region: # It defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in MinimizePeakFWHM and CircleDetection bblib pre-centering methods.
   min: # Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
