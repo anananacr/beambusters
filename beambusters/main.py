@@ -41,7 +41,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         # Not listed events. TODO test if CrystFEL not loaded sucessfully.
         list_name = input
         events_list_file = (
-            f"{list_name.split('.')[0]}_events.lst{list_name.split('.')[-1][-2:]}"
+            f"{list_name.split('.')[0]}_events.lst{list_name.split('.lst')[-1]}"
         )
         command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0.11.0; list_events -i {list_name} -o {events_list_file} -g {config['geometry_file']}"
         sub.call(command, shell=True)
