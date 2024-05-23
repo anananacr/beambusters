@@ -41,31 +41,31 @@ pf8: # peakfinder8 paratemers for Bragg peaks search. For more information, see:
   min_res: # Minimum resolution region, in pixels. Type: int
   max_res: # Maximum resolution region, in pixels. Type: int
 
-offset: # Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method.
-  x: # Offset in x, in pixels. Type: int
-  y: # Offset in y, in pixels. Type: int
+offset: # Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from the pixel left corner to the pixel center.
+  x: # Offset in x direction, in pixels. Type: int
+  y: # Offset in y direction, in pixels. Type: int
 
-peak_region: # It defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in MinimizePeakFWHM and CircleDetection bblib pre-centering methods.
+peak_region: # Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.
   min: # Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
   max: # Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
 
-outlier_distance: # It doesn't refine the center with FriedelPairs method if the initial_guess distance to the force_mode coordinates is bigger than the outlier_distance. In this case, the force_mode coordinates is used even if force_mode is False.
+outlier_distance: # Don't refine the detector center with FriedelPairs method if the initial_guess distance to the force_mode coordinates is bigger than the outlier_distance. In this case, the force_mode coordinates is used even if force_mode is False.
 
 canny: # Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see: https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html
   sigma: # Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float
   low_threshold: # Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float
   high_threshold: # Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float
 
-method: # Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass', 'circle_detection' or 'minimize_peak_fwhm'. Type: str
+method: # Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str
 
 bragg_peaks_positions_for_center_of_mass_calculation: # Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
 
 pixels_for_mask_of_bragg_peaks: # Radius of Bragg peaks, in pixels. Used in the bblib pre-centering methods. Type: int
 
-skip_methods: # List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection', 'minimize_peak_fwhm'. Type: List[str]
+skip_methods: # List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]
   - # Method label you want to skip. Type: str
 
-polarization: # Configure the polarization correction before refining the center in MinimizePeakFWHM or FridelPairs bblib method. 
+polarization: # Configure the polarization correction before refining the center in the FridelPairs bblib method. 
   skip: # Control if you want to skip polarization correction (True) or not skip (False). False enables the polarization correction to be applied. Type: bool
   axis: # Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str
   value: # Polarization fraction in the axis direction. Type: float
