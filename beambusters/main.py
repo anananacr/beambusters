@@ -256,7 +256,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             grp_shots.create_dataset("detector_shift_x_in_mm", data=shift_x_mm)
             grp_shots.create_dataset("detector_shift_y_in_mm", data=shift_y_mm)
             grp_shots.create_dataset("refined_center_flag", data=refined_center_flag)
-            grp_proc = f.create_group("pre_processing")
+            grp_proc = f.create_group("preprocessing")
             grp_proc.attrs["NX_class"] = "NXdata"
             for key, value in BeambustersParam.items():
                 grp_proc.create_dataset(key, data=value)
