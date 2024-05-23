@@ -1,0 +1,71 @@
+geometry_file: # Absolute path to the geometry file. Type: str
+output_path:  # Absolute path to the output path. Type: str
+burst_mode: # Indicate if the detector is on burst/storage cell mode (True) or single cell mode (False) configuration. Type: bool.
+
+compression:
+  compress_data: # Indicate if the output data should be compressed (True) or not (False). Type: bool.
+  type: # Label of the compression filter to be used, for example: gzip. Type: str.
+  opts: # Options of the compression filter. Type: int.
+
+plots:
+  flag:  # Indicate if plots should be saved in intermediate steps (True) or not (False). The number of frames is automatically changed to 50. Type: bool.
+  file_name: # The plots file name for saving. Type: str.
+  folder_name: # The plots folder name for saving. Type: str.
+  root_path: # Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/*/file_name_*.png. Type: str.
+  value_auto:  # Control the automatic intensity adjustment of plots level (True). The normalization used is in logarithmic scale. Type: bool.
+  value_min: # If value_auto is False, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
+  value_max: # If value_auto is False, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
+  axis_lim_auto: # Control the automatic axis limits of the plots (True). Type: bool.
+  xlim_min: # If axis_lim_auto is False, minimum coordinate of the x axis should be passed. Type: int.
+  xlim_max: # If axis_lim_auto is False, maximum coordinate of the x axis should be passed. Type: int.
+  ylim_min: # If axis_lim_auto is False, minimum coordinate of the y axis should be passed. Type: int.
+  ylim_max: # If axis_lim_auto is False, maximum coordinate of the y axis should be passed. Type: int.
+  color_map: # Colormap preference for the plots, for example: viridis. Type: str.
+
+starting_frame: # Change the index of the starting frame, it will jump the first n images of the container file. Type: int.
+
+force_center:
+  mode: false
+  x: 554
+  y: 522
+
+search_radius: 4.5
+
+pf8:
+  max_num_peaks: 10000
+  adc_threshold: 100
+  minimum_snr: 5
+  min_pixel_count: 2
+  max_pixel_count: 10000
+  local_bg_radius: 5
+  min_res: 0
+  max_res: 600
+
+offset:
+  x: 0
+  y: 0
+
+peak_region:
+  min: 50
+  max: 70
+
+outlier_distance: 10
+
+canny:
+  sigma: 3
+  low_threshold: 0.9
+  high_threshold: 0.99
+
+method: circle_detection
+
+bragg_peaks_positions_for_center_of_mass_calculation: -1
+
+pixels_for_mask_of_bragg_peaks: 4
+
+skip_methods:
+  - minimize_peak_fwhm
+
+polarization:
+  skip: false
+  axis: x
+  value: 0.99
