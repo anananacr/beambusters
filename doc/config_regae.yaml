@@ -3,12 +3,12 @@ input_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/converted
 output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/test
 
 burst_mode: 
-  state: False
+  state: false
   storage_cell_hdf5_path: /entry/data/storage_cell_number
   debug_hdf5_path: /entry/data/debug
 
 compression:
-  compress_data: False
+  compress_data: false
   filter: gzip
   opts: 6
 
@@ -18,10 +18,10 @@ plots:
   file_name: mica_dez
   folder_name: mica_dez_flip
   root_path: /home/rodria/bb
-  value_auto: True
+  value_auto: true
   value_min: 0
   value_max: 0
-  axis_lim_auto: True
+  axis_lim_auto: true
   xlim_min: 0
   xlim_max: 0
   ylim_min: 0 
