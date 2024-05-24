@@ -159,9 +159,9 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         if config["force_center"]["mode"]:
             initial_guess = [config["force_center"]["x"], config["force_center"]["y"]]
-        elif config["method"] == "center_of_mass":
+        elif config["centering_method_for_initial_guess"] == "center_of_mass":
             initial_guess = detector_center_from_center_of_mass[index]
-        elif config["method"] == "circle_detection":
+        elif config["centering_method_for_initial_guess"] == "circle_detection":
             initial_guess = detector_center_from_circle_detection[index]
         else:
             initial_guess = PF8Config.detector_center_from_geom
@@ -169,8 +169,8 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         initial_guess_center[index, :] = initial_guess
 
         distance = math.sqrt(
-            (initial_guess[0] - config["force_center"]["x"]) ** 2
-            + (initial_guess[1] - config["force_center"]["y"]) ** 2
+            (initial_guess[0] - config["reference_center"]["x"]) ** 2
+            + (initial_guess[1] - config["reference_center"]["y"]) ** 2
         )
 
         if distance < config["outlier_distance"]:
