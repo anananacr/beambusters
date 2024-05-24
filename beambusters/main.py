@@ -157,7 +157,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         ## Define the initial_guess
 
-        if config["force_center"]["mode"]:
+        if config["force_center"]["state"]:
             initial_guess = [config["force_center"]["x"], config["force_center"]["y"]]
         elif config["centering_method_for_initial_guess"] == "center_of_mass":
             initial_guess = detector_center_from_center_of_mass[index]
