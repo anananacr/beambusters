@@ -13,7 +13,8 @@ compression:
   opts: # Options of the compression filter. Type: int.
 
 plots:
-  flag:  # Indicate if plots should be saved in intermediate steps (True) or not (False). The number of frames is automatically changed to 50. Type: bool.
+  flag:  # Indicate if plots should be saved in intermediate steps (True) or not (False). Type: bool.
+  maximum_number_of_frames: # Number of frames to save plots. Type: int
   file_name: # The plots file name for saving. Type: str.
   folder_name: # The plots folder name for saving. Type: str.
   root_path: # Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/*/file_name_*.png. Type: str.

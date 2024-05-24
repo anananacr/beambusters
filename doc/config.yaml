@@ -14,6 +14,7 @@ compression:
 
 plots:
   flag: true
+  maximum_number_of_frames: 50
   file_name: fakp
   folder_name: fakp_apo
   root_path: /home/rodria/bb

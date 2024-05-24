@@ -59,7 +59,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
     if config["plots"]["flag"]:
         config["plots_flag"] = True
         plots_info = settings.parse_plots_info(config=config)
-        number_of_frames = 50
+        number_of_frames = config["plots"]["maximum_number_of_frames"]
         starting_frame = config["starting_frame"]
     else:
         config["plots_flag"] = False
