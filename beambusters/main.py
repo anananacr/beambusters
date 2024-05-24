@@ -239,7 +239,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             entry.attrs["NX_class"] = "NXentry"
             grp_data = entry.create_group("data")
             grp_data.attrs["NX_class"] = "NXdata"
-            if not config["compression"]["compress_data"]:
+            if not config["compression"]["compress_output_data"]:
                 grp_data.create_dataset("data", data=dataset)
             else:
                 grp_data.create_dataset(
