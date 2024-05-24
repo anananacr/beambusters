@@ -139,7 +139,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         PF8Config.set_geometry_from_file(config["geometry_file"])
 
-        if "center_of_mass" not in config["skip_methods"]:
+        if "center_of_mass" not in config["skip_centering_methods"]:
             center_of_mass_method = CenterOfMass(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
@@ -147,7 +147,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 data=calibrated_data
             )
 
-        if "circle_detection" not in config["skip_methods"]:
+        if "circle_detection" not in config["skip_centering_methods"]:
             circle_detection_method = CircleDetection(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
@@ -184,7 +184,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             peak_list = pf8.get_peaks_pf8(data=calibrated_data)
             PF8Config.set_geometry_from_file(config["geometry_file"])
 
-            if "friedel_pairs" not in config["skip_methods"]:
+            if "friedel_pairs" not in config["skip_centering_methods"]:
                 PF8Config.set_geometry_from_file(config["geometry_file"])
                 friedel_pairs_method = FriedelPairs(
                     config=config, PF8Config=PF8Config, plots_info=plots_info
