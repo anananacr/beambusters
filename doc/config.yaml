@@ -3,12 +3,12 @@ input_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processe
 output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/centered
 
 burst_mode: 
-  on: False
+  is_active: false
   storage_cell_hdf5_path: /entry/data/storage_cell_number
   debug_hdf5_path: /entry/data/debug
 
 compression:
-  compress_data: False
+  compress_output_data: false
   filter: gzip
   opts: 6
 
@@ -57,21 +57,25 @@ peak_region:
 
 outlier_distance: 10
 
+reference_center:
+  x: 554
+  y: 522
+
 canny:
   sigma: 3
   low_threshold: 0.9
   high_threshold: 0.99
 
-method: circle_detection
+centering_method_for_initial_guess: circle_detection
 
 bragg_peaks_positions_for_center_of_mass_calculation: -1
 
 pixels_for_mask_of_bragg_peaks: 4
 
-skip_methods:
+skip_centering_methods:
   - minimize_peak_fwhm
 
 polarization:
-  skip: false
+  apply_polarization_correction: true
   axis: x
   value: 0.99
