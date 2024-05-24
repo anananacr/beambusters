@@ -1,6 +1,6 @@
-geometry_file: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/geoms/jungfrau-1m-vertical-v1-100mm-shift.geom
-input_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/converted
-output_path: /gpfs/cfel/group/cxi/scratch/2021/ESRF-2024-Meents-Mar-ID09/processed/rodria/centered
+geometry_file: /path/to/geom/detector.geom
+input_path: /path/to/processed/converted
+output_path: /path/to/processed/centered
 
 burst_mode: 
   is_active: false
@@ -15,9 +15,9 @@ compression:
 plots:
   flag: true
   maximum_number_of_frames: 50
-  file_name: fakp
-  folder_name: fakp_apo
-  root_path: /home/rodria/bb
+  file_name: my_sample_label
+  folder_name: run_label
+  root_path: /path/to/plots
   value_auto: false
   value_min: 1e0
   value_max: 5e2
@@ -48,8 +48,8 @@ pf8:
 starting_frame: 500
 
 offset:
-  x: 0
-  y: 0
+  x: 0.5
+  y: 0.5
 
 peak_region:
   min: 50
