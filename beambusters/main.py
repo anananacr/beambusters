@@ -3,7 +3,7 @@ from beambusters import settings
 import subprocess as sub
 import h5py
 import numpy as np
-from beambusters.utils import centering_converged
+from beambusters.utils import centering_converged, list_events
 import matplotlib.pyplot as plt
 import math
 import hdf5plugin
@@ -43,14 +43,13 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         events_list_file = (
             f"{list_name.split('.')[0]}_events.lst{list_name.split('.lst')[-1]}"
         )
-        command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0.11.0; list_events -i {list_name} -o {events_list_file} -g {config['geometry_file']}"
-        sub.call(command, shell=True)
+        list_events(list_name, events_list_file, config["geometry_file"])
         files = open(events_list_file, "r")
         paths = files.readlines()
         files.close()
 
     geometry_txt = open(config["geometry_file"], "r").readlines()
-    h5_path = [
+    data_hdf5_path = [
         x.split(" = ")[-1][:-1] for x in geometry_txt if x.split(" = ")[0] == "data"
     ][0]
 
@@ -87,7 +86,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
 
         with h5py.File(f"{file_name}", "r") as f:
-            data = np.array(f[h5_path][frame_number], dtype=np.int32)
+            data = np.array(f[data_hdf5_path][frame_number], dtype=np.int32)
             if not initialized_arrays:
                 _data_shape = data.shape
 
