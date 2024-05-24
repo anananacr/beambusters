@@ -18,10 +18,10 @@ plots:
   file_name: fakp
   folder_name: fakp_apo
   root_path: /home/rodria/bb
-  value_auto: False
+  value_auto: false
   value_min: 1e0
   value_max: 5e2
-  axis_lim_auto: False
+  axis_lim_auto: false
   xlim_min: 200
   xlim_max: 900
   ylim_min: 200

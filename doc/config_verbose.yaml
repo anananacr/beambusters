@@ -3,35 +3,35 @@ input_path:  # Absolute path to the input path. Type: str
 output_path:  # Absolute path to the output path. Type: str
 
 burst_mode: # Indicate if the detector is on burst mode. 
-  state: # Burst/storage cell mode (True) or single cell mode (False). Type: bool.
+  state: # Burst/storage cell mode (true) or single cell mode (false). Type: bool.
   storage_cell_hdf5_path: # Absolute HDF5 path to the storage cell id per frame. Type: str
   debug_hdf5_path: # Absolute HDF5 path to the debug value per frames. Type: str
 
 compression:
-  compress_data: # Indicate if the output data should be compressed (True) or not (False). Type: bool.
+  compress_data: # Indicate if the output data should be compressed (true) or not (false). Type: bool.
   filter: # Label of the compression filter to be used, for example: gzip. Type: str.
   opts: # Options of the compression filter. Type: int.
 
 plots:
-  flag:  # Indicate if plots should be saved in intermediate steps (True) or not (False). Type: bool.
+  flag:  # Indicate if plots should be saved in intermediate steps (true) or not (false). Type: bool.
   maximum_number_of_frames: # Number of frames to save plots. Type: int
   file_name: # The plots file name for saving. Type: str.
   folder_name: # The plots folder name for saving. Type: str.
   root_path: # Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/*/file_name_*.png. Type: str.
-  value_auto: # Control the automatic intensity adjustment of plots level (True). The normalization used is in logarithmic scale. Type: bool.
-  value_min: # If value_auto is False, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
-  value_max: # If value_auto is False, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
-  axis_lim_auto: # Control the automatic axis limits of the plots (True). Type: bool.
-  xlim_min: # If axis_lim_auto is False, minimum coordinate of the x axis should be passed. Type: int.
-  xlim_max: # If axis_lim_auto is False, maximum coordinate of the x axis should be passed. Type: int.
-  ylim_min: # If axis_lim_auto is False, minimum coordinate of the y axis should be passed. Type: int.
-  ylim_max: # If axis_lim_auto is False, maximum coordinate of the y axis should be passed. Type: int.
+  value_auto: # Control the automatic intensity adjustment of plots level (true). The normalization used is in logarithmic scale. Type: bool.
+  value_min: # If value_auto is false, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
+  value_max: # If value_auto is false, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
+  axis_lim_auto: # Control the automatic axis limits of the plots (true). Type: bool.
+  xlim_min: # If axis_lim_auto is false, minimum coordinate of the x axis should be passed. Type: int.
+  xlim_max: # If axis_lim_auto is false, maximum coordinate of the x axis should be passed. Type: int.
+  ylim_min: # If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.
+  ylim_max: # If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.
   color_map: # Colormap preference for the plots, for example: viridis. Type: str.
 
 starting_frame: # Change the index of the starting frame, it will jump the first n images of the container file. Type: int.
 
 force_center: # Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.
-  state: # Turn force mode on (True) or off (False). Type: bool.
+  state: # Turn force mode on (true) or off (false). Type: bool.
   x: # Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
   y: # Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
 
@@ -76,6 +76,6 @@ skip_centering_methods: # List of bblib pre-centering methods you don't want to 
   - # Method label you want to skip. Type: str
 
 polarization: # Configure the polarization correction before refining the center in the FridelPairs bblib method. 
-  apply_polarization_correction: # Aoply polarization correction (True) or not (False). Type: bool
+  apply_polarization_correction: # Aoply polarization correction (true) or not (false). Type: bool
   axis: # Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str
   value: # Polarization fraction in the axis direction. Type: float
