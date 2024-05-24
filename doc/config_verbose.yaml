@@ -3,7 +3,7 @@ input_path:  # Absolute path to the input path. Type: str
 output_path:  # Absolute path to the output path. Type: str
 
 burst_mode: # Indicate if the detector is on burst mode. 
-  on: # Burst/storage cell mode (True) or single cell mode (False). Type: bool.
+  state: # Burst/storage cell mode (True) or single cell mode (False). Type: bool.
   storage_cell_hdf5_path: # Absolute HDF5 path to the storage cell id per frame. Type: str
   debug_hdf5_path: # Absolute HDF5 path to the debug value per frames. Type: str
 
@@ -31,7 +31,7 @@ plots:
 starting_frame: # Change the index of the starting frame, it will jump the first n images of the container file. Type: int.
 
 force_center: # Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.
-  mode: # Turn force mode on (True) or off (False). Type: bool.
+  state: # Turn force mode on (True) or off (False). Type: bool.
   x: # Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
   y: # Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
 
@@ -55,23 +55,27 @@ peak_region: # Defines the approximate background peak distance from the center 
   min: # Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
   max: # Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
 
-outlier_distance: # Don't refine the detector center with FriedelPairs method if the initial_guess distance to the force_mode coordinates is bigger than the outlier_distance. In this case, the force_mode coordinates is used even if force_mode is False.
+outlier_distance: # Don't refine the detector center with FriedelPairs method if the initial_guess distance to the reference_center coordinates is bigger than the outlier_distance.
+
+reference_center: # Reference center of the diffraction pattern to filter outliers in the initial_guess calculation
+  x: # Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int
+  y: # Reference center pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int
 
 canny: # Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see: https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html
   sigma: # Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float
   low_threshold: # Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float
   high_threshold: # Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float
 
-method: # Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str
+centering_method_for_initial_guess: # Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str
 
 bragg_peaks_positions_for_center_of_mass_calculation: # Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
 
 pixels_for_mask_of_bragg_peaks: # Radius of Bragg peaks, in pixels. Used in the bblib pre-centering methods. Type: int
 
-skip_methods: # List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]
+skip_centering_methods: # List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]
   - # Method label you want to skip. Type: str
 
 polarization: # Configure the polarization correction before refining the center in the FridelPairs bblib method. 
-  skip: # Control if you want to skip polarization correction (True) or not skip (False). False enables the polarization correction to be applied. Type: bool
+  apply_polarization_correction: # Aoply polarization correction (True) or not (False). Type: bool
   axis: # Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str
   value: # Polarization fraction in the axis direction. Type: float

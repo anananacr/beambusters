@@ -3,7 +3,7 @@ input_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/converted
 output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/test
 
 burst_mode: 
-  on: False
+  state: False
   storage_cell_hdf5_path: /entry/data/storage_cell_number
   debug_hdf5_path: /entry/data/debug
 
@@ -30,7 +30,7 @@ plots:
   
   
 force_center:
-  mode: true
+  state: true
   x: 454
   y: 538
 
@@ -59,18 +59,22 @@ peak_region:
 
 outlier_distance: 20
 
+reference_center:
+  x: 454
+  y: 538
+
 canny:
   sigma: 0
   low_threshold: 0.0
   high_threshold: 0.0
 
-method: center_of_mass
+centering_method_for_initial_guess: center_of_mass
 
 bragg_peaks_positions_for_center_of_mass_calculation: -1
 
 pixels_for_mask_of_bragg_peaks: 8
 
-skip_methods:
+skip_centering_methods:
   - minimize_peak_fwhm
   
 polarization:

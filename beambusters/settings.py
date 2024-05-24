@@ -29,22 +29,25 @@ def parse(config: dict) -> dict:
         "canny_high_thr": config["canny"]["high_threshold"],
         "outlier_distance": config["outlier_distance"],
         "search_radius": config["search_radius"],
-        "method": config["method"],
+        "centering_method_for_initial_guess": config["centering_method_for_initial_guess"],
         "bragg_peaks_positions_for_center_of_mass_calculation": config[
             "bragg_peaks_positions_for_center_of_mass_calculation"
         ],
         "pixels_for_mask_of_bragg_peaks": config["pixels_for_mask_of_bragg_peaks"],
-        "skipped_methods": config["skip_methods"],
-        "polarization_skip": config["polarization"]["skip"],
+        "skipped_centering_methods": config["skip_centering_methods"],
+        "polarization_apply": config["polarization"]["apply_polarization_correction"],
         "polarization_axis": config["polarization"]["axis"],
         "polarization_value": config["polarization"]["value"],
         "offset_x": config["offset"]["x"],
         "offset_y": config["offset"]["y"],
-        "force_center_mode": config["force_center"]["mode"],
+        "force_center_state": config["force_center"]["state"],
         "force_center": [config["force_center"]["x"], config["force_center"]["y"]],
+        "reference_center": [config["reference_center"]["x"], config["reference_center"]["y"]],
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
-        "burst_mode": config["burst_mode"],
+        "burst_mode_active": config["burst_mode"]["is_active"],
+        "burst_mode_storage_cell_hdf5_path": config["burst_mode"]["storage_cell_hdf5_path"],
+        "burst_mode_debug_hdf5_path": config["burst_mode"]["debug_hdf5_path"],
     }
 
 

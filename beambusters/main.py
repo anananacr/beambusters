@@ -89,7 +89,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             if not initialized_arrays:
                 _data_shape = data.shape
 
-            if config["burst_mode"]["on"]:
+            if config["burst_mode"]["is_active"]:
                 storage_cell_hdf5_path=config["burst_mode"]["storage_cell_hdf5_path"]
                 debug_hdf5_path=config["burst_mode"]["debug_hdf5_path"]
                 
@@ -119,14 +119,14 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             )
             shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
             shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
-            if config["burst_mode"]["on"]:
+            if config["burst_mode"]["is_active"]:
                 storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
                 debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
             initialized_arrays = True
 
         raw_dataset[index, :, :] = data
 
-        if config["burst_mode"]["on"]:
+        if config["burst_mode"]["is_active"]:
             storage_cell_number[index] = storage_cell_number_of_frame
             debug_from_raw[index, :] = debug_from_raw_of_frame
 
@@ -139,7 +139,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         PF8Config.set_geometry_from_file(config["geometry_file"])
 
-        if "center_of_mass" not in config["skip_methods"]:
+        if "center_of_mass" not in config["skip_centering_methods"]:
             center_of_mass_method = CenterOfMass(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
@@ -147,7 +147,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 data=calibrated_data
             )
 
-        if "circle_detection" not in config["skip_methods"]:
+        if "circle_detection" not in config["skip_centering_methods"]:
             circle_detection_method = CircleDetection(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
@@ -157,11 +157,11 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         ## Define the initial_guess
 
-        if config["force_center"]["mode"]:
+        if config["force_center"]["state"]:
             initial_guess = [config["force_center"]["x"], config["force_center"]["y"]]
-        elif config["method"] == "center_of_mass":
+        elif config["centering_method_for_initial_guess"] == "center_of_mass":
             initial_guess = detector_center_from_center_of_mass[index]
-        elif config["method"] == "circle_detection":
+        elif config["centering_method_for_initial_guess"] == "circle_detection":
             initial_guess = detector_center_from_circle_detection[index]
         else:
             initial_guess = PF8Config.detector_center_from_geom
@@ -169,8 +169,8 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         initial_guess_center[index, :] = initial_guess
 
         distance = math.sqrt(
-            (initial_guess[0] - config["force_center"]["x"]) ** 2
-            + (initial_guess[1] - config["force_center"]["y"]) ** 2
+            (initial_guess[0] - config["reference_center"]["x"]) ** 2
+            + (initial_guess[1] - config["reference_center"]["y"]) ** 2
         )
 
         if distance < config["outlier_distance"]:
@@ -184,7 +184,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             peak_list = pf8.get_peaks_pf8(data=calibrated_data)
             PF8Config.set_geometry_from_file(config["geometry_file"])
 
-            if "friedel_pairs" not in config["skip_methods"]:
+            if "friedel_pairs" not in config["skip_centering_methods"]:
                 PF8Config.set_geometry_from_file(config["geometry_file"])
                 friedel_pairs_method = FriedelPairs(
                     config=config, PF8Config=PF8Config, plots_info=plots_info
@@ -239,7 +239,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             entry.attrs["NX_class"] = "NXentry"
             grp_data = entry.create_group("data")
             grp_data.attrs["NX_class"] = "NXdata"
-            if not config["compression"]["compress_data"]:
+            if not config["compression"]["compress_output_data"]:
                 grp_data.create_dataset("data", data=dataset)
             else:
                 grp_data.create_dataset(
@@ -250,7 +250,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 )
 
             grp_data.create_dataset("raw_file_id", data=raw_file_id)
-            if config["burst_mode"]["on"]:
+            if config["burst_mode"]["is_active"]:
                 grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
                 grp_data.create_dataset("debug", data=debug_from_raw)
             grp_shots = entry.create_group("shots")
