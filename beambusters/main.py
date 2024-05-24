@@ -89,11 +89,14 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             if not initialized_arrays:
                 _data_shape = data.shape
 
-            if config["burst_mode"]:
+            if config["burst_mode"]["on"]:
+                storage_cell_hdf5_path=config["burst_mode"]["storage_cell_hdf5_path"]
+                debug_hdf5_path=config["burst_mode"]["debug_hdf5_path"]
+                
                 storage_cell_number_of_frame = int(
-                    f["/entry/data/storage_cell_number"][frame_number]
+                    f[f"{storage_cell_hdf5_path}"][frame_number]
                 )
-                debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
+                debug_from_raw_of_frame = np.array(f[f"{debug_hdf5_path}"][frame_number])
 
         if not initialized_arrays:
             raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
@@ -116,14 +119,14 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             )
             shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
             shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
-            if config["burst_mode"]:
+            if config["burst_mode"]["on"]:
                 storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
                 debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
             initialized_arrays = True
 
         raw_dataset[index, :, :] = data
 
-        if config["burst_mode"]:
+        if config["burst_mode"]["on"]:
             storage_cell_number[index] = storage_cell_number_of_frame
             debug_from_raw[index, :] = debug_from_raw_of_frame
 
@@ -220,8 +223,9 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
     ## Create output path
     file_label = os.path.basename(file_name).split("/")[-1][:-3]
-    root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
-    output_path = config["output_path"] + "/centered/" + path_on_raw
+    converted_path=config["input_path"].split("/")[-1]
+    root_directory, path_in_raw = os.path.dirname(file_name).split(converted_path)
+    output_path = config["output_path"] + path_in_raw
     path = pathlib.Path(output_path)
     path.mkdir(parents=True, exist_ok=True)
 
@@ -241,12 +245,12 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 grp_data.create_dataset(
                     "data",
                     data=dataset,
-                    compression=config["compression"]["type"],
+                    compression=config["compression"]["filter"],
                     compression_opts=config["compression"]["opts"]
                 )
 
             grp_data.create_dataset("raw_file_id", data=raw_file_id)
-            if config["burst_mode"]:
+            if config["burst_mode"]["on"]:
                 grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
                 grp_data.create_dataset("debug", data=debug_from_raw)
             grp_shots = entry.create_group("shots")

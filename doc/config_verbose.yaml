@@ -1,10 +1,15 @@
 geometry_file: # Absolute path to the geometry file. Type: str
+input_path:  # Absolute path to the input path. Type: str
 output_path:  # Absolute path to the output path. Type: str
-burst_mode: # Indicate if the detector is on burst/storage cell mode (True) or single cell mode (False) configuration. Type: bool.
+
+burst_mode: # Indicate if the detector is on burst mode. 
+  on: # Burst/storage cell mode (True) or single cell mode (False). Type: bool.
+  storage_cell_hdf5_path: # Absolute HDF5 path to the storage cell id per frame. Type: str
+  debug_hdf5_path: # Absolute HDF5 path to the debug value per frames. Type: str
 
 compression:
   compress_data: # Indicate if the output data should be compressed (True) or not (False). Type: bool.
-  type: # Label of the compression filter to be used, for example: gzip. Type: str.
+  filter: # Label of the compression filter to be used, for example: gzip. Type: str.
   opts: # Options of the compression filter. Type: int.
 
 plots:
