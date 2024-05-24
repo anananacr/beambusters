@@ -1,0 +1,26 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: beambusters
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Ana Carolina
+    family-names: Rodrigues
+    email: sc.anarodrigues@gmail.com
+    orcid: 'https://orcid.org/0000-0001-6180-9522'
+repository-code: 'https://github.com/anananacr/beambusters'
+abstract: >-
+  API for detector center refinement for serial
+  crystallography experiments. Performs the determination of
+  the diffraction pattern center and calculates the detector
+  center shift of each event.
+keywords:
+  - serial crystallography
+  - xray
+  - diffraction
+  - electron
+license: GPL-3.0
