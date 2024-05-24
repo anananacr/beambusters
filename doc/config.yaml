@@ -29,7 +29,7 @@ plots:
   color_map: viridis
 
 force_center:
-  mode: false
+  state: false
   x: 554
   y: 522
 
