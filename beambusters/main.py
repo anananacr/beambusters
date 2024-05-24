@@ -3,7 +3,7 @@ from beambusters import settings
 import subprocess as sub
 import h5py
 import numpy as np
-from beambusters.utils import centering_converged
+from beambusters.utils import centering_converged, list_events
 import matplotlib.pyplot as plt
 import math
 import hdf5plugin
@@ -38,19 +38,17 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
     files.close()
 
     if len(paths[0][:-1].split(" //")) == 1:
-        # Not listed events. TODO test if CrystFEL not loaded sucessfully.
         list_name = input
         events_list_file = (
             f"{list_name.split('.')[0]}_events.lst{list_name.split('.lst')[-1]}"
         )
-        command = f"source /etc/profile.d/modules.sh; module load maxwell crystfel/0.11.0; list_events -i {list_name} -o {events_list_file} -g {config['geometry_file']}"
-        sub.call(command, shell=True)
+        list_events(list_name, events_list_file, config["geometry_file"])
         files = open(events_list_file, "r")
         paths = files.readlines()
         files.close()
 
     geometry_txt = open(config["geometry_file"], "r").readlines()
-    h5_path = [
+    data_hdf5_path = [
         x.split(" = ")[-1][:-1] for x in geometry_txt if x.split(" = ")[0] == "data"
     ][0]
 
@@ -61,7 +59,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
     if config["plots"]["flag"]:
         config["plots_flag"] = True
         plots_info = settings.parse_plots_info(config=config)
-        number_of_frames = 50
+        number_of_frames = config["plots"]["maximum_number_of_frames"]
         starting_frame = config["starting_frame"]
     else:
         config["plots_flag"] = False
@@ -87,15 +85,18 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
 
         with h5py.File(f"{file_name}", "r") as f:
-            data = np.array(f[h5_path][frame_number], dtype=np.int32)
+            data = np.array(f[data_hdf5_path][frame_number], dtype=np.int32)
             if not initialized_arrays:
                 _data_shape = data.shape
 
-            if config["burst_mode"]:
+            if config["burst_mode"]["on"]:
+                storage_cell_hdf5_path=config["burst_mode"]["storage_cell_hdf5_path"]
+                debug_hdf5_path=config["burst_mode"]["debug_hdf5_path"]
+                
                 storage_cell_number_of_frame = int(
-                    f["/entry/data/storage_cell_number"][frame_number]
+                    f[f"{storage_cell_hdf5_path}"][frame_number]
                 )
-                debug_from_raw_of_frame = np.array(f["/entry/data/debug"][frame_number])
+                debug_from_raw_of_frame = np.array(f[f"{debug_hdf5_path}"][frame_number])
 
         if not initialized_arrays:
             raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
@@ -118,14 +119,14 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             )
             shift_x_mm = np.zeros((number_of_frames,), dtype=np.float32)
             shift_y_mm = np.zeros((number_of_frames,), dtype=np.float32)
-            if config["burst_mode"]:
+            if config["burst_mode"]["on"]:
                 storage_cell_number = np.zeros((number_of_frames,), dtype=np.int16)
                 debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
             initialized_arrays = True
 
         raw_dataset[index, :, :] = data
 
-        if config["burst_mode"]:
+        if config["burst_mode"]["on"]:
             storage_cell_number[index] = storage_cell_number_of_frame
             debug_from_raw[index, :] = debug_from_raw_of_frame
 
@@ -222,8 +223,9 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
     ## Create output path
     file_label = os.path.basename(file_name).split("/")[-1][:-3]
-    root_directory, path_on_raw = os.path.dirname(file_name).split("/converted/")
-    output_path = config["output_path"] + "/centered/" + path_on_raw
+    converted_path=config["input_path"].split("/")[-1]
+    root_directory, path_in_raw = os.path.dirname(file_name).split(converted_path)
+    output_path = config["output_path"] + path_in_raw
     path = pathlib.Path(output_path)
     path.mkdir(parents=True, exist_ok=True)
 
@@ -243,12 +245,12 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 grp_data.create_dataset(
                     "data",
                     data=dataset,
-                    compression=config["compression"]["type"],
+                    compression=config["compression"]["filter"],
                     compression_opts=config["compression"]["opts"]
                 )
 
             grp_data.create_dataset("raw_file_id", data=raw_file_id)
-            if config["burst_mode"]:
+            if config["burst_mode"]["on"]:
                 grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
                 grp_data.create_dataset("debug", data=debug_from_raw)
             grp_shots = entry.create_group("shots")
@@ -256,7 +258,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             grp_shots.create_dataset("detector_shift_x_in_mm", data=shift_x_mm)
             grp_shots.create_dataset("detector_shift_y_in_mm", data=shift_y_mm)
             grp_shots.create_dataset("refined_center_flag", data=refined_center_flag)
-            grp_proc = f.create_group("pre_processing")
+            grp_proc = f.create_group("preprocessing")
             grp_proc.attrs["NX_class"] = "NXdata"
             for key, value in BeambustersParam.items():
                 grp_proc.create_dataset(key, data=value)

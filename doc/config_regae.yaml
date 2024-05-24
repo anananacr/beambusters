@@ -1,14 +1,20 @@
 geometry_file: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/geoms/JF_regae_v2.geom
+input_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/converted
 output_path: /asap3/fs-bmx/gpfs/regae/2023/data/11018148/processed/rodria/test
-burst_mode: False
+
+burst_mode: 
+  on: False
+  storage_cell_hdf5_path: /entry/data/storage_cell_number
+  debug_hdf5_path: /entry/data/debug
 
 compression:
   compress_data: False
-  type: gzip
+  filter: gzip
   opts: 6
 
 plots:
   flag: false
+  maximum_number_of_frames: 50
   file_name: mica_dez
   folder_name: mica_dez_flip
   root_path: /home/rodria/bb
@@ -21,6 +27,7 @@ plots:
   ylim_min: 0 
   ylim_max: 0
   color_map: viridis
+  
   
 force_center:
   mode: true
@@ -40,6 +47,7 @@ pf8:
   max_res: 250
 
 starting_frame: 600
+
 
 offset:
   x: 0
