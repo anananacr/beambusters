@@ -31,7 +31,7 @@ plots:
 starting_frame: # Change the index of the starting frame, it will jump the first n images of the container file. Type: int.
 
 force_center: # Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.
-  mode: # Turn force mode on (True) or off (False). Type: bool.
+  state: # Turn force mode on (True) or off (False). Type: bool.
   x: # Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
   y: # Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
 

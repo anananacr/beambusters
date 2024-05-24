@@ -30,7 +30,7 @@ plots:
   
   
 force_center:
-  mode: true
+  state: true
   x: 454
   y: 538
 
