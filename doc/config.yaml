@@ -30,6 +30,8 @@ plots:
 
 force_center:
   state: false
+  anchor_x: true
+  anchor_y: false
   x: 554
   y: 522
 

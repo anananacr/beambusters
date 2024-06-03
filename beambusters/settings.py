@@ -42,6 +42,8 @@ def parse(config: dict) -> dict:
         "offset_y": config["offset"]["y"],
         "force_center_state": config["force_center"]["state"],
         "force_center": [config["force_center"]["x"], config["force_center"]["y"]],
+        "force_center_in_x": config["force_center"]["anchor_x"],
+        "force_center_in_y": config["force_center"]["anchor_y"],
         "reference_center": [config["reference_center"]["x"], config["reference_center"]["y"]],
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],

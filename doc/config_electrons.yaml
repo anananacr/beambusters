@@ -31,6 +31,8 @@ plots:
   
 force_center:
   state: true
+  anchor_x: true
+  anchor_y: false
   x: 454
   y: 538
 
