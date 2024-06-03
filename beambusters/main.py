@@ -157,13 +157,20 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         ## Define the initial_guess
 
-        if config["force_center"]["state"]:
-            initial_guess = [config["force_center"]["x"], config["force_center"]["y"]]
-        elif config["centering_method_for_initial_guess"] == "center_of_mass":
+        initial_guess =[]
+        if config["centering_method_for_initial_guess"] == "center_of_mass":
             initial_guess = detector_center_from_center_of_mass[index]
         elif config["centering_method_for_initial_guess"] == "circle_detection":
             initial_guess = detector_center_from_circle_detection[index]
-        else:
+        
+        if config["force_center"]["state"]:
+            if config["force_center"]["anchor_x"]:
+                initial_guess[0] = config["force_center"]["x"]
+            
+            if config["force_center"]["anchor_y"]:
+                initial_guess[1] = config["force_center"]["y"]
+        
+        if not initial_guess:
             initial_guess = PF8Config.detector_center_from_geom
 
         initial_guess_center[index, :] = initial_guess
