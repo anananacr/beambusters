@@ -170,7 +170,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             if config["force_center"]["anchor_y"]:
                 initial_guess[1] = config["force_center"]["y"]
         
-        if not initial_guess:
+        if len(initial_guess)==0:
             initial_guess = PF8Config.detector_center_from_geom
 
         initial_guess_center[index, :] = initial_guess
