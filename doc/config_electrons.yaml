@@ -50,6 +50,15 @@ pf8:
 
 starting_frame: 600
 
+peak_region:
+  min: 0
+  max: 0
+
+canny:
+  sigma: 3
+  low_threshold: 0.9
+  high_threshold: 0.99
+
 
 offset:
   x: 0.5
