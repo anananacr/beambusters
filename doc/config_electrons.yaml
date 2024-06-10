@@ -80,6 +80,6 @@ skip_centering_methods:
   - minimize_peak_fwhm
   
 polarization:
-  skip: true
+  apply_polarization_correction: true
   axis: x
   value: 0.99
