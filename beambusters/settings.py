@@ -29,7 +29,9 @@ def parse(config: dict) -> dict:
         "canny_high_thr": config["canny"]["high_threshold"],
         "outlier_distance": config["outlier_distance"],
         "search_radius": config["search_radius"],
-        "centering_method_for_initial_guess": config["centering_method_for_initial_guess"],
+        "centering_method_for_initial_guess": config[
+            "centering_method_for_initial_guess"
+        ],
         "bragg_peaks_positions_for_center_of_mass_calculation": config[
             "bragg_peaks_positions_for_center_of_mass_calculation"
         ],
@@ -44,11 +46,16 @@ def parse(config: dict) -> dict:
         "force_center": [config["force_center"]["x"], config["force_center"]["y"]],
         "force_center_in_x": config["force_center"]["anchor_x"],
         "force_center_in_y": config["force_center"]["anchor_y"],
-        "reference_center": [config["reference_center"]["x"], config["reference_center"]["y"]],
+        "reference_center": [
+            config["reference_center"]["x"],
+            config["reference_center"]["y"],
+        ],
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
         "burst_mode_active": config["burst_mode"]["is_active"],
-        "burst_mode_storage_cell_hdf5_path": config["burst_mode"]["storage_cell_hdf5_path"],
+        "burst_mode_storage_cell_hdf5_path": config["burst_mode"][
+            "storage_cell_hdf5_path"
+        ],
         "burst_mode_debug_hdf5_path": config["burst_mode"]["debug_hdf5_path"],
     }
 
