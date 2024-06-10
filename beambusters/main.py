@@ -90,13 +90,15 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 _data_shape = data.shape
 
             if config["burst_mode"]["is_active"]:
-                storage_cell_hdf5_path=config["burst_mode"]["storage_cell_hdf5_path"]
-                debug_hdf5_path=config["burst_mode"]["debug_hdf5_path"]
-                
+                storage_cell_hdf5_path = config["burst_mode"]["storage_cell_hdf5_path"]
+                debug_hdf5_path = config["burst_mode"]["debug_hdf5_path"]
+
                 storage_cell_number_of_frame = int(
                     f[f"{storage_cell_hdf5_path}"][frame_number]
                 )
-                debug_from_raw_of_frame = np.array(f[f"{debug_hdf5_path}"][frame_number])
+                debug_from_raw_of_frame = np.array(
+                    f[f"{debug_hdf5_path}"][frame_number]
+                )
 
         if not initialized_arrays:
             raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
@@ -162,15 +164,15 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             initial_guess = detector_center_from_center_of_mass[index]
         elif config["centering_method_for_initial_guess"] == "circle_detection":
             initial_guess = detector_center_from_circle_detection[index]
-        
+
         if config["force_center"]["state"]:
             if config["force_center"]["anchor_x"]:
                 initial_guess[0] = config["force_center"]["x"]
-            
+
             if config["force_center"]["anchor_y"]:
-                initial_guess.append(config["force_center"]["y"])        
-                
-        if len(initial_guess)==0:
+                initial_guess.append(config["force_center"]["y"])
+
+        if len(initial_guess) == 0:
             initial_guess = PF8Config.detector_center_from_geom
 
         initial_guess_center[index, :] = initial_guess
@@ -230,7 +232,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
     ## Create output path
     file_label = os.path.basename(file_name).split("/")[-1][:-3]
-    converted_path=config["input_path"].split("/")[-1]
+    converted_path = config["input_path"].split("/")[-1]
     root_directory, path_in_raw = os.path.dirname(file_name).split(converted_path)
     output_path = config["output_path"] + path_in_raw
     path = pathlib.Path(output_path)
@@ -253,7 +255,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                     "data",
                     data=dataset,
                     compression=config["compression"]["filter"],
-                    compression_opts=config["compression"]["opts"]
+                    compression_opts=config["compression"]["opts"],
                 )
 
             grp_data.create_dataset("raw_file_id", data=raw_file_id)
