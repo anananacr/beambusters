@@ -27,6 +27,7 @@ plots:
   ylim_min: # If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.
   ylim_max: # If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.
   color_map: # Colormap preference for the plots, for example: viridis. Type: str.
+  marker_size: # Scatter marker size of center coordinates. Type: float
 
 starting_frame: # Change the index of the starting frame, it will jump the first n images of the container file. Type: int.
 
