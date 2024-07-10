@@ -27,6 +27,7 @@ plots:
   ylim_min: 0 
   ylim_max: 0
   color_map: viridis
+  marker_size: 200
   
   
 force_center:
