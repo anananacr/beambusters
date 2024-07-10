@@ -87,4 +87,5 @@ def parse_plots_info(config: dict) -> dict:
         "ylim_min": config["plots"]["ylim_min"],
         "ylim_max": config["plots"]["ylim_max"],
         "color_map": config["plots"]["color_map"],
+        "marker_size": config["plots"]["marker_size"]
     }
