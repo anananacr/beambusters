@@ -136,15 +136,17 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         if len(_data_shape)>1:
             vds_format=config["vds_format"]
             calibrated_data = expand_data_to_hyperslab(data, format=vds_format)
+            geometry_filename = translate_geom_to_hyperslab(config["geometry_file"])
         else:
             calibrated_data = data
+            geometry_filename = config["geometry_file"]
 
         dataset[index, *_data_shape] = calibrated_data
 
         ## Refine the detector center
         ## Set geometry in PF8
 
-        PF8Config.set_geometry_from_file(config["geometry_file"])
+        PF8Config.set_geometry_from_file(geometry_filename)
 
         if "center_of_mass" not in config["skip_centering_methods"]:
             center_of_mass_method = CenterOfMass(
