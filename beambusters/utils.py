@@ -47,7 +47,7 @@ def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
 
 def expand_data_to_hyperslab(data:np.array, format: str)-> np.array:
     if format=="vds_spb_jf4m":
-        hyperslab=np.zeros((2048,2048))
+        hyperslab=np.zeros((2048,2048), np.int32)
         expected_shape = (8, 512, 1024) 
         if data.shape != expected_shape:
             raise ValueError(f"Data shape for {format} format not in expected shape: {expected_shape}.")
