@@ -132,7 +132,11 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             storage_cell_number[index] = storage_cell_number_of_frame
             debug_from_raw[index, 0] = debug_from_raw_of_frame
 
-        calibrated_data = data
+        
+        if len(_data_shape)>1:
+            calibrated_data = expand_data_to_hyperslab(data, format="vds")
+        else:
+            calibrated_data = data
 
         dataset[index, *_data_shape] = calibrated_data
 
