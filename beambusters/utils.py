@@ -43,3 +43,25 @@ def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
     events_list = np.arange(0, num_events, 1)
 
     return events_list, num_events
+
+
+def expand_data_to_hyperslab(data:np.array, format: str)-> np.array:
+    if format=="vds_spb_jf4m":
+        hyperslab=np.zeros((2048,2048))
+        expected_shape = (8, 512, 1024) 
+        if data.shape != expected_shape:
+            raise ValueError(f"Data shape for {format} format not in expected shape: {expected_shape}.")
+    else:
+        raise NameError("Unknown data format.")
+
+    ## Concatenate panels in one hyperslab keep the order break after panel 4 to second column, as described here: https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html. 
+    for panel_id, panel in enumerate(data):
+        if panel_id<4:
+            hyperslab[512*panel_id:512*(panel_id+1),0:1024]=panel
+        else:
+            if panel_id==4:
+                hyperslab[512*(-panel_id+3):,1024:2048]=panel 
+            else:
+                hyperslab[512*(-panel_id+3):512*(-panel_id+4),1024:2048]=panel
+
+    return hyperslab

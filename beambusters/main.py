@@ -134,7 +134,8 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
 
         
         if len(_data_shape)>1:
-            calibrated_data = expand_data_to_hyperslab(data, format="vds")
+            vds_format=config["vds_format"]
+            calibrated_data = expand_data_to_hyperslab(data, format=vds_format)
         else:
             calibrated_data = data
 

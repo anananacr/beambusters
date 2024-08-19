@@ -53,6 +53,7 @@ def parse(config: dict) -> dict:
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
         "burst_mode_active": config["burst_mode"]["is_active"],
+        "vds_format": config["vds_format"],
         "burst_mode_storage_cell_hdf5_path": config["burst_mode"][
             "storage_cell_hdf5_path"
         ],
