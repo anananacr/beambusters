@@ -126,15 +126,15 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
             initialized_arrays = True
 
-        raw_dataset[index, :, :] = data
+        raw_dataset[index, *_data_shape] = data
 
         if config["burst_mode"]["is_active"]:
             storage_cell_number[index] = storage_cell_number_of_frame
-            debug_from_raw[index, :] = debug_from_raw_of_frame
+            debug_from_raw[index, 0] = debug_from_raw_of_frame
 
         calibrated_data = data
 
-        dataset[index, :, :] = calibrated_data
+        dataset[index, *_data_shape] = calibrated_data
 
         ## Refine the detector center
         ## Set geometry in PF8
