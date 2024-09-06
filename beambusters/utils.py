@@ -44,13 +44,13 @@ def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
 
     return events_list, num_events
 
-def expand_data_to_hyperslab(data:np.array, format: str)-> np.array:
+def expand_data_to_hyperslab(data: np.array, data_format: str)-> np.array:
     # TO TEST
-    if format=="vds_spb_jf4m":
+    if data_format=="vds_spb_jf4m":
         hyperslab=np.zeros((2048,2048), np.int32)
-        expected_shape = (8, 512, 1024) 
-        if data.shape != expected_shape:
-            raise ValueError(f"Data shape for {format} format not in expected shape: {expected_shape}.")
+        expected_shape = (8,512,1024) 
+        if data.shape!=expected_shape:
+            raise ValueError(f"Data shape for {data_format} format not in expected shape: {expected_shape}.")
     else:
         raise NameError("Unknown data format.")
 
@@ -60,99 +60,102 @@ def expand_data_to_hyperslab(data:np.array, format: str)-> np.array:
             hyperslab[512*panel_id:512*(panel_id+1),0:1024]=panel
         else:
             if panel_id==4:
-                hyperslab[512*(-panel_id+3):,1024:2048]=panel 
+                hyperslab[512*(-panel_id+3):,1024:2048]=panel[::-1,::-1] 
             else:
-                hyperslab[512*(-panel_id+3):512*(-panel_id+4),1024:2048]=panel
+                hyperslab[512*(-panel_id+3):512*(-panel_id+4),1024:2048]=panel[::-1,::-1] 
 
     return hyperslab
 
+
 def translate_geom_to_hyperslab(geometry_filename:str)-> str:
-    # TO TEST
-    output_file = geometry_filename.split(".geom")[0]+"_hyperslab.geom"
-    lines = open(geometry_filename, "r").readlines()
-    input_geom.close()
+    input_file = open(geometry_filename, "r")
+    lines = input_file.readlines()
+    input_file.close()
+    
+    output_filename = geometry_filename.split(".geom")[0]+"_hyperslab.geom"
     
     jf_4m_hyperslab = slab_to_hyperslab()
 
-    f = open(output_file, "w")
+    f = open(output_filename, "w")
     
     for line in lines:
         key = line.split("=")[0]
-        value = int(line.split("=")[1])
         key_parts = key.split("/")
-        if len(key_parts)>1 and  key_parts[1] in ("min_ss", "min_fs", "max_ss", "max_fs"):
-            new_value = get_slab_coordinates_in_hyperslab(panel_name=key_parts[0], key=key_parts[1], value=value, detector=jf_4m_hyperslab)
-            f.write(f"{key} = {new_value}")
+        if len(key_parts)>1 and  key_parts[1] in ("min_ss ", "min_fs ", "max_ss ", "max_fs "):
+            new_value = get_slab_coordinates_in_hyperslab(slab_name=key_parts[0][:2], asic_name=key_parts[0][2:], key=key_parts[1][:-1], detector_layout=jf_4m_hyperslab)
+            f.write(f"{key} = {new_value}\n")
         else:
             f.write(line)
     f.close()
 
 def slab_to_hyperslab()->dict:
-    # TO TEST
+    ## Jungfrau4M SPB EuXFEL
     jf_4m_in_hyperslab = {}
-    slab_name = p1
+    slab_name = "p1"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 0, 0))
-    slab_name = p2
+    slab_name = "p2"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 512, 0))
-    slab_name = p3
+    slab_name = "p3"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1024, 0))
-    slab_name = p4
+    slab_name = "p4"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1536, 0))
-    slab_name = p5
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1536, 1024))
-    slab_name = p6
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1024, 1024))
-    slab_name = p7
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 512, 1024))
-    slab_name = p8
+    slab_name = "p5"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 0, 1024))
+    slab_name = "p6"
+    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 512, 1024))
+    slab_name = "p7"
+    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1024, 1024))
+    slab_name = "p8"
+    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1536, 1024))
+       
+    
+    return jf_4m_in_hyperslab
 
 def get_500k_slab(slab_name: str, offset_ss:int, offset_fs:int)->dict:
-    # TO TEST
     return {
-        f"{panel_name}": {
+        f"{slab_name}": {
             "a1": {
                 "min_ss": 256 + offset_ss,
                 "min_fs": 768 + offset_fs,
                 "max_ss": 511 + offset_ss,
                 "max_fs": 1023 + offset_fs
-            }
+            },
             "a2": {
                 "min_ss": 256  + offset_ss,
                 "min_fs": 512  + offset_fs,
                 "max_ss": 511  + offset_ss,
                 "max_fs": 767  + offset_fs
-            }
+            },
             "a3": {
                 "min_ss": 256  + offset_ss,
                 "min_fs": 256  + offset_fs,
                 "max_ss": 511  + offset_ss,
                 "max_fs": 511  + offset_fs
-            }
+            },
             "a4": {
                 "min_ss": 256  + offset_ss,
                 "min_fs": 0  + offset_fs,
                 "max_ss": 511  + offset_ss,
                 "max_fs": 255  + offset_fs
-            }
+            },
             "a5": {
                 "min_ss": 0  + offset_ss,
                 "min_fs": 768  + offset_fs,
                 "max_ss": 255  + offset_ss,
                 "max_fs": 1023  + offset_fs
-            }
+            },
             "a6": {
                 "min_ss": 0  + offset_ss,
                 "min_fs": 512  + offset_fs,
                 "max_ss": 255  + offset_ss,
                 "max_fs": 767  + offset_fs
-            }
+            },
             "a7": {
                 "min_ss": 0 + offset_ss,
                 "min_fs": 256  + offset_fs,
                 "max_ss": 255  + offset_ss,
                 "max_fs": 511  + offset_fs
-            }
+            },
             "a8": {
                 "min_ss": 0  + offset_ss,
                 "min_fs": 0  + offset_fs,
@@ -162,5 +165,5 @@ def get_500k_slab(slab_name: str, offset_ss:int, offset_fs:int)->dict:
         }
     }
 
-def get_slab_coordinates_in_hyperslab(slab_name:str, key:str, detector:dict) -> int:
-    # TODO
+def get_slab_coordinates_in_hyperslab(slab_name:str, asic_name:str, key:str, detector_layout:dict) -> int:
+    return detector_layout[f"{slab_name}"][f"{asic_name}"][f"{key}"]
