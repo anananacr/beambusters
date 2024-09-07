@@ -60,9 +60,9 @@ def expand_data_to_hyperslab(data: np.array, data_format: str)-> np.array:
             hyperslab[512*panel_id:512*(panel_id+1),0:1024]=panel
         else:
             if panel_id==4:
-                hyperslab[512*(-panel_id+3):,1024:2048]=panel[::-1,::-1] 
+                hyperslab[512*(-panel_id+3):,1024:2048]=panel 
             else:
-                hyperslab[512*(-panel_id+3):512*(-panel_id+4),1024:2048]=panel[::-1,::-1] 
+                hyperslab[512*(-panel_id+3):512*(-panel_id+4),1024:2048]=panel
 
     return hyperslab
 
@@ -100,15 +100,14 @@ def slab_to_hyperslab()->dict:
     slab_name = "p4"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1536, 0))
     slab_name = "p5"
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 0, 1024))
+    jf_4m_in_hyperslab.update(get_500k_slab_inverted(slab_name, 1536, 1024))
     slab_name = "p6"
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 512, 1024))
+    jf_4m_in_hyperslab.update(get_500k_slab_inverted(slab_name, 1024, 1024))
     slab_name = "p7"
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1024, 1024))
+    jf_4m_in_hyperslab.update(get_500k_slab_inverted(slab_name, 512, 1024))
     slab_name = "p8"
-    jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 1536, 1024))
+    jf_4m_in_hyperslab.update(get_500k_slab_inverted(slab_name, 0, 1024))
        
-    
     return jf_4m_in_hyperslab
 
 def get_500k_slab(slab_name: str, offset_ss:int, offset_fs:int)->dict:
@@ -161,6 +160,60 @@ def get_500k_slab(slab_name: str, offset_ss:int, offset_fs:int)->dict:
                 "min_fs": 0  + offset_fs,
                 "max_ss": 255  + offset_ss,
                 "max_fs": 255  + offset_fs
+            }
+        }
+    }
+
+def get_500k_slab_inverted(slab_name: str, offset_ss:int, offset_fs:int)->dict:
+    return {
+        f"{slab_name}": {
+            "a1": {
+                "min_ss": 0 + offset_ss,
+                "min_fs": 0 + offset_fs,
+                "max_ss": 255 + offset_ss,
+                "max_fs": 255 + offset_fs
+            },
+            "a2": {
+                "min_ss": 0  + offset_ss,
+                "min_fs": 256  + offset_fs,
+                "max_ss": 255  + offset_ss,
+                "max_fs": 511  + offset_fs
+            },
+            "a3": {
+                "min_ss": 0  + offset_ss,
+                "min_fs": 512  + offset_fs,
+                "max_ss": 255  + offset_ss,
+                "max_fs": 767  + offset_fs
+            },
+            "a4": {
+                "min_ss": 0  + offset_ss,
+                "min_fs": 768  + offset_fs,
+                "max_ss": 255  + offset_ss,
+                "max_fs": 1023  + offset_fs
+            },
+            "a5": {
+                "min_ss": 256  + offset_ss,
+                "min_fs": 0  + offset_fs,
+                "max_ss": 511  + offset_ss,
+                "max_fs": 255  + offset_fs
+            },
+            "a6": {
+                "min_ss": 256  + offset_ss,
+                "min_fs": 256  + offset_fs,
+                "max_ss": 511  + offset_ss,
+                "max_fs": 511  + offset_fs
+            },
+            "a7": {
+                "min_ss": 256  + offset_ss,
+                "min_fs": 512  + offset_fs,
+                "max_ss": 511  + offset_ss,
+                "max_fs": 767  + offset_fs
+            },
+            "a8": {
+                "min_ss": 256 + offset_ss,
+                "min_fs": 768 + offset_fs,
+                "max_ss": 511 + offset_ss,
+                "max_fs": 1023 + offset_fs
             }
         }
     }
