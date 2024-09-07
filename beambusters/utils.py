@@ -82,7 +82,9 @@ def translate_geom_to_hyperslab(geometry_filename:str)-> str:
         key = line.split("=")[0]
         key_parts = key.split("/")
         if len(key_parts)>1 and  key_parts[1] in ("min_ss ", "min_fs ", "max_ss ", "max_fs "):
-            new_value = get_slab_coordinates_in_hyperslab(slab_name=key_parts[0][:2], asic_name=key_parts[0][2:], key=key_parts[1][:-1], detector_layout=jf_4m_hyperslab)
+            slab_id=key_parts[0].split("a")[0]
+            asic_id=key_parts[0].split(slab_id)[-1]
+            new_value = get_slab_coordinates_in_hyperslab(slab_name=slab_id, asic_name=asic_id, key=key_parts[1][:-1], detector_layout=jf_4m_hyperslab)
             f.write(f"{key} = {new_value}\n")
         else:
             f.write(line)
