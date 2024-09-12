@@ -1,17 +1,14 @@
 import typer
 from beambusters import settings
-import subprocess as sub
 import h5py
 import numpy as np
-from beambusters.utils import centering_converged, list_events
-import matplotlib.pyplot as plt
+from beambusters.utils import centering_converged, list_events, expand_data_to_hyperslab, translate_geom_to_hyperslab
 import math
 import hdf5plugin
 import os
 import pathlib
-import sys
-from bblib.methods import CenterOfMass, FriedelPairs, MinimizePeakFWHM, CircleDetection
-from bblib.models import PF8Info, PF8
+from bblib.methods import CenterOfMass, FriedelPairs, CircleDetection
+from bblib.models import PF8
 
 app = typer.Typer()
 
@@ -63,7 +60,7 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         starting_frame = config["starting_frame"]
     else:
         config["plots_flag"] = False
-        plots_info = {"file_name": "", "folder_name": "", "root_path": ""}
+        plots_info = {"filename": "", "folder_name": "", "root_path": ""}
         number_of_frames = len(paths)
         starting_frame = 0
 
@@ -76,16 +73,16 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         paths[starting_frame : starting_frame + number_of_frames]
     ):
         raw_file_id.append(path)
-        file_name, frame_number = path.split(" //")
-        print(f"Image filename: {file_name}")
+        filename, frame_number = path.split(" //")
+        print(f"Image filename: {filename}")
         print(f"Event: //{frame_number}")
         frame_number = int(frame_number)
 
         if config["plots_flag"]:
-            plots_info["file_name"] = config["plots"]["file_name"] + f"_{frame_number}"
+            plots_info["filename"] = config["plots"]["filename"] + f"_{frame_number}"
 
-        with h5py.File(f"{file_name}", "r") as f:
-            data = np.array(f[data_hdf5_path][frame_number], dtype=np.int32)
+        with h5py.File(f"{filename}", "r") as f:
+            data = np.array(f[data_hdf5_path][frame_number,:], dtype=np.int32)
             if not initialized_arrays:
                 _data_shape = data.shape
 
@@ -101,8 +98,8 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 )
 
         if not initialized_arrays:
-            raw_dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
-            dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
+            if not config["vds_format"]:
+                dataset = np.zeros((number_of_frames, *_data_shape), dtype=np.int32)
             refined_detector_center = np.zeros((number_of_frames, 2), dtype=np.float32)
             refined_center_flag = np.zeros(number_of_frames, dtype=np.int16)
 
@@ -126,22 +123,21 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                 debug_from_raw = np.zeros((number_of_frames, 2), dtype=np.int16)
             initialized_arrays = True
 
-        raw_dataset[index, *_data_shape] = data
-
         if config["burst_mode"]["is_active"]:
             storage_cell_number[index] = storage_cell_number_of_frame
             debug_from_raw[index, 0] = debug_from_raw_of_frame
 
-        
-        if len(_data_shape)>1:
-            vds_format=config["vds_format"]
-            calibrated_data = expand_data_to_hyperslab(data, format=vds_format)
+
+        if len(_data_shape)>1 and config["vds_format"]:
+            vds_id=config["vds_id"]
+            calibrated_data = expand_data_to_hyperslab(data=data, data_format=vds_id)
             geometry_filename = translate_geom_to_hyperslab(config["geometry_file"])
         else:
             calibrated_data = data
             geometry_filename = config["geometry_file"]
-
-        dataset[index, *_data_shape] = calibrated_data
+        
+        if not config["vds_format"]:
+            dataset[index, :, :] = calibrated_data
 
         ## Refine the detector center
         ## Set geometry in PF8
@@ -238,9 +234,9 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         shift_y_mm[index] = detector_shift_in_mm[1]
 
     ## Create output path
-    file_label = os.path.basename(file_name).split("/")[-1][:-3]
+    file_label = os.path.basename(filename).split("/")[-1][:-3]
     converted_path = config["input_path"].split("/")[-1]
-    root_directory, path_in_raw = os.path.dirname(file_name).split(converted_path)
+    root_directory, path_in_raw = os.path.dirname(filename).split(converted_path)
     output_path = config["output_path"] + path_in_raw
     path = pathlib.Path(output_path)
     path.mkdir(parents=True, exist_ok=True)
@@ -249,8 +245,10 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
     clen = float(np.mean(PF8Config.pixel_maps["z"]))
 
     ## Write centered file
-    if not test_only:
-        with h5py.File(f"{output_path}/{file_label}.h5", "w") as f:
+    output_file= f"{output_path}/{file_label}.h5"
+    
+    if not config["vds_format"] and not test_only:
+        with h5py.File(output_file, "w") as f:
             entry = f.create_group("entry")
             entry.attrs["NX_class"] = "NXentry"
             grp_data = entry.create_group("data")
@@ -264,7 +262,51 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
                     compression=config["compression"]["filter"],
                     compression_opts=config["compression"]["opts"],
                 )
-
+            grp_data.create_dataset("raw_file_id", data=raw_file_id)
+            if config["burst_mode"]["is_active"]:
+                grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
+                grp_data.create_dataset("debug", data=debug_from_raw)
+            grp_shots = entry.create_group("shots")
+            grp_shots.attrs["NX_class"] = "NXdata"
+            grp_shots.create_dataset("detector_shift_x_in_mm", data=shift_x_mm)
+            grp_shots.create_dataset("detector_shift_y_in_mm", data=shift_y_mm)
+            grp_shots.create_dataset("refined_center_flag", data=refined_center_flag)
+            grp_proc = f.create_group("preprocessing")
+            grp_proc.attrs["NX_class"] = "NXdata"
+            for key, value in BeambustersParam.items():
+                grp_proc.create_dataset(key, data=value)
+            grp_proc.create_dataset("raw_path", data=paths)
+            grp_proc.create_dataset(
+                "refined_detector_center", data=refined_detector_center
+            )
+            grp_proc.create_dataset(
+                "center_from_center_of_mass", data=detector_center_from_center_of_mass
+            )
+            grp_proc.create_dataset(
+                "center_from_circle_detection",
+                data=detector_center_from_circle_detection,
+            )
+            grp_proc.create_dataset(
+                "center_from_minimize_peak_fwhm",
+                data=detector_center_from_minimize_peak_fwhm,
+            )
+            grp_proc.create_dataset(
+                "center_from_friedel_pairs", data=detector_center_from_friedel_pairs
+            )
+            grp_proc.create_dataset("initial_guess_center", data=initial_guess_center)
+            grp_proc.create_dataset(
+                "detector_center_from_geometry_file",
+                data=PF8Config.detector_center_from_geom,
+            )
+            grp_proc.create_dataset("pixel_resolution", data=PF8Config.pixel_resolution)
+            grp_proc.create_dataset("camera_length", data=clen)            
+    elif not test_only and config["vds_format"] and os.path.exists(output_file):
+        # Append per pattern detector center in a previously created virtual dataset in centered folder
+        with h5py.File(output_file, "a") as f:
+            entry = f.create_group("entry")
+            entry.attrs["NX_class"] = "NXentry"
+            grp_data = entry.create_group("data")
+            grp_data.attrs["NX_class"] = "NXdata"                
             grp_data.create_dataset("raw_file_id", data=raw_file_id)
             if config["burst_mode"]["is_active"]:
                 grp_data.create_dataset("storage_cell_number", data=storage_cell_number)
@@ -303,6 +345,8 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             )
             grp_proc.create_dataset("pixel_resolution", data=PF8Config.pixel_resolution)
             grp_proc.create_dataset("camera_length", data=clen)
+    elif not test_only and config["vds_format"] and not os.path.exists(output_file):
+        raise ValueError("Output files not found, please create the VDS in the centered folder first.")
 
 
 @app.callback()

@@ -54,6 +54,7 @@ def parse(config: dict) -> dict:
         "geometry_file": config["geometry_file"],
         "burst_mode_active": config["burst_mode"]["is_active"],
         "vds_format": config["vds_format"],
+        "vds_id": config["vds_id"],
         "burst_mode_storage_cell_hdf5_path": config["burst_mode"][
             "storage_cell_hdf5_path"
         ],
@@ -76,7 +77,7 @@ def get_pf8_info(config: dict):
 
 def parse_plots_info(config: dict) -> dict:
     return {
-        "file_name": config["plots"]["file_name"],
+        "file_name": config["plots"]["filename"],
         "folder_name": config["plots"]["folder_name"],
         "root_path": config["plots"]["root_path"],
         "value_auto": config["plots"]["value_auto"],

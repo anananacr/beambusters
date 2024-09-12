@@ -89,6 +89,7 @@ def translate_geom_to_hyperslab(geometry_filename:str)-> str:
         else:
             f.write(line)
     f.close()
+    return output_filename
 
 def slab_to_hyperslab()->dict:
     ## Jungfrau4M SPB EuXFEL
