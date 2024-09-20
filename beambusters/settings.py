@@ -54,11 +54,14 @@ def parse(config: dict) -> dict:
         "geometry_file": config["geometry_file"],
         "burst_mode_active": config["burst_mode"]["is_active"],
         "vds_format": config["vds_format"],
+        "vds_vds_maximum_number_of_frames": config["vds_maximum_number_of_frames"],
+        "vds_frames_batch_id": config["vds_batch_id"],
         "vds_id": config["vds_id"],
         "burst_mode_storage_cell_hdf5_path": config["burst_mode"][
             "storage_cell_hdf5_path"
         ],
         "burst_mode_debug_hdf5_path": config["burst_mode"]["debug_hdf5_path"],
+        "plots_flag":config["plots"]["flag"]
     }
 
 
