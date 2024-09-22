@@ -61,10 +61,11 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
     else:
         config["plots_flag"] = False
         plots_info = {"filename": "", "folder_name": "", "root_path": ""}
-        #number_of_frames = len(paths)
+        number_of_frames = len(paths)
+        starting_frame = 0
         print(config)
-        number_of_frames = config["vds_maximum_number_of_frames"]
-        starting_frame = config["vds_maximum_number_of_frames"] * config["vds_batch_id"]
+        #number_of_frames = config["vds_maximum_number_of_frames"]
+        #starting_frame = config["vds_maximum_number_of_frames"] * config["vds_batch_id"]
 
     ## Set peakfinder8 configuration
     PF8Config = settings.get_pf8_info(config)
@@ -135,7 +136,9 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         if len(_data_shape)>1 and config["vds_format"]:
             vds_id=config["vds_id"]
             calibrated_data = expand_data_to_hyperslab(data=data, data_format=vds_id)
-            geometry_filename = translate_geom_to_hyperslab(config["geometry_file"])
+            geometry_filename = config["geometry_file"].split(".geom")[0]+"_hyperslab.geom"
+            if not os.path.exists(geometry_filename):
+                geometry_filename = translate_geom_to_hyperslab(config["geometry_file"])
         else:
             calibrated_data = data
             geometry_filename = config["geometry_file"]
@@ -179,23 +182,28 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
         
         if config["centering_method_for_initial_guess"] == "center_of_mass":
             calculated_detector_center = detector_center_from_center_of_mass[index]
-            distance = math.sqrt(
+            distance_in_x = math.sqrt(
                 (calculated_detector_center[0] - config["reference_center"]["x"]) ** 2
-                + (calculated_detector_center[1] - config["reference_center"]["y"]) ** 2
             )
-            if distance<config["outlier_distance"]:
+            distance_in_y =   math.sqrt((calculated_detector_center[1] - config["reference_center"]["y"]) ** 2)
+            if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
                 pre_centering_flag[index] = 1
                 initial_guess = detector_center_from_center_of_mass[index]
         elif config["centering_method_for_initial_guess"] == "circle_detection":
             calculated_detector_center = detector_center_from_circle_detection[index]
-            distance = math.sqrt(
+            distance_in_x = math.sqrt(
                 (calculated_detector_center[0] - config["reference_center"]["x"]) ** 2
-                + (calculated_detector_center[1] - config["reference_center"]["y"]) ** 2
             )
-            if distance<config["outlier_distance"]:
+            distance_in_y =   math.sqrt((calculated_detector_center[1] - config["reference_center"]["y"]) ** 2)
+            if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
                 pre_centering_flag[index] = 1
                 initial_guess = detector_center_from_circle_detection[index]
-            
+        # If the method chosen didn't converge change to the detector center from the geometry file
+
+        if initial_guess[0] == -1 and initial_guess[1] == -1:
+            initial_guess = PF8Config.detector_center_from_geom
+
+        
         # Background shifting case
         if config["force_center"]["state"]:
             if config["force_center"]["anchor_x"]:
@@ -204,21 +212,16 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
             if config["force_center"]["anchor_y"]:
                 initial_guess[1] = config["force_center"]["y"]
             
-        # If the method chosen didn't converge change to the detector center from the geometry file
-
-        if initial_guess[0] == -1 or initial_guess[1] == -1:
-            initial_guess = PF8Config.detector_center_from_geom
-
         initial_guess_center[index, :] = initial_guess
 
-        distance = math.sqrt(
+        distance_in_x = math.sqrt(
             (initial_guess[0] - config["reference_center"]["x"]) ** 2
-            + (initial_guess[1] - config["reference_center"]["y"]) ** 2
         )
+        distance_in_y =   math.sqrt((initial_guess[1] - config["reference_center"]["y"]) ** 2)
 
         center_is_refined = False
         
-        if distance < config["outlier_distance"]:
+        if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
             
             ## Ready for detector center refinement
             PF8Config.update_pixel_maps(
@@ -339,11 +342,19 @@ def run_centering(input: str, path_to_config: str, test_only: bool = False):
     elif not test_only and config["vds_format"] and os.path.exists(output_file):
         # Append per pattern detector center in a previously created virtual dataset in centered folder
         with h5py.File(output_file, "a") as f: 
+            """
             f.create_dataset(f"entry_1/instrument_1/detector_shift_x_in_mm_{config['vds_batch_id']}", data=shift_x_mm)
             f.create_dataset(f"entry_1/instrument_1/detector_shift_y_in_mm_{config['vds_batch_id']}", data=shift_y_mm)
             f.create_dataset(f"entry_1/instrument_1/refined_center_flag_{config['vds_batch_id']}", data=refined_center_flag)
             f.create_dataset(f"entry_1/instrument_1/pre_centering_flag_{config['vds_batch_id']}", data=pre_centering_flag)
             f.create_dataset(f"entry_1/instrument_1/hit_{config['vds_batch_id']}", data=hits)
+            """
+            
+            f.create_dataset("entry_1/instrument_1/detector_shift_x_in_mm", data=shift_x_mm)
+            f.create_dataset("entry_1/instrument_1/detector_shift_y_in_mm", data=shift_y_mm)
+            f.create_dataset("entry_1/instrument_1/refined_center_flag", data=refined_center_flag)
+            f.create_dataset("entry_1/instrument_1/pre_centering_flag", data=pre_centering_flag)
+            f.create_dataset("entry_1/instrument_1/hit", data=hits)
 
     elif not test_only and config["vds_format"] and not os.path.exists(output_file):
         raise ValueError("Output files not found, please create the VDS in the centered folder first.")

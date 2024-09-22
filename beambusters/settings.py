@@ -27,7 +27,8 @@ def parse(config: dict) -> dict:
         "canny_sigma": config["canny"]["sigma"],
         "canny_low_thr": config["canny"]["low_threshold"],
         "canny_high_thr": config["canny"]["high_threshold"],
-        "outlier_distance": config["outlier_distance"],
+        "outlier_distance_in_x": config["outlier_distance"]["x"],
+        "outlier_distance_in_y": config["outlier_distance"]["y"],
         "search_radius": config["search_radius"],
         "centering_method_for_initial_guess": config[
             "centering_method_for_initial_guess"
@@ -53,9 +54,6 @@ def parse(config: dict) -> dict:
         "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
         "burst_mode_active": config["burst_mode"]["is_active"],
-        "vds_format": config["vds_format"],
-        "vds_vds_maximum_number_of_frames": config["vds_maximum_number_of_frames"],
-        "vds_frames_batch_id": config["vds_batch_id"],
         "vds_id": config["vds_id"],
         "burst_mode_storage_cell_hdf5_path": config["burst_mode"][
             "storage_cell_hdf5_path"
