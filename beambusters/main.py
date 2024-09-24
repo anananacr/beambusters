@@ -111,7 +111,7 @@ def run_centering_parallel(input: str, path_to_config: str):
 
     with h5py.File(output_file, "a") as f: 
         f.create_dataset("entry_1/instrument_1/detector_shift_x_in_mm", data=detector_shift_x_in_mm)
-        f.create_dataset("entry_1/instrument_1/detector_shift_y_in_mm", data=detector_shift_y_mm)
+        f.create_dataset("entry_1/instrument_1/detector_shift_y_in_mm", data=detector_shift_y_in_mm)
         f.create_dataset("entry_1/instrument_1/refined_center_flag", data=refined_center_flag)
         f.create_dataset("entry_1/instrument_1/pre_centering_flag", data=pre_centering_flag)
         f.create_dataset("entry_1/instrument_1/hit", data=hits)
