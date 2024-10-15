@@ -58,7 +58,9 @@ peak_region:
   min: 50
   max: 70
 
-outlier_distance: 10
+outlier_distance: 
+  x: 10
+  y: 100
 
 reference_center:
   x: 554
@@ -68,6 +70,12 @@ canny:
   sigma: 3
   low_threshold: 0.9
   high_threshold: 0.99
+
+hough:
+  maximum_rank:
+  outlier_shift: 
+    x: 10
+    y: 100
 
 centering_method_for_initial_guess: circle_detection
 

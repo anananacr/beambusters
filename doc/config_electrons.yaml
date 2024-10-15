@@ -60,6 +60,11 @@ canny:
   low_threshold: 0.9
   high_threshold: 0.99
 
+hough:
+  maximum_rank:
+  outlier_shift: 
+    x: 0
+    y: 0
 
 offset:
   x: 0.5
