@@ -105,7 +105,6 @@ def run_centering_parallel(input: str, path_to_config: str):
     results = [*results, *partial_results]
 
     ## Rearrange results arrays
-    
     for index, i in enumerate(results):
         detector_shift_x_in_mm[index], detector_shift_y_in_mm[index], hits[index], pre_centering_flag[index], refined_center_flag[index] = i
 
