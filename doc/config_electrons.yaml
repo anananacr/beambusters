@@ -62,7 +62,7 @@ canny:
 
 hough:
   maximum_rank:
-  outlier_shift: 
+  outlier_distance: 
     x: 0
     y: 0
 
@@ -70,7 +70,9 @@ offset:
   x: 0.5
   y: 0.5
 
-outlier_distance: 20
+outlier_distance:
+  x: 20
+  y: 20
 
 reference_center:
   x: 454

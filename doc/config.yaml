@@ -73,7 +73,7 @@ canny:
 
 hough:
   maximum_rank:
-  outlier_shift: 
+  outlier_distance: 
     x: 10
     y: 100
 

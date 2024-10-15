@@ -73,7 +73,7 @@ canny: # Controls skimage.feature.canny function, used in the CircleDetection bb
 
 hough:
   maximum_rank: # Evaluate the ranked solutions of Hough transform output until the maximum ranked position. 
-  outlier_shift: # If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
+  outlier_distance: # If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
     x: # Outlier shift in the x-axis
     y: # Outlier shift in the y-axis
 
