@@ -58,7 +58,9 @@ peak_region: # Defines the approximate background peak distance from the center 
   min: # Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
   max: # Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
 
-outlier_distance: # Don't refine the detector center with FriedelPairs method if the initial_guess distance to the reference_center coordinates is bigger than the outlier_distance.
+outlier_distance: # Don't refine the detector center with FriedelPairs method if the distance from the initial_guess (in a certain axis) to the reference_center coordinates is bigger than the outlier_distance.
+  x: # Outlier distance in x
+  y: # Outlier distance in y
 
 reference_center: # Reference center of the diffraction pattern to filter outliers in the initial_guess calculation
   x: # Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int
@@ -68,6 +70,12 @@ canny: # Controls skimage.feature.canny function, used in the CircleDetection bb
   sigma: # Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float
   low_threshold: # Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float
   high_threshold: # Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float
+
+hough:
+  maximum_rank: # Evaluate the ranked solutions of Hough transform output until the maximum ranked position. 
+  outlier_shift: # If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
+    x: # Outlier shift in the x-axis
+    y: # Outlier shift in the y-axis
 
 centering_method_for_initial_guess: # Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str
 

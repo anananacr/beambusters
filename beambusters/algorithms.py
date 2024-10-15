@@ -27,12 +27,13 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
             detector_center_from_circle_detection = circle_detection_method(
                 data=calibrated_data
             )
+            
             ## Calculate distance from the calculated center to the reference point in each axis
             distance_in_x = math.sqrt((detector_center_from_circle_detection[0] - config["reference_center"]["x"]) ** 2)
 
             distance_in_y =   math.sqrt((detector_center_from_circle_detection[1] - config["reference_center"]["y"]) ** 2)
         
-            if distance_in_x<config["hough"]["outlier_distance"]["x"] and distance_in_y<config["hough"]["outlier_distance"]["y"]:
+            if distance_in_x<config["hough"]["outlier_shift"]["x"] and distance_in_y<config["hough"]["outlier_shift"]["y"]:
                 break
     else:
         detector_center_from_circle_detection = [-1, -1]
