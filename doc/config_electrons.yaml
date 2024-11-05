@@ -1,12 +1,13 @@
 geometry_file: /path/to/geom/detector.geom
 
-chunks:
-number_of_processors:
+chunks: 100
+number_of_processors: 4
 
 burst_mode: 
   state: false
   storage_cell_hdf5_path: /entry/data/storage_cell_number
-  debug_hdf5_path: /entry/data/debug
+
+vds_format: false
 
 plots:
   flag: false
