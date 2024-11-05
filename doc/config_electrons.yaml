@@ -1,16 +1,12 @@
 geometry_file: /path/to/geom/detector.geom
-input_path: /path/to/processed/converted
-output_path: /path/to/processed/centered
+
+chunks:
+number_of_processors:
 
 burst_mode: 
   state: false
   storage_cell_hdf5_path: /entry/data/storage_cell_number
   debug_hdf5_path: /entry/data/debug
-
-compression:
-  compress_data: false
-  filter: gzip
-  opts: 6
 
 plots:
   flag: false
@@ -33,7 +29,7 @@ plots:
 force_center:
   state: true
   anchor_x: true
-  anchor_y: false
+  anchor_y: true
   x: 454
   y: 538
 
@@ -89,6 +85,6 @@ skip_centering_methods:
   - circle_detection
   
 polarization:
-  apply_polarization_correction: true
+  apply_polarization_correction: false
   axis: x
   value: 0.99
