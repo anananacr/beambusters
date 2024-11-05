@@ -8,6 +8,9 @@ burst_mode:
 chunks: 500
 number_of_processors: 16
 
+vds_format: true
+vds_id: generic
+
 plots:
   flag: true
   maximum_number_of_frames: 50
