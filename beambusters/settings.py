@@ -2,6 +2,7 @@ import yaml
 from pathlib import Path
 import sys
 from bblib.models import PF8Info
+from datetime import datetime
 
 
 def read(path: str) -> dict:
@@ -51,15 +52,11 @@ def parse(config: dict) -> dict:
             config["reference_center"]["x"],
             config["reference_center"]["y"],
         ],
-        "output_path": config["output_path"],
         "geometry_file": config["geometry_file"],
+        "parse_timestamp": datetime.now().timestamp(),
         "burst_mode_active": config["burst_mode"]["is_active"],
         "vds_id": config["vds_id"],
-        "burst_mode_storage_cell_hdf5_path": config["burst_mode"][
-            "storage_cell_hdf5_path"
-        ],
-        "burst_mode_debug_hdf5_path": config["burst_mode"]["debug_hdf5_path"],
-        "plots_flag":config["plots"]["flag"]
+        "plots_flag": config["plots"]["flag"],
     }
 
 
@@ -90,5 +87,5 @@ def parse_plots_info(config: dict) -> dict:
         "ylim_min": config["plots"]["ylim_min"],
         "ylim_max": config["plots"]["ylim_max"],
         "color_map": config["plots"]["color_map"],
-        "marker_size": config["plots"]["marker_size"]
+        "marker_size": config["plots"]["marker_size"],
     }
