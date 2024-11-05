@@ -8,6 +8,7 @@ Beambusters uses the methods implemented in bblib to calculate the detector cent
 - Python 3.10
 
 
+
 ## Installation
 pip install beambusters
 
