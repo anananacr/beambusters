@@ -1,11 +1,13 @@
-        
 from bblib.methods import CenterOfMass, FriedelPairs, CircleDetection, MinimizePeakFWHM
 from beambusters.utils import centering_converged
 import numpy as np
 import math
 from bblib.models import PF8
 
-def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_id:int, config: dict, PF8Config: dict) -> list:
+
+def calculate_detector_center_on_a_frame(
+    calibrated_data: np.array, memory_cell_id: int, config: dict, PF8Config: dict
+) -> list:
     plots_info = {"filename": "", "folder_name": "", "root_path": ""}
     config["plots_flag"] = False
 
@@ -20,7 +22,7 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
         detector_center_from_center_of_mass = [-1, -1]
     if "circle_detection" not in config["skip_centering_methods"]:
         for rank in range(config["hough"]["maximum_rank"]):
-            config["hough_rank"]=rank
+            config["hough_rank"] = rank
             circle_detection_method = CircleDetection(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
             )
@@ -29,11 +31,26 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
             )
 
             ## Calculate distance from the calculated center to the reference point in each axis
-            distance_in_x = math.sqrt((detector_center_from_circle_detection[0] - config["reference_center"]["x"]) ** 2)
+            distance_in_x = math.sqrt(
+                (
+                    detector_center_from_circle_detection[0]
+                    - config["reference_center"]["x"]
+                )
+                ** 2
+            )
 
-            distance_in_y =   math.sqrt((detector_center_from_circle_detection[1] - config["reference_center"]["y"]) ** 2)
-        
-            if distance_in_x<config["hough"]["outlier_distance"]["x"] and distance_in_y<config["hough"]["outlier_distance"]["y"]:
+            distance_in_y = math.sqrt(
+                (
+                    detector_center_from_circle_detection[1]
+                    - config["reference_center"]["y"]
+                )
+                ** 2
+            )
+
+            if (
+                distance_in_x < config["hough"]["outlier_distance"]["x"]
+                and distance_in_y < config["hough"]["outlier_distance"]["y"]
+            ):
                 break
         ## Check for the case where rank reached the maximum value and the detector center is not within the allowed region
         else:
@@ -49,32 +66,40 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
         )
     else:
         detector_center_from_minimize_peak_fwhm = [-1, -1]
-    
-    
+
     ## Define the initial_guess
     initial_guess = [-1, -1]
     pre_centering_flag = 0
     is_a_hit = 0
     refined_center_flag = 0
 
-
     if config["centering_method_for_initial_guess"] == "center_of_mass":
         calculated_detector_center = detector_center_from_center_of_mass
         distance_in_x = math.sqrt(
             (calculated_detector_center[0] - config["reference_center"]["x"]) ** 2
         )
-        distance_in_y =   math.sqrt((calculated_detector_center[1] - config["reference_center"]["y"]) ** 2)
-        
-        if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
+        distance_in_y = math.sqrt(
+            (calculated_detector_center[1] - config["reference_center"]["y"]) ** 2
+        )
+
+        if (
+            distance_in_x < config["outlier_distance"]["x"]
+            and distance_in_y < config["outlier_distance"]["y"]
+        ):
             pre_centering_flag = 1
-            initial_guess = detector_center_from_center_of_mass           
+            initial_guess = detector_center_from_center_of_mass
     elif config["centering_method_for_initial_guess"] == "circle_detection":
         calculated_detector_center = detector_center_from_circle_detection
         distance_in_x = math.sqrt(
             (calculated_detector_center[0] - config["reference_center"]["x"]) ** 2
         )
-        distance_in_y =   math.sqrt((calculated_detector_center[1] - config["reference_center"]["y"]) ** 2)
-        if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
+        distance_in_y = math.sqrt(
+            (calculated_detector_center[1] - config["reference_center"]["y"]) ** 2
+        )
+        if (
+            distance_in_x < config["outlier_distance"]["x"]
+            and distance_in_y < config["outlier_distance"]["y"]
+        ):
             pre_centering_flag = 1
             initial_guess = detector_center_from_circle_detection
     elif config["centering_method_for_initial_guess"] == "minimize_peak_fwhm":
@@ -82,36 +107,45 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
         distance_in_x = math.sqrt(
             (calculated_detector_center[0] - config["reference_center"]["x"]) ** 2
         )
-        distance_in_y =   math.sqrt((calculated_detector_center[1] - config["reference_center"]["y"]) ** 2)
-        
-        if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
+        distance_in_y = math.sqrt(
+            (calculated_detector_center[1] - config["reference_center"]["y"]) ** 2
+        )
+
+        if (
+            distance_in_x < config["outlier_distance"]["x"]
+            and distance_in_y < config["outlier_distance"]["y"]
+        ):
             pre_centering_flag = 1
-            initial_guess = detector_center_from_minimize_peak_fwhm    
+            initial_guess = detector_center_from_minimize_peak_fwhm
     elif config["centering_method_for_initial_guess"] == "manual_input":
-        initial_guess = [config["manual_input"][f"{memory_cell_id}"]["x"], config["manual_input"][f"{memory_cell_id}"]["y"]]
-    
+        initial_guess = [
+            config["manual_input"][f"{memory_cell_id}"]["x"],
+            config["manual_input"][f"{memory_cell_id}"]["y"],
+        ]
+
     # If the method chosen didn't converge change to the detector center from the geometry file
     if initial_guess[0] == -1 and initial_guess[1] == -1:
         initial_guess = PF8Config.detector_center_from_geom
-    
+
     # Force center override the initial guess calculated to coordinates defined in config
     if config["force_center"]["state"]:
         if config["force_center"]["anchor_x"]:
             initial_guess[0] = config["force_center"]["x"]
         if config["force_center"]["anchor_y"]:
             initial_guess[1] = config["force_center"]["y"]
-    
+
     # Compares if the calculated center is within the outlier distance in each axis
-    distance_in_x = math.sqrt(
-        (initial_guess[0] - config["reference_center"]["x"]) ** 2
-    )
-    distance_in_y =   math.sqrt((initial_guess[1] - config["reference_center"]["y"]) ** 2)
+    distance_in_x = math.sqrt((initial_guess[0] - config["reference_center"]["x"]) ** 2)
+    distance_in_y = math.sqrt((initial_guess[1] - config["reference_center"]["y"]) ** 2)
 
     # Start refine the detector center by FriedelPairs
     center_is_refined = False
-    
-    if distance_in_x<config["outlier_distance"]["x"] and distance_in_y<config["outlier_distance"]["y"]:
-        
+
+    if (
+        distance_in_x < config["outlier_distance"]["x"]
+        and distance_in_y < config["outlier_distance"]["y"]
+    ):
+
         ## Ready for detector center refinement
         PF8Config.update_pixel_maps(
             initial_guess[0] - PF8Config.detector_center_from_geom[0],
@@ -120,14 +154,19 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
         pf8 = PF8(PF8Config)
         peak_list = pf8.get_peaks_pf8(data=calibrated_data)
 
-        if config["vds_format"]:
-            geometry_filename = config["geometry_file"].split(".geom")[0]+"_hyperslab.geom"
+        if config["vds_format"] and config["vds_id"] == "vds_spb_jf4m":
+            geometry_filename = (
+                config["geometry_file"].split(".geom")[0] + "_hyperslab.geom"
+            )
         else:
             geometry_filename = config["geometry_file"]
 
         PF8Config.set_geometry_from_file(geometry_filename)
-        
-        if "friedel_pairs" not in config["skip_centering_methods"] and peak_list["num_peaks"]>config["pf8"]["min_num_peaks"]:
+
+        if (
+            "friedel_pairs" not in config["skip_centering_methods"]
+            and peak_list["num_peaks"] > config["pf8"]["min_num_peaks"]
+        ):
             is_a_hit = 1
             friedel_pairs_method = FriedelPairs(
                 config=config, PF8Config=PF8Config, plots_info=plots_info
@@ -148,11 +187,11 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
     else:
         refined_detector_center = initial_guess
 
-    beam_position_shift_in_pixels =  [
+    beam_position_shift_in_pixels = [
         refined_detector_center[x] - PF8Config.detector_center_from_geom[x]
         for x in range(2)
     ]
-    
+
     detector_shift_in_mm = [
         np.round(-1 * x * 1e3 / PF8Config.pixel_resolution, 4)
         for x in beam_position_shift_in_pixels
@@ -160,4 +199,10 @@ def calculate_detector_center_on_a_frame(calibrated_data:np.array, memory_cell_i
     detector_shift_x_in_mm = detector_shift_in_mm[0]
     detector_shift_y_in_mm = detector_shift_in_mm[1]
 
-    return [detector_shift_x_in_mm, detector_shift_y_in_mm, is_a_hit, pre_centering_flag, refined_center_flag]
+    return [
+        detector_shift_x_in_mm,
+        detector_shift_y_in_mm,
+        is_a_hit,
+        pre_centering_flag,
+        refined_center_flag,
+    ]
