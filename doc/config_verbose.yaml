@@ -4,6 +4,9 @@ output_hdf5_root_path: # Absolute path inside the hdf5 file to create a dataset 
 chunks: # Number of frames in a chunk for parallel processing
 number_of_processors: # Number of processors to use in parallel processing
 
+vds_format: # True if the file is saved in VDS format. Type: bool
+vds_id: # Identification of which detector is being used. Currently it is supported "vds_spb_jf4m" and "generic". Type: str
+
 burst_mode: # Indicate if the detector is on burst mode. 
   state: # Burst/storage cell mode (true) or single cell mode (false). Type: bool.
   storage_cell_hdf5_path: # Absolute HDF5 path to the storage cell id per frame. Type: str
