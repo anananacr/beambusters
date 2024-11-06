@@ -101,12 +101,16 @@ def run_centering_parallel(input: str, path_to_config: str):
             events = np.array(
                 f[data_hdf5_path][i : i + config["chunks"]], dtype=np.int32
             )
-            memory_cells_id = np.array(
-                f[config["burst_mode"]["storage_cell_hdf5_path"]][
-                    i : i + config["chunks"]
-                ],
-                dtype=np.int32,
-            )
+            if config["burst_mode"]["is_active"]:
+                memory_cells_id = np.array(
+                    f[config["burst_mode"]["storage_cell_hdf5_path"]][
+                        i : i + config["chunks"]
+                    ],
+                    dtype=np.int32,
+                )
+            else:
+                memory_cells_id = np.zeros(config["chunks"], dtype=np.int32)
+
             # Use multiprocessing Pool for parallel processing
             args = [
                 [event, memory_cells_id[index], paths[i + index], config]
@@ -120,10 +124,13 @@ def run_centering_parallel(input: str, path_to_config: str):
     i = number_of_events - rest
     with h5py.File(f"{filename}", "r") as f:
         events = np.array(f[data_hdf5_path][i:number_of_events], dtype=np.int32)
-        memory_cells_id = np.array(
-            f[config["burst_mode"]["storage_cell_hdf5_path"]][i:number_of_events],
-            dtype=np.int32,
-        )
+        if config["burst_mode"]["is_active"]:
+            memory_cells_id = np.array(
+                f[config["burst_mode"]["storage_cell_hdf5_path"]][i:number_of_events],
+                dtype=np.int32,
+            )
+        else:
+            memory_cells_id = np.zeros(rest, dtype=np.int32)
         # Use multiprocessing Pool for parallel processing
         args = [
             [event, memory_cells_id[index], paths[index], config]
