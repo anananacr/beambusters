@@ -1,4 +1,3 @@
-```python
 geometry_file: Absolute path to the geometry file. Type: str
 output_hdf5_root_path: Absolute path inside the hdf5 file to create a dataset with the output results. Type: str
 
@@ -90,4 +89,3 @@ polarization: Configure the polarization correction before refining the center i
   apply_polarization_correction: Aoply polarization correction (true) or not (false). Type: bool
   axis: Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str
   value: Polarization fraction in the axis direction. Type: float
-```
