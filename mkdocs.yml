@@ -1,0 +1,11 @@
+site_name: Beambusters
+plugins: 
+- mkdocstrings:
+    handlers: 
+      python:
+        options:
+          show_submodule: true
+- search 
+nav:
+- Home: index.md
+- Documentation: api.md

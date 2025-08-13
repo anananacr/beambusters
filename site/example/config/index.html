@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Config - Beambusters</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Beambusters</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../api/" class="nav-link">Documentation</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>chunks: Number of frames in a chunk for parallel processing
+number_of_processors: Number of processors to use in parallel processing</p>
+<p>vds_format: True if the file is saved in VDS format. Type: bool
+vds_id: Identification of which detector is being used. Currently it is supported "vds_spb_jf4m" and "generic". Type: str</p>
+<p>burst_mode: Indicate if the detector is on burst mode. 
+  state: Burst/storage cell mode (true) or single cell mode (false). Type: bool.
+  storage_cell_hdf5_path: Absolute HDF5 path to the storage cell id per frame. Type: str</p>
+<p>plots:
+  flag: Indicate if plots should be saved in intermediate steps (true) or not (false). Type: bool.
+  maximum_number_of_frames: Number of frames to save plots. Type: int
+  file_name: The plots file name for saving. Type: str.
+  folder_name: The plots folder name for saving. Type: str.
+  root_path: Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/<em>/file_name_</em>.png. Type: str.
+  value_auto: Control the automatic intensity adjustment of plots level (true). The normalization used is in logarithmic scale. Type: bool.
+  value_min: If value_auto is false, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
+  value_max: If value_auto is false, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
+  axis_lim_auto: Control the automatic axis limits of the plots (true). Type: bool.
+  xlim_min: If axis_lim_auto is false, minimum coordinate of the x axis should be passed. Type: int.
+  xlim_max: If axis_lim_auto is false, maximum coordinate of the x axis should be passed. Type: int.
+  ylim_min: If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.
+  ylim_max: If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.
+  color_map: Colormap preference for the plots, for example: viridis. Type: str.
+  marker_size: Scatter marker size of center coordinates. Type: float</p>
+<p>starting_frame: Change the index of the starting frame, it will jump the first n images of the container file. Type: int.</p>
+<p>force_center: Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.
+  state: Turn force mode on (true) or off (false). Type: bool.
+  anchor_x: Turn force mode on (true) or off (false) for the x-axis. Type: bool.
+  anchor_y: Turn force mode on (true) or off (false) for the y-axis . Type: bool.
+  x: Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
+  y: Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p>search_radius: Search radius used in the FriedelPairs bblib method. Type: float</p>
+<p>pf8: peakfinder8 paratemers for Bragg peaks search. For more information, see: https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html
+  max_num_peaks: Maximum number of peaks. Type: int
+  adc_threshold: Arbitrary detector counts (ADC) threshold. Type: int
+  minimum_snr: Minimum signal-to-noise ratio (SNR). Type: float
+  min_pixel_count: Minimum number of pixels to consider a peak. Type: int
+  max_pixel_count: Maximum number of pixels to consider a peak. Type: int
+  local_bg_radius: Radius of the peaks local background, in pixels. Type: int
+  min_res: Minimum resolution region, in pixels. Type: int
+  max_res: Maximum resolution region, in pixels. Type: int</p>
+<p>offset: Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from pixel indices to the pixel center, as expected for CrystFEL.
+  x: Offset in x direction, in pixels. Type: int
+  y: Offset in y direction, in pixels. Type: int</p>
+<p>peak_region: Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.
+  min: Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
+  max: Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int</p>
+<p>outlier_distance: Don't refine the detector center with FriedelPairs method if the distance from the initial_guess (in a certain axis) to the reference_center coordinates is bigger than the outlier_distance.
+  x: Outlier distance in x
+  y: Outlier distance in y</p>
+<p>reference_center: Reference center of the diffraction pattern to filter outliers in the initial_guess calculation
+  x: Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int
+  y: Reference center pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int</p>
+<p>canny: Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see: https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html
+  sigma: Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float
+  low_threshold: Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float
+  high_threshold: Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float</p>
+<p>hough:
+  maximum_rank: Evaluate the ranked solutions of Hough transform output until the maximum ranked position. 
+  outlier_distance: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
+    x: Outlier shift in the x-axis
+    y: Outlier shift in the y-axis</p>
+<p>centering_method_for_initial_guess: Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str</p>
+<p>bragg_peaks_positions_for_center_of_mass_calculation: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int</p>
+<p>pixels_for_mask_of_bragg_peaks: Radius of Bragg peaks, in pixels. Used in the bblib pre-centering methods. Type: int</p>
+<p>skip_centering_methods: List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]
+  -  Method label you want to skip. Type: str</p>
+<p>polarization: Configure the polarization correction before refining the center in the FridelPairs bblib method. 
+  apply_polarization_correction: Aoply polarization correction (true) or not (false). Type: bool
+  axis: Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str
+  value: Polarization fraction in the axis direction. Type: float</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

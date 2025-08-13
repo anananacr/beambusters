@@ -95,6 +95,9 @@ zipp = "3.17.0"
 bblib = "2.1.8"
 
 
+[tool.poetry.group.docs.dependencies]
+mkdocstrings-python = "^1.16.12"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

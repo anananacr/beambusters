@@ -16,9 +16,18 @@ import typer
 
 app = typer.Typer()
 
-
 # Define the function for processing each file
 def process_file(args: list) -> list:
+    """
+    Process one event.
+
+    Attributes:
+        args (list): List of arguments containing the data event as np.ndarray, the memory cell id integer, the path of the event obtained from the input list, the configuration file path.
+
+    Returns:
+        results (list): Returns a list with the calculated detector center shit in x and y in mm, if it is a hit, if it was pre-centered and if the center was refined.
+    
+    """
     data, memory_cell_id, path, config = args
     filename, frame_number = path.split(" //")
     print(f"Image filename: {filename}")
@@ -58,6 +67,15 @@ def process_file(args: list) -> list:
 # Main parallel processing
 @app.command("run_centering")
 def run_centering_parallel(input: str, path_to_config: str):
+
+    """
+    Process one HDF5 file. Results will be appended to the HDF5 file given as input.
+
+    Attributes:
+        input (str): Full path to the HDF5 file.
+
+        path_to_config (str): Path to the YAML configuration file.
+    """
     config = settings.read(path_to_config)
     BeambustersParam = settings.parse(config)
     files = open(input, "r")
@@ -174,7 +192,9 @@ def run_centering_parallel(input: str, path_to_config: str):
 @app.callback()
 def main():
     """
-    Beambusters performs the detector center refinement of each diffraction patterns for serial crystallography. This app was written to process the EuXFEL data format.
+    This module perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.
+    
+    Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat. 
 
     For more information, type the following command:
 

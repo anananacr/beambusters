@@ -8,6 +8,21 @@ from bblib.models import PF8
 def calculate_detector_center_on_a_frame(
     calibrated_data: np.array, memory_cell_id: int, config: dict, PF8Config: dict
 ) -> list:
+    """
+    Calculate the detector center on a frame.
+
+    Attributes:
+        calibrated_data (np.array): Data in which the center determination will be performed.
+
+        memory_cell_id (int): Memory cell id of the frame, only necessary when operating in storage cell mode.
+
+        config (dict): Configuration dictionary containing the beambusters configuration parameters.
+
+        PF8Config (dict): Configuration dictionary containing peakfinder8 parameters.
+
+    Returns:
+        results (list): Returns a list with the calculated detector center shit in x and y in mm, if it is a hit, if it was pre-centered and if the center was refined.
+    """
     plots_info = {"filename": "", "folder_name": "", "root_path": ""}
     config["plots_flag"] = False
 
