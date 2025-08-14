@@ -1,3 +1,6 @@
+"""
+This module defines a Typer App for CLI usage.
+"""
 import h5py
 import numpy as np
 from beambusters.utils import (
@@ -26,7 +29,7 @@ def process_file(args: list) -> list:
 
     Returns:
         results (list): Returns a list with the calculated detector center shit in x and y in mm, if it is a hit, if it was pre-centered and if the center was refined.
-    
+
     """
     data, memory_cell_id, path, config = args
     filename, frame_number = path.split(" //")
@@ -192,9 +195,9 @@ def run_centering_parallel(input: str, path_to_config: str):
 @app.callback()
 def main():
     """
-    This module perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.
-    
-    Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat. 
+    This function perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.
+
+    Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat.
 
     For more information, type the following command:
 

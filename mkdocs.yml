@@ -1,11 +1,22 @@
-site_name: Beambusters
-plugins: 
-- mkdocstrings:
-    handlers: 
-      python:
-        options:
-          show_submodule: true
-- search 
+site_name: beambusters
+repo_url: https://github.com/anananacr/beambusters.git
+repo_name: beambusters
+theme:
+  name: material
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_submodule: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_root_toc_entry: false
+  - search
 nav:
-- Home: index.md
-- Documentation: api.md
+  - About beambusters: reference/index.md
+  - Examples:
+      - Configuration: example/config.md
+  - API Reference:
+      - main CLI: reference/main.md

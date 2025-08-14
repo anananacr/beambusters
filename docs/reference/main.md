@@ -1,0 +1,3 @@
+# main CLI
+
+::: beambusters.main
