@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../../reference/">
+      
+      
+        <link rel="next" href="../../reference/main/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -16,7 +20,7 @@
     
     
       
-        <title>Config - beambusters</title>
+        <title>Configuration - beambusters</title>
       
     
     
@@ -59,6 +63,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#configuration" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -91,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Config
+              Configuration
             
           </span>
         </div>
@@ -216,12 +225,133 @@
   
   
   <span class="md-ellipsis">
-    Home
+    About beambusters
     
   </span>
   
 
       </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -241,10 +371,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -257,8 +387,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             API Reference
           </label>
@@ -311,6 +441,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -329,87 +478,184 @@
   
 
 
-  <h1>Config</h1>
-
-<p>chunks: Number of frames in a chunk for parallel processing
-number_of_processors: Number of processors to use in parallel processing</p>
-<p>vds_format: True if the file is saved in VDS format. Type: bool
-vds_id: Identification of which detector is being used. Currently it is supported "vds_spb_jf4m" and "generic". Type: str</p>
-<p>burst_mode: Indicate if the detector is on burst mode. 
-  state: Burst/storage cell mode (true) or single cell mode (false). Type: bool.
-  storage_cell_hdf5_path: Absolute HDF5 path to the storage cell id per frame. Type: str</p>
-<p>plots:
-  flag: Indicate if plots should be saved in intermediate steps (true) or not (false). Type: bool.
-  maximum_number_of_frames: Number of frames to save plots. Type: int
-  file_name: The plots file name for saving. Type: str.
-  folder_name: The plots folder name for saving. Type: str.
-  root_path: Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/<em>/file_name_</em>.png. Type: str.
-  value_auto: Control the automatic intensity adjustment of plots level (true). The normalization used is in logarithmic scale. Type: bool.
-  value_min: If value_auto is false, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
-  value_max: If value_auto is false, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.
-  axis_lim_auto: Control the automatic axis limits of the plots (true). Type: bool.
-  xlim_min: If axis_lim_auto is false, minimum coordinate of the x axis should be passed. Type: int.
-  xlim_max: If axis_lim_auto is false, maximum coordinate of the x axis should be passed. Type: int.
-  ylim_min: If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.
-  ylim_max: If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.
-  color_map: Colormap preference for the plots, for example: viridis. Type: str.
+<h1 id="configuration">Configuration</h1>
+<p>The <code>config.yaml</code> file sets the configuration parameters of beambusters.</p>
+<p>geometry_file: Absolute path to the geometry file. Type: str</p>
+<p>output_hdf5_root_path: Absolute path inside the hdf5 file to create a dataset with the output results. Type: str</p>
+<p>chunks: Number of frames in a chunk for parallel processing</p>
+<p>number_of_processors: Number of processors to use in parallel processing</p>
+<p>vds_format: True if the file is saved in VDS format. Type: bool</p>
+<p>vds_id: Identification of which detector is being used. Currently it is supported "vds_spb_jf4m" and "generic". Type: str</p>
+<p>burst_mode: Indicate if the detector is on burst mode.</p>
+<p>state: Burst/storage cell mode (true) or single cell mode (false). Type: bool.</p>
+<p>storage_cell_hdf5_path: Absolute HDF5 path to the storage cell id per frame. Type: str</p>
+<p>plots:</p>
+<p>flag: Indicate if plots should be saved in intermediate steps (true) or not (false). Type: bool.</p>
+<p>maximum_number_of_frames: Number of frames to save plots. Type: int</p>
+<p>file_name: The plots file name for saving. Type: str.</p>
+<p>folder_name: The plots folder name for saving. Type: str.</p>
+<p>root_path: Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/<em>/file_name_</em>.png. Type: str.</p>
+<p>value_auto: Control the automatic intensity adjustment of plots level (true). The normalization used is in logarithmic scale. Type: bool.</p>
+<p>value_min: If value_auto is false, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.</p>
+<p>value_max: If value_auto is false, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.</p>
+<p>axis_lim_auto: Control the automatic axis limits of the plots (true). Type: bool.</p>
+<p>xlim_min: If axis_lim_auto is false, minimum coordinate of the x axis should be passed. Type: int.</p>
+<p>xlim_max: If axis_lim_auto is false, maximum coordinate of the x axis should be passed. Type: int.</p>
+<p>ylim_min: If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.</p>
+<p>ylim_max: If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.</p>
+<p>color_map: Colormap preference for the plots, for example: viridis. Type: str.
   marker_size: Scatter marker size of center coordinates. Type: float</p>
 <p>starting_frame: Change the index of the starting frame, it will jump the first n images of the container file. Type: int.</p>
-<p>force_center: Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.
-  state: Turn force mode on (true) or off (false). Type: bool.
-  anchor_x: Turn force mode on (true) or off (false) for the x-axis. Type: bool.
-  anchor_y: Turn force mode on (true) or off (false) for the y-axis . Type: bool.
-  x: Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.
-  y: Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p>force_center: Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.</p>
+<p>state: Turn force mode on (true) or off (false). Type: bool.</p>
+<p>anchor_x: Turn force mode on (true) or off (false) for the x-axis. Type: bool.</p>
+<p>anchor_y: Turn force mode on (true) or off (false) for the y-axis . Type: bool.</p>
+<p>x: Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p>y: Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
 <p>search_radius: Search radius used in the FriedelPairs bblib method. Type: float</p>
-<p>pf8: peakfinder8 paratemers for Bragg peaks search. For more information, see: https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html
-  max_num_peaks: Maximum number of peaks. Type: int
-  adc_threshold: Arbitrary detector counts (ADC) threshold. Type: int
-  minimum_snr: Minimum signal-to-noise ratio (SNR). Type: float
-  min_pixel_count: Minimum number of pixels to consider a peak. Type: int
-  max_pixel_count: Maximum number of pixels to consider a peak. Type: int
-  local_bg_radius: Radius of the peaks local background, in pixels. Type: int
-  min_res: Minimum resolution region, in pixels. Type: int
-  max_res: Maximum resolution region, in pixels. Type: int</p>
-<p>offset: Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from pixel indices to the pixel center, as expected for CrystFEL.
-  x: Offset in x direction, in pixels. Type: int
-  y: Offset in y direction, in pixels. Type: int</p>
-<p>peak_region: Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.
-  min: Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int
-  max: Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int</p>
-<p>outlier_distance: Don't refine the detector center with FriedelPairs method if the distance from the initial_guess (in a certain axis) to the reference_center coordinates is bigger than the outlier_distance.
-  x: Outlier distance in x
-  y: Outlier distance in y</p>
-<p>reference_center: Reference center of the diffraction pattern to filter outliers in the initial_guess calculation
-  x: Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int
-  y: Reference center pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int</p>
-<p>canny: Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see: https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html
-  sigma: Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float
-  low_threshold: Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float
-  high_threshold: Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float</p>
-<p>hough:
-  maximum_rank: Evaluate the ranked solutions of Hough transform output until the maximum ranked position. 
-  outlier_distance: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
+<p>pf8: peakfinder8 paratemers for Bragg peaks search. For more information, see: https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html</p>
+<p>max_num_peaks: Maximum number of peaks. Type: int</p>
+<p>adc_threshold: Arbitrary detector counts (ADC) threshold. Type: int</p>
+<p>minimum_snr: Minimum signal-to-noise ratio (SNR). Type: float</p>
+<p>min_pixel_count: Minimum number of pixels to consider a peak. Type: int</p>
+<p>max_pixel_count: Maximum number of pixels to consider a peak. Type: int</p>
+<p>local_bg_radius: Radius of the peaks local background, in pixels. Type: int</p>
+<p>min_res: Minimum resolution region, in pixels. Type: int</p>
+<p>max_res: Maximum resolution region, in pixels. Type: int</p>
+<p>offset: Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from pixel indices to the pixel center, as expected for CrystFEL.</p>
+<p>x: Offset in x direction, in pixels. Type: int</p>
+<p>y: Offset in y direction, in pixels. Type: int</p>
+<p>peak_region: Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.</p>
+<p>min: Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int</p>
+<p>max: Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int</p>
+<p>outlier_distance: Don't refine the detector center with FriedelPairs method if the distance from the initial_guess (in a certain axis) to the reference_center coordinates is bigger than the outlier_distance.</p>
+<p>x: Outlier distance in x</p>
+<p>y: Outlier distance in y</p>
+<p>reference_center: Reference center of the diffraction pattern to filter outliers in the initial_guess calculation</p>
+<p>x: Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int</p>
+<p>y: Reference center pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int</p>
+<p>canny: Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see: https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html</p>
+<p>sigma: Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float</p>
+<p>low_threshold: Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float</p>
+<p>high_threshold: Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float</p>
+<p>hough:</p>
+<p>maximum_rank: Evaluate the ranked solutions of Hough transform output until the
+  maximum ranked position.</p>
+<p>outlier_distance: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
     x: Outlier shift in the x-axis
     y: Outlier shift in the y-axis</p>
-<p>centering_method_for_initial_guess: Choose the bblib pre-centering method for the initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str</p>
+<p>centering_method_for_initial_guess: Choose the bblib pre-centering method for the</p>
+<p>initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str</p>
 <p>bragg_peaks_positions_for_center_of_mass_calculation: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int</p>
-<p>pixels_for_mask_of_bragg_peaks: Radius of Bragg peaks, in pixels. Used in the bblib pre-centering methods. Type: int</p>
-<p>skip_centering_methods: List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]
-  -  Method label you want to skip. Type: str</p>
-<p>polarization: Configure the polarization correction before refining the center in the FridelPairs bblib method. 
-  apply_polarization_correction: Aoply polarization correction (true) or not (false). Type: bool
-  axis: Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str
-  value: Polarization fraction in the axis direction. Type: float</p>
+<p>pixels_for_mask_of_bragg_peaks: Radius of Bragg peaks, in pixels. Used in the bblib</p>
+<p>pre-centering methods. Type: int</p>
+<p>skip_centering_methods: List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]</p>
+<ul>
+<li>Method label you want to skip. Type: str</li>
+</ul>
+<p>polarization: Configure the polarization correction before refining the center in the FridelPairs bblib method.</p>
+<p>apply_polarization_correction: Aoply polarization correction (true) or not (false). Type: bool</p>
+<p>axis: Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str</p>
+<p>value: Polarization fraction in the axis direction. Type: float</p>
+<h2 id="example">Example</h2>
+<pre><code class="language-yaml">geometry_file: /path/to/geom/detector.geom
+output_hdf5_root_path: /entry/data
+
+burst_mode:
+  is_active: false
+  storage_cell_hdf5_path: /entry/data/storage_cell_number
+
+chunks: 500
+number_of_processors: 16
+
+vds_format: true
+vds_id: generic
+
+plots:
+  flag: true
+  maximum_number_of_frames: 50
+  file_name: my_sample_label
+  folder_name: run_label
+  root_path: /path/to/plots
+  value_auto: false
+  value_min: 1e0
+  value_max: 5e2
+  axis_lim_auto: false
+  xlim_min: 200
+  xlim_max: 900
+  ylim_min: 200
+  ylim_max: 900
+  color_map: viridis
+  marker_size: 100
+
+force_center:
+  state: false
+  anchor_x: true
+  anchor_y: false
+  x: 554
+  y: 522
+
+search_radius: 4.5
+
+pf8:
+  max_num_peaks: 10000
+  adc_threshold: 100
+  minimum_snr: 5
+  min_pixel_count: 2
+  max_pixel_count: 10000
+  local_bg_radius: 5
+  min_res: 0
+  max_res: 600
+
+starting_frame: 500
+
+offset:
+  x: 0.5
+  y: 0.5
+
+peak_region:
+  min: 50
+  max: 70
+
+outlier_distance:
+  x: 10
+  y: 100
+
+reference_center:
+  x: 554
+  y: 522
+
+canny:
+  sigma: 3
+  low_threshold: 0.9
+  high_threshold: 0.99
+
+hough:
+  maximum_rank:
+  outlier_distance:
+    x: 10
+    y: 100
+
+centering_method_for_initial_guess: circle_detection
+
+bragg_peaks_positions_for_center_of_mass_calculation: -1
+
+pixels_for_mask_of_bragg_peaks: 4
+
+skip_centering_methods:
+  - minimize_peak_fwhm
+
+polarization:
+  apply_polarization_correction: true
+  axis: x
+  value: 0.99
+</code></pre>
 
 
 
 
 
 
-
-  
-  
 
 
 
