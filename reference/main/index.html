@@ -489,6 +489,8 @@
 
     <div class="doc doc-contents first">
 
+        <p>This module defines a Typer App for CLI usage.</p>
+
 
 
 
@@ -518,30 +520,30 @@
 
     <div class="doc doc-contents ">
 
-        <p>This module perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.</p>
-<p>Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat. </p>
+        <p>This function perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.</p>
+<p>Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat.</p>
 <p>For more information, type the following command:</p>
 <p>beambusters run_centering --help</p>
 
 
             <details class="quote">
               <summary>Source code in <code>beambusters/main.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">195</span>
 <span class="normal">196</span>
 <span class="normal">197</span>
 <span class="normal">198</span>
 <span class="normal">199</span>
 <span class="normal">200</span>
 <span class="normal">201</span>
-<span class="normal">202</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">()</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">()</span>
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This module perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.</span>
+<span class="sd">    This function perfoms the pre-processing of serial crystallography data by determining the detector center shift in each frame.</span>
 
-<span class="sd">    Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat. </span>
+<span class="sd">    Beambusters support the VDS data format of the EuXFEL. Currently, only the Jungfrau 4M of the SPB/SFX instrument can be invoked when using the VDS data fromat.</span>
 
 <span class="sd">    For more information, type the following command:</span>
 
@@ -617,10 +619,7 @@
 
             <details class="quote">
               <summary>Source code in <code>beambusters/main.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
 <span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span>
@@ -661,7 +660,10 @@
 <span class="normal">61</span>
 <span class="normal">62</span>
 <span class="normal">63</span>
-<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">args</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process one event.</span>
 
@@ -764,10 +766,7 @@
 
             <details class="quote">
               <summary>Source code in <code>beambusters/main.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 71</span>
 <span class="normal"> 72</span>
 <span class="normal"> 73</span>
 <span class="normal"> 74</span>
@@ -885,7 +884,10 @@
 <span class="normal">186</span>
 <span class="normal">187</span>
 <span class="normal">188</span>
-<span class="normal">189</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;run_centering&quot;</span><span class="p">)</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;run_centering&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">run_centering_parallel</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path_to_config</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
