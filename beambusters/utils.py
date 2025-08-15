@@ -29,9 +29,7 @@ def list_events(input_file: str, output_file: str, geometry_file: str):
 
     Attributes:
         input_file (str): Path to the file list containg the data filename.
-
         output_file (str): Path to the output file list containing the individual events path.
-
         geometry_file (str): Path to the geometry file in CrystFEL format.
 
     """
@@ -66,7 +64,6 @@ def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
 
     Attributes:
         file_name (str): Path to the HDF5 file.
-
         data_hdf5_path (str): Path pointing to the data in the HDF5 file.
 
     Returns:
@@ -90,7 +87,6 @@ def expand_data_to_hyperslab(data: np.array, data_format: str) -> np.array:
 
     Attributes:
         data (np.array): Data array corresponding to one event.
-
         data_format (str): Data format identification. Option: `vds_spb_jf4m`.
 
     Returns:
@@ -129,7 +125,6 @@ def reduce_hyperslab_to_vds(data: np.array, data_format: str) -> np.array:
 
     Attributes:
         data (np.array): Data array in the hyperslab shape.
-
         data_format (str): Data format identification. Option: `vds_spb_jf4m`.
 
     Returns:
@@ -209,7 +204,6 @@ def slab_to_hyperslab() -> dict:
 
     Returns:
         jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL, see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
-.
     """
     jf_4m_in_hyperslab = {}
     slab_name = "p1"
@@ -236,13 +230,10 @@ def get_500k_slab(slab_name: str, offset_ss: int, offset_fs: int) -> dict:
     """
     This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the upper-left corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
 
-     Attributes:
-         slab_name (str): Identification of the panel (slab).
-
-         offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
-
-         offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
-
+    Attributes:
+        slab_name (str): Identification of the panel or slab.
+        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
+        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
     Returns:
         panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
     """
@@ -304,15 +295,13 @@ def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> di
     """
     This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
 
-    Attributes:
-        slab_name (str): Identification of the panel (slab).
-
-        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
-
-        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
+    slab_name (str): Identification of the panel or slab.
+    offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
+    offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
 
     Returns:
         panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
+
     """
     return {
         f"{slab_name}": {
