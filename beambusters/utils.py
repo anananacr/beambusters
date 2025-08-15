@@ -238,9 +238,9 @@ def get_500k_slab(slab_name: str, offset_ss: int, offset_fs: int) -> dict:
      Attributes:
          slab_name (str): Identification of the panel (slab).
 
-         offset_ss (int): Number of indexes to offset the panel in the slow-scan axis.
+         offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
 
-         offset_fs (int): Number of indexes to offset the panel in the fast-scan axis.
+         offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
 
     Returns:
         panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
@@ -306,9 +306,9 @@ def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> di
     Attributes:
         slab_name (str): Identification of the panel (slab).
 
-        offset_ss (int): Number of indexes to offset the panel in the slow-scan axis.
+        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
 
-        offset_fs (int): Number of indexes to offset the panel in the fast-scan axis.
+        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
     Returns:
         panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
     """
