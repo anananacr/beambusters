@@ -24,6 +24,9 @@
     
       <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
       
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -53,7 +56,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -105,8 +113,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -372,6 +380,52 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="algorithms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    algorithms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    settings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -417,7 +471,9 @@
 
 
 <h1 id="about-beambusters">About beambusters</h1>
-<p>Welcome to the Beambusters Documentation.</p>
+<p>Beambusters is an application developed to determine the detector center directly from still diffraction patterns collected in serial crystallography experiments.</p>
+<p>Beambusters uses the methods implemented in bblib to calculate the detector center shift in each diffraction pattern, according to your initial detector geometry (CrystFEL format).</p>
+<p><img alt="Python" src="https://img.shields.io/badge/-Python-000?&amp;logo=Python" /> Python 3.10</p>
 
 
 

@@ -26,6 +26,9 @@
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
       
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
       
 
 
@@ -55,7 +58,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="cyan" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -107,8 +115,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -332,6 +340,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#parameters-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       Example
@@ -417,6 +434,52 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/algorithms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    algorithms
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    settings
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -451,6 +514,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#parameters-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameters description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       Example
@@ -479,84 +551,85 @@
 
 
 <h1 id="configuration">Configuration</h1>
+<h2 id="parameters-description">Parameters description</h2>
 <p>The <code>config.yaml</code> file sets the configuration parameters of beambusters.</p>
-<p>geometry_file: Absolute path to the geometry file. Type: str</p>
-<p>output_hdf5_root_path: Absolute path inside the hdf5 file to create a dataset with the output results. Type: str</p>
-<p>chunks: Number of frames in a chunk for parallel processing</p>
-<p>number_of_processors: Number of processors to use in parallel processing</p>
-<p>vds_format: True if the file is saved in VDS format. Type: bool</p>
-<p>vds_id: Identification of which detector is being used. Currently it is supported "vds_spb_jf4m" and "generic". Type: str</p>
-<p>burst_mode: Indicate if the detector is on burst mode.</p>
-<p>state: Burst/storage cell mode (true) or single cell mode (false). Type: bool.</p>
-<p>storage_cell_hdf5_path: Absolute HDF5 path to the storage cell id per frame. Type: str</p>
-<p>plots:</p>
-<p>flag: Indicate if plots should be saved in intermediate steps (true) or not (false). Type: bool.</p>
-<p>maximum_number_of_frames: Number of frames to save plots. Type: int</p>
-<p>file_name: The plots file name for saving. Type: str.</p>
-<p>folder_name: The plots folder name for saving. Type: str.</p>
-<p>root_path: Absolute path for the root directory for saving. Plots final state is /root_path/folder_name/<em>/file_name_</em>.png. Type: str.</p>
-<p>value_auto: Control the automatic intensity adjustment of plots level (true). The normalization used is in logarithmic scale. Type: bool.</p>
-<p>value_min: If value_auto is false, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.</p>
-<p>value_max: If value_auto is false, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.</p>
-<p>axis_lim_auto: Control the automatic axis limits of the plots (true). Type: bool.</p>
-<p>xlim_min: If axis_lim_auto is false, minimum coordinate of the x axis should be passed. Type: int.</p>
-<p>xlim_max: If axis_lim_auto is false, maximum coordinate of the x axis should be passed. Type: int.</p>
-<p>ylim_min: If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.</p>
-<p>ylim_max: If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.</p>
-<p>color_map: Colormap preference for the plots, for example: viridis. Type: str.
-  marker_size: Scatter marker size of center coordinates. Type: float</p>
-<p>starting_frame: Change the index of the starting frame, it will jump the first n images of the container file. Type: int.</p>
-<p>force_center: Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.</p>
-<p>state: Turn force mode on (true) or off (false). Type: bool.</p>
-<p>anchor_x: Turn force mode on (true) or off (false) for the x-axis. Type: bool.</p>
-<p>anchor_y: Turn force mode on (true) or off (false) for the y-axis . Type: bool.</p>
-<p>x: Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
-<p>y: Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
-<p>search_radius: Search radius used in the FriedelPairs bblib method. Type: float</p>
-<p>pf8: peakfinder8 paratemers for Bragg peaks search. For more information, see: https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html</p>
-<p>max_num_peaks: Maximum number of peaks. Type: int</p>
-<p>adc_threshold: Arbitrary detector counts (ADC) threshold. Type: int</p>
-<p>minimum_snr: Minimum signal-to-noise ratio (SNR). Type: float</p>
-<p>min_pixel_count: Minimum number of pixels to consider a peak. Type: int</p>
-<p>max_pixel_count: Maximum number of pixels to consider a peak. Type: int</p>
-<p>local_bg_radius: Radius of the peaks local background, in pixels. Type: int</p>
-<p>min_res: Minimum resolution region, in pixels. Type: int</p>
-<p>max_res: Maximum resolution region, in pixels. Type: int</p>
-<p>offset: Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from pixel indices to the pixel center, as expected for CrystFEL.</p>
-<p>x: Offset in x direction, in pixels. Type: int</p>
-<p>y: Offset in y direction, in pixels. Type: int</p>
-<p>peak_region: Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.</p>
-<p>min: Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int</p>
-<p>max: Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int</p>
-<p>outlier_distance: Don't refine the detector center with FriedelPairs method if the distance from the initial_guess (in a certain axis) to the reference_center coordinates is bigger than the outlier_distance.</p>
-<p>x: Outlier distance in x</p>
-<p>y: Outlier distance in y</p>
-<p>reference_center: Reference center of the diffraction pattern to filter outliers in the initial_guess calculation</p>
-<p>x: Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int</p>
-<p>y: Reference center pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int</p>
-<p>canny: Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see: https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html</p>
-<p>sigma: Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float</p>
-<p>low_threshold: Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float</p>
-<p>high_threshold: Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float</p>
-<p>hough:</p>
-<p>maximum_rank: Evaluate the ranked solutions of Hough transform output until the
-  maximum ranked position.</p>
-<p>outlier_distance: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
-    x: Outlier shift in the x-axis
-    y: Outlier shift in the y-axis</p>
-<p>centering_method_for_initial_guess: Choose the bblib pre-centering method for the</p>
-<p>initial_guess assignment. Options: 'center_of_mass' or 'circle_detection'. Type: str</p>
-<p>bragg_peaks_positions_for_center_of_mass_calculation: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int</p>
-<p>pixels_for_mask_of_bragg_peaks: Radius of Bragg peaks, in pixels. Used in the bblib</p>
-<p>pre-centering methods. Type: int</p>
-<p>skip_centering_methods: List of bblib pre-centering methods you don't want to be executed. Options: 'center_of_mass', 'circle_detection' or 'friedel_pairs'. Type: List[str]</p>
+<p><strong>geometry_file</strong>: Absolute path to the geometry file. Type: str.</p>
+<p><strong>output_hdf5_root_path</strong>: Absolute path inside the hdf5 file to create a dataset with the output results. Type: str.</p>
+<p><strong>chunks</strong>: Number of frames in a chunk for parallel processing. Type: int</p>
+<p><strong>number_of_processors</strong>: Number of processors to use in parallel processing. Type: int.</p>
+<p><strong>vds_format</strong>: True if the file is saved in VDS format. Type: bool.</p>
+<p><strong>vds_id</strong>: Identification of which detector is being used. Currently it is supported <code>vds_spb_jf4m</code> and <code>generic</code>. Type: str.</p>
+<p><strong>burst_mode</strong>: Indicate if the detector is on burst mode.</p>
+<p><strong>state</strong>: Burst or storage cell mode (true) or single cell mode (false). Type: bool.</p>
+<p><strong>storage_cell_hdf5_path</strong>: Absolute HDF5 path to the storage cell id per frame. Type: str</p>
+<p><strong>plots</strong>:</p>
+<p><strong>flag</strong>: Indicate if plots should be saved in intermediate steps (true) or not (false). Type: bool.</p>
+<p><strong>maximum_number_of_frames</strong>: Number of frames to save plots. Type: int.</p>
+<p><strong>file_name</strong>: The plots file name for saving. Type: str.</p>
+<p><strong>folder_name</strong>: The plots folder name for saving. Type: str.</p>
+<p><strong>root_path</strong>: Absolute path for the root directory for saving. Plots output are <code>/root_path/folder_name/*/file_name_*.png</code>. Type: str.</p>
+<p><strong>value_auto</strong>: Control the automatic intensity adjustment of plots level (true). The normalization used is in logarithmic scale. Type: bool.</p>
+<p><strong>value_min</strong>: If value_auto is false, minimum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.</p>
+<p><strong>value_max</strong>: If value_auto is false, maximum value of the intensity level should be passed. The normalization used is in logarithmic scale. Type: int.</p>
+<p><strong>axis_lim_auto</strong>: Control the automatic axis limits of the plots (true). Type: bool.</p>
+<p><strong>xlim_min</strong>: If axis_lim_auto is false, minimum coordinate of the x axis should be passed. Type: int.</p>
+<p><strong>xlim_max</strong>: If axis_lim_auto is false, maximum coordinate of the x axis should be passed. Type: int.</p>
+<p><strong>ylim_min</strong>: If axis_lim_auto is false, minimum coordinate of the y axis should be passed. Type: int.</p>
+<p><strong>ylim_max</strong>: If axis_lim_auto is false, maximum coordinate of the y axis should be passed. Type: int.</p>
+<p><strong>color_map</strong>: Colormap preference for the plots, for example, viridis. Type: str.</p>
+<p><strong>marker_size</strong>: Scatter marker size of center coordinates. Type: float.</p>
+<p><strong>starting_frame</strong>: Change the index of the starting frame, it will jump the first n images of the container file. Type: int.</p>
+<p><strong>force_center</strong>: Anchor the initial guess to a fixed point, if enabled this option will override other bblib pre-centering methods.</p>
+<p><strong>state</strong>: Turn force mode on (true) or off (false). Type: bool.</p>
+<p><strong>anchor_x</strong>: Turn force mode on (true) or off (false) for the x-axis. Type: bool.</p>
+<p><strong>anchor_y</strong>: Turn force mode on (true) or off (false) for the y-axis. Type: bool.</p>
+<p><strong>x</strong>: Initial guess pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p><strong>y</strong>: Initial guess pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p><strong>search_radius</strong>: Search radius used in the FriedelPairs bblib method. Type: float.</p>
+<p><strong>pf8</strong>: peakfinder8 paratemers for Bragg peaks search. For more information, see the <a href="https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html">Cheetah Documentation</a>.</p>
+<p><strong>max_num_peaks</strong>: Maximum number of peaks. Type: int.</p>
+<p><strong>adc_threshold</strong>: Arbitrary detector counts (ADC) threshold. Type: int.</p>
+<p><strong>minimum_snr</strong>: Minimum signal-to-noise ratio (SNR). Type: float.</p>
+<p><strong>min_pixel_count</strong>: Minimum number of pixels to consider a peak. Type: int.</p>
+<p><strong>max_pixel_count</strong>: Maximum number of pixels to consider a peak. Type: int.</p>
+<p><strong>local_bg_radius</strong>: Radius of the peaks local background, in pixels. Type: int.</p>
+<p><strong>min_res</strong>: Minimum resolution region, in pixels. Type: int.</p>
+<p><strong>max_res</strong>: Maximum resolution region, in pixels. Type: int.</p>
+<p><strong>offset</strong>: Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from pixel indices to the pixel center, as expected for CrystFEL.</p>
+<p><strong>x</strong>: Offset in x direction, in pixels. Type: int.</p>
+<p><strong>y</strong>: Offset in y direction, in pixels. Type: int.</p>
+<p><strong>peak_region</strong>: Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.</p>
+<p><strong>min</strong>: Minimum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int.</p>
+<p><strong>max</strong>: Maximum distance, in pixels, of the background peak to the center of the diffraction pattern. Type: int.</p>
+<p><strong>outlier_distance</strong>: Don't refine the detector center with FriedelPairs method if the distance from the initial_guess (in a certain axis) to the reference_center coordinates is bigger than the outlier_distance.</p>
+<p><strong>x</strong>: Outlier distance in x. Type: float.</p>
+<p><strong>y</strong>: Outlier distance in y. Type: float.</p>
+<p><strong>reference_center</strong>: Reference center of the diffraction pattern to filter outliers in the initial_guess calculation.</p>
+<p><strong>x</strong>: Reference center pixel coordinates in x of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p><strong>y</strong>: Reference center pixel coordinates in y of the assembled data, i.e. image stored in a single array with the detector panels' geometric transformations applied, according to CrystFEL referential convention. Type: int.</p>
+<p><strong>canny</strong>: Controls skimage.feature.canny function, used in the CircleDetection bblib method. For more information, see the <a href="https://scikit-image.org/docs/stable/auto_examples/edges/plot_circular_elliptical_hough_transform.html&quot;">Scikit-image Documentation</a>.</p>
+<p><strong>sigma</strong>: Standard deviation of the Gaussian filter, used in the Canny function. Usually, 3 is good. Type: float.</p>
+<p><strong>low_threshold</strong>: Lower bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude image. Threshold must be in the range [0, 1). Usually, 0.9 is good. Type: float.</p>
+<p><strong>high_threshold</strong>: Upper bound for hysteresis thresholding (linking edges), as quantiles of the edge magnitude images. Threshold must be in the range [0, 1). Usually, 0.99 is good. Type: float.</p>
+<p><strong>hough</strong>:</p>
+<p><strong>maximum_rank</strong>: Evaluate the ranked solutions of Hough transform output until the
+  maximum ranked position. Type: int.</p>
+<p><strong>outlier_distance</strong>: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.</p>
+<pre><code>x: Outlier shift in the x-axis. Type: int.
+
+y: Outlier shift in the y-axis. Type: int.
+</code></pre>
+<p><strong>centering_method_for_initial_guess</strong>: Choose the bblib pre-centering method for the initial_guess assignment. The options available are <code>center_of_mass</code> or <code>circle_detection</code>. Type: str.</p>
+<p><strong>bragg_peaks_positions_for_center_of_mass_calculation</strong>: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int</p>
+<p><strong>pixels_for_mask_of_bragg_peaks</strong>: Radius of the Bragg peaks, in pixels, to be masked in the pre-centering step. Type: int.</p>
+<p><strong>skip_centering_methods</strong>: List of bblib pre-centering methods to be skipped. Options: <code>center_of_mass</code>, <code>circle_detection</code> or <code>friedel_pairs</code>. Type: List[str]</p>
 <ul>
-<li>Method label you want to skip. Type: str</li>
+<li>Method label you want to skip. Type: str.</li>
 </ul>
-<p>polarization: Configure the polarization correction before refining the center in the FridelPairs bblib method.</p>
-<p>apply_polarization_correction: Aoply polarization correction (true) or not (false). Type: bool</p>
-<p>axis: Polarization axis direction. Options: 'x' and 'y', as defined by the CrystFEL referential convention. Type: str</p>
-<p>value: Polarization fraction in the axis direction. Type: float</p>
+<p><strong>polarization</strong>: Configure the polarization correction before refining the center in the FridelPairs bblib method.</p>
+<p><strong>apply_polarization_correction</strong>: Aoply polarization correction (true) or not (false). Type: bool</p>
+<p><strong>axis</strong>: Polarization axis direction. Options: <code>x</code> and <code>y</code>, as defined by the CrystFEL referential convention. Type: str.</p>
+<p><strong>value</strong>: Polarization fraction in the axis direction. Type: float.</p>
 <h2 id="example">Example</h2>
 <pre><code class="language-yaml">geometry_file: /path/to/geom/detector.geom
 output_hdf5_root_path: /entry/data
