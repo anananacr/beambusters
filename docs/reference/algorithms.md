@@ -1,3 +1,3 @@
-# main CLI
+# Algorithms
 
 ::: beambusters.algorithms

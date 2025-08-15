@@ -1,9 +1,22 @@
+"""
+This module defines auxiliary funtions to process the data.
+"""
+
 import sys
 import h5py
 import numpy as np
 
 
 def centering_converged(center: tuple) -> bool:
+    """
+    This function receives the detector center coordinates and checks if the centering converged.
+
+    Attributes:
+        center (tuple): Detector center coordinates determined by onxe of the bblib centering methods.
+
+    Returns:
+        centering_flag (bool): True if the centering converged, False if the centering didn't converge.
+    """
     if center[0] == -1 and center[1] == -1:
         return False
     else:
@@ -11,6 +24,18 @@ def centering_converged(center: tuple) -> bool:
 
 
 def list_events(input_file: str, output_file: str, geometry_file: str):
+    """
+    Expands a list of filenames into a list of individual events. Similar to the [list_events](https://www.desy.de/~twhite/crystfel/manual-list_events.html#:~:text=list_events%20expands%20a%20list%20of,than%20just%20processing%20all%20events.) in CrystFEL.
+
+    Attributes:
+        input_file (str): Path to the file list containg the data filename.
+
+        output_file (str): Path to the output file list containing the individual events path.
+
+        geometry_file (str): Path to the geometry file in CrystFEL format.
+
+    """
+
     geometry_txt = open(geometry_file, "r").readlines()
     data_hdf5_path = [
         x.split(" = ")[-1][:-1] for x in geometry_txt if x.split(" = ")[0] == "data"
@@ -36,7 +61,19 @@ def list_events(input_file: str, output_file: str, geometry_file: str):
 
 
 def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
+    """
+    Expands the events of an HDF5 file by specifying the HDF5 path to the data.
 
+    Attributes:
+        file_name (str): Path to the HDF5 file.
+
+        data_hdf5_path (str): Path pointing to the data in the HDF5 file.
+
+    Returns:
+        events_list (np.ndarray): Array containing the number each listed event.
+
+        num_events (int): Total number of events in the HDF5 file.
+    """
     with h5py.File(f"{file_name}", "r") as f:
         num_events = (f[data_hdf5_path]).shape[0]
 
@@ -46,7 +83,19 @@ def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
 
 
 def expand_data_to_hyperslab(data: np.array, data_format: str) -> np.array:
+    """
+    This function takes the data in its original shape (VDS) and map each detector panel into the hyperslab that contains all detector panels in a single Numpy array.
 
+    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+
+    Attributes:
+        data (np.array): Data array corresponding to one event.
+
+        data_format (str): Data format identification. Option: `vds_spb_jf4m`.
+
+    Returns:
+        hyperslab (np.array): Data transformed from the original shape (VDS) to a single array containing all the detector panels.
+    """
     if data_format == "vds_spb_jf4m":
         hyperslab = np.zeros((2048, 2048), np.int32)
         expected_shape = (8, 512, 1024)
@@ -73,7 +122,20 @@ def expand_data_to_hyperslab(data: np.array, data_format: str) -> np.array:
 
 
 def reduce_hyperslab_to_vds(data: np.array, data_format: str) -> np.array:
+    """
+    This function takes the data in the hyperslab shape and reduce it to the original shape (VDS).
 
+    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+
+    Attributes:
+        data (np.array): Data array in the hyperslab shape.
+
+        data_format (str): Data format identification. Option: `vds_spb_jf4m`.
+
+    Returns:
+        vds_slab (np.array): Data transformed from the hyperslab shape to the original shape (VDS).
+
+    """
     if data_format == "vds_spb_jf4m":
         expected_shape = (2048, 2048)
         vds_slab = np.zeros((1, 8, 512, 1024), np.int32)
@@ -96,6 +158,17 @@ def reduce_hyperslab_to_vds(data: np.array, data_format: str) -> np.array:
 
 
 def translate_geom_to_hyperslab(geometry_filename: str) -> str:
+    """
+    Translates the geometry file (CrystFEL format), written for data in the original shape (VDS), to perform the same operations in the panels when using the data in the hyperslab shape.
+
+    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+
+    Attributes:
+        geometry_filename (str): Path to the geometry file in CrystFEL format.
+
+    Returns:
+        output_filename (str): Path to the geometry file, in CrystFEL format, for operating the hyperslab.
+    """
     input_file = open(geometry_filename, "r")
     lines = input_file.readlines()
     input_file.close()
@@ -131,7 +204,12 @@ def translate_geom_to_hyperslab(geometry_filename: str) -> str:
 
 
 def slab_to_hyperslab() -> dict:
-    ## Jungfrau4M SPB EuXFEL
+    """
+    Creates a dictionary containing all the panels of the detector and their corresponding slow-scan and fast-scan axis limits in the hyperslab.
+
+    Returns:
+        jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL.
+    """
     jf_4m_in_hyperslab = {}
     slab_name = "p1"
     jf_4m_in_hyperslab.update(get_500k_slab(slab_name, 0, 0))
@@ -154,6 +232,19 @@ def slab_to_hyperslab() -> dict:
 
 
 def get_500k_slab(slab_name: str, offset_ss: int, offset_fs: int) -> dict:
+    """
+    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the upper-left corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
+
+     Attributes:
+         slab_name (str): Identification of the panel (slab).
+
+         offset_ss (int): Number of indexes to offset the panel in the slow-scan axis.
+
+         offset_fs (int): Number of indexes to offset the panel in the fast-scan axis.
+
+    Returns:
+        panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
+    """
     return {
         f"{slab_name}": {
             "a1": {
@@ -209,6 +300,18 @@ def get_500k_slab(slab_name: str, offset_ss: int, offset_fs: int) -> dict:
 
 
 def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> dict:
+    """
+    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
+
+    Attributes:
+        slab_name (str): Identification of the panel (slab).
+
+        offset_ss (int): Number of indexes to offset the panel in the slow-scan axis.
+
+        offset_fs (int): Number of indexes to offset the panel in the fast-scan axis.
+    Returns:
+        panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
+    """
     return {
         f"{slab_name}": {
             "a1": {
@@ -266,11 +369,28 @@ def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> di
 def get_slab_coordinates_in_hyperslab(
     slab_name: str, asic_name: str, key: str, detector_layout: dict
 ) -> int:
+    """
+    This function return the value of a key (`min_ss`, `max_ss`, `min_fs` or `max_fs`) from one detector layout dictionary, a slab identification and an asic identification.
+
+    Returns:
+        value (int): Value of the slow-scan and fast-scan limits in the hyperslab for a given detector layout, panel and asic.
+    """
+
     return detector_layout[f"{slab_name}"][f"{asic_name}"][f"{key}"]
 
 
 def create_simple_vds(input_file: str, data_hdf5_path: str, output_file: str):
+    """
+    This function shows an example how to create a file in the VDS format pointing a virtual dataset to a source. For European XFEL users there is a function in the [Extra-data library](https://rtd.xfel.eu/docs/data-analysis-user-documentation/en/latest/software/hdf5-virtualise/#how-to-make-virtual-cxi-data-files) to create VDS files of the measured runs.
 
+    Attributes:
+        input_file (str): Path to the source file.
+
+        data_hdf5_path (str): HDF5 path to the data in the source file.
+
+        output_file (str): Path to the VDS file.
+
+    """
     with h5py.File(input_file, "r") as g:
         shape = g[data_hdf5_path].shape
         layouts = h5py.VirtualLayout(shape, dtype=np.int32)

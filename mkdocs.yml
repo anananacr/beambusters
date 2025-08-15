@@ -24,3 +24,4 @@ nav:
       - main CLI: reference/main.md
       - algorithms: reference/algorithms.md
       - settings: reference/settings.md
+      - utils: reference/utils.md

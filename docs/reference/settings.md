@@ -1,3 +1,3 @@
-# main CLI
+# Settings
 
 ::: beambusters.settings
