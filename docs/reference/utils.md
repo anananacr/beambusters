@@ -1,3 +1,3 @@
-# Utilities
+# Utils
 
 ::: beambusters.utils

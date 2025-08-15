@@ -1,12 +1,15 @@
 site_name: beambusters
 repo_url: https://github.com/anananacr/beambusters.git
 repo_name: beambusters
+
 theme:
   name: material
   favicon: assets/icon.png
   logo: assets/icon.png
   palette:
     primary: cyan
+  icon:
+    repo: fontawesome/brands/github
 extra_css:
   - stylesheets/typewriter.css
 plugins:
