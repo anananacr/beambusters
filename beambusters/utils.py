@@ -125,7 +125,7 @@ def reduce_hyperslab_to_vds(data: np.array, data_format: str) -> np.array:
     """
     This function takes the data in the hyperslab shape and reduce it to the original shape (VDS).
 
-    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+    Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
 
     Attributes:
         data (np.array): Data array in the hyperslab shape.
@@ -161,7 +161,7 @@ def translate_geom_to_hyperslab(geometry_filename: str) -> str:
     """
     Translates the geometry file (CrystFEL format), written for data in the original shape (VDS), to perform the same operations in the panels when using the data in the hyperslab shape.
 
-    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+    Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
 
     Attributes:
         geometry_filename (str): Path to the geometry file in CrystFEL format.
@@ -208,7 +208,8 @@ def slab_to_hyperslab() -> dict:
     Creates a dictionary containing all the panels of the detector and their corresponding slow-scan and fast-scan axis limits in the hyperslab.
 
     Returns:
-        jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL.
+        jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL, see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+.
     """
     jf_4m_in_hyperslab = {}
     slab_name = "p1"
@@ -309,6 +310,7 @@ def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> di
         offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
 
         offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
+
     Returns:
         panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
     """
