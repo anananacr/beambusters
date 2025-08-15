@@ -69,24 +69,24 @@ def process_file(args: list) -> list:
 
 # Main parallel processing
 @app.command("run_centering")
-def run_centering_parallel(input: str, path_to_config: str):
+def run_centering_parallel(input_file: str, path_to_config: str):
 
     """
-    Process one HDF5 file. Results will be appended to the HDF5 file given as input.
+    Process one HDF5 file. Results will be appended to the HDF5 file given as input file.
 
     Attributes:
-        input (str): Full path to the HDF5 file.
+        input_file (str): Full path to the HDF5 file.
 
         path_to_config (str): Path to the YAML configuration file.
     """
     config = settings.read(path_to_config)
     BeambustersParam = settings.parse(config)
-    files = open(input, "r")
+    files = open(input_file, "r")
     paths = files.readlines()
     files.close()
 
     if len(paths[0][:-1].split(" //")) == 1:
-        list_name = input
+        list_name = input_file
         events_list_file = (
             f"{list_name.split('.')[0]}_events.lst{list_name.split('.lst')[-1]}"
         )

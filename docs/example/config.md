@@ -132,13 +132,13 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
     y: Outlier shift in the y-axis. Type: int.
 
-**centering_method_for_initial_guess**: Choose the bblib pre-centering method for the initial_guess assignment. The options available are `center_of_mass` or `circle_detection`. Type: str.
+**centering_method_for_initial_guess**: Choose the bblib pre-centering method for the initial_guess assignment. The options available are `center_of_mass`, `circle_detection` or `manual_input`. Type: str.
 
 **bragg_peaks_positions_for_center_of_mass_calculation**: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
 
 **pixels_for_mask_of_bragg_peaks**: Radius of the Bragg peaks, in pixels, to be masked in the pre-centering step. Type: int.
 
-**skip_centering_methods**: List of bblib pre-centering methods to be skipped. Options: `center_of_mass`, `circle_detection` or `friedel_pairs`. Type: List[str]
+**skip_centering_methods**: List of bblib pre-centering methods to be skipped. Options: `center_of_mass`, `circle_detection` , `minimize_peak_fwhm` or `friedel_pairs`. Type: List[str]
 
   - Method label you want to skip. Type: str.
 
@@ -238,7 +238,7 @@ bragg_peaks_positions_for_center_of_mass_calculation: -1
 pixels_for_mask_of_bragg_peaks: 4
 
 skip_centering_methods:
-  - minimize_peak_fwhm
+  - center_of_mass
 
 polarization:
   apply_polarization_correction: true
