@@ -642,10 +642,10 @@
 
 y: Outlier shift in the y-axis. Type: int.
 </code></pre>
-<p><strong>centering_method_for_initial_guess</strong>: Choose the bblib pre-centering method for the initial_guess assignment. The options available are <code>center_of_mass</code> or <code>circle_detection</code>. Type: str.</p>
+<p><strong>centering_method_for_initial_guess</strong>: Choose the bblib pre-centering method for the initial_guess assignment. The options available are <code>center_of_mass</code>, <code>circle_detection</code> or <code>manual_input</code>. Type: str.</p>
 <p><strong>bragg_peaks_positions_for_center_of_mass_calculation</strong>: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int</p>
 <p><strong>pixels_for_mask_of_bragg_peaks</strong>: Radius of the Bragg peaks, in pixels, to be masked in the pre-centering step. Type: int.</p>
-<p><strong>skip_centering_methods</strong>: List of bblib pre-centering methods to be skipped. Options: <code>center_of_mass</code>, <code>circle_detection</code> or <code>friedel_pairs</code>. Type: List[str]</p>
+<p><strong>skip_centering_methods</strong>: List of bblib pre-centering methods to be skipped. Options: <code>center_of_mass</code>, <code>circle_detection</code> , <code>minimize_peak_fwhm</code> or <code>friedel_pairs</code>. Type: List[str]</p>
 <ul>
 <li>Method label you want to skip. Type: str.</li>
 </ul>
@@ -739,7 +739,7 @@ bragg_peaks_positions_for_center_of_mass_calculation: -1
 pixels_for_mask_of_bragg_peaks: 4
 
 skip_centering_methods:
-  - minimize_peak_fwhm
+  - center_of_mass
 
 polarization:
   apply_polarization_correction: true

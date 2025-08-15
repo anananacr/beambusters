@@ -865,14 +865,14 @@
 
 
 <h3 id="beambusters.main.run_centering_parallel" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">run_centering_parallel</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">path_to_config</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">run_centering_parallel</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">path_to_config</span><span class="p">)</span></code>
 
 </h3>
 
 
     <div class="doc doc-contents ">
 
-        <p>Process one HDF5 file. Results will be appended to the HDF5 file given as input.</p>
+        <p>Process one HDF5 file. Results will be appended to the HDF5 file given as input file.</p>
 
 
 <p><span class="doc-section-title">Attributes:</span></p>
@@ -886,7 +886,7 @@
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.main.run_centering_parallel.input">input</span></code></td>
+            <td><code><span title="beambusters.main.run_centering_parallel.input_file">input_file</span></code></td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1035,24 +1035,24 @@
 <span class="normal">190</span>
 <span class="normal">191</span>
 <span class="normal">192</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;run_centering&quot;</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">run_centering_parallel</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path_to_config</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">run_centering_parallel</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path_to_config</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Process one HDF5 file. Results will be appended to the HDF5 file given as input.</span>
+<span class="sd">    Process one HDF5 file. Results will be appended to the HDF5 file given as input file.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        input (str): Full path to the HDF5 file.</span>
+<span class="sd">        input_file (str): Full path to the HDF5 file.</span>
 
 <span class="sd">        path_to_config (str): Path to the YAML configuration file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">config</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path_to_config</span><span class="p">)</span>
     <span class="n">BeambustersParam</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
     <span class="n">files</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; //&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">list_name</span> <span class="o">=</span> <span class="nb">input</span>
+        <span class="n">list_name</span> <span class="o">=</span> <span class="n">input_file</span>
         <span class="n">events_list_file</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">list_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">_events.lst</span><span class="si">{</span><span class="n">list_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.lst&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
