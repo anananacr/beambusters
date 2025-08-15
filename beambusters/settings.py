@@ -1,3 +1,7 @@
+"""
+This module sets the configuration parameters from the YAML configuration file.
+"""
+
 import yaml
 from pathlib import Path
 import sys
@@ -6,6 +10,15 @@ from datetime import datetime
 
 
 def read(path: str) -> dict:
+    """
+    This function reads a YAML configuration file from a specified path and loads it as a dictionary.
+
+    Attributes:
+        path (str): The path to the YAML configuration file.
+
+    Returns:
+        config (dict): A configuration dictionary containing the information of the YAML configuration file.
+    """
     path = Path(path)
     config = path.read_text()
     config = yaml.safe_load(config)
@@ -13,7 +26,15 @@ def read(path: str) -> dict:
 
 
 def parse(config: dict) -> dict:
+    """
+    This function receives the configuration dictionary loaded from the YAML and parse it into the format expected by beambusters.
 
+    Attributes:
+        config (dict): A configuration dictionary loaded from the YAML file.
+
+    Returns:
+        config (dict): A configuration dictionary in a format expected by beambusters.
+    """
     return {
         "pf8_max_num_peaks": config["pf8"]["max_num_peaks"],
         "pf8_adc_threshold": config["pf8"]["adc_threshold"],
@@ -61,6 +82,15 @@ def parse(config: dict) -> dict:
 
 
 def get_pf8_info(config: dict):
+    """
+    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.
+
+    Attributes:
+        config (dict): A configuration dictionary in the format expected by beambusters.
+
+    Returns:
+        pf8info (PF8Info): A PF8Info object.
+    """
     return PF8Info(
         max_num_peaks=config["pf8"]["max_num_peaks"],
         adc_threshold=config["pf8"]["adc_threshold"],
@@ -74,6 +104,15 @@ def get_pf8_info(config: dict):
 
 
 def parse_plots_info(config: dict) -> dict:
+    """
+    This function extracts plot parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary of plot settings.
+
+    Attributes:
+        config (dict): A configuration dictionary (in the format expected by beambusters).
+
+    Returns:
+        plots_info (dict): A dictionary containg the plot settings.
+    """
     return {
         "file_name": config["plots"]["filename"],
         "folder_name": config["plots"]["folder_name"],

@@ -3,6 +3,8 @@ repo_url: https://github.com/anananacr/beambusters.git
 repo_name: beambusters
 theme:
   name: material
+  palette:
+    primary: cyan
 
 plugins:
   - mkdocstrings:
@@ -20,3 +22,5 @@ nav:
       - Configuration: example/config.md
   - API Reference:
       - main CLI: reference/main.md
+      - algorithms: reference/algorithms.md
+      - settings: reference/settings.md

@@ -10,7 +10,7 @@ from beambusters.utils import (
 )
 from beambusters.algorithms import calculate_detector_center_on_a_frame
 from beambusters import settings
-from multiprocessing import Pool, set_start_method
+from multiprocessing import Pool
 import os
 from bblib.models import PF8
 import math
@@ -25,10 +25,10 @@ def process_file(args: list) -> list:
     Process one event.
 
     Attributes:
-        args (list): List of arguments containing the data event as np.ndarray, the memory cell id integer, the path of the event obtained from the input list, the configuration file path.
+        args (list): A list of arguments containing the data event as np.ndarray, the memory cell id integer, the path of the event obtained from the input list, the configuration file path.
 
     Returns:
-        results (list): Returns a list with the calculated detector center shit in x and y in mm, if it is a hit, if it was pre-centered and if the center was refined.
+        results (list): A list with the calculated detector center shit in x and y in mm, if it is a hit, if it was pre-centered and if the center was refined.
 
     """
     data, memory_cell_id, path, config = args
