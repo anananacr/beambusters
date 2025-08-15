@@ -958,9 +958,7 @@
 
             <details class="quote">
               <summary>Source code in <code>beambusters/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">382</span>
-<span class="normal">383</span>
-<span class="normal">384</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">384</span>
 <span class="normal">385</span>
 <span class="normal">386</span>
 <span class="normal">387</span>
@@ -979,7 +977,9 @@
 <span class="normal">400</span>
 <span class="normal">401</span>
 <span class="normal">402</span>
-<span class="normal">403</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_simple_vds</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_hdf5_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_simple_vds</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_hdf5_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function shows an example how to create a file in the VDS format pointing a virtual dataset to a source. For European XFEL users there is a function in the [Extra-data library](https://rtd.xfel.eu/docs/data-analysis-user-documentation/en/latest/software/hdf5-virtualise/#how-to-make-virtual-cxi-data-files) to create VDS files of the measured runs.</span>
 
@@ -1207,8 +1207,7 @@
 
             <details class="quote">
               <summary>Source code in <code>beambusters/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">234</span>
-<span class="normal">235</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">235</span>
 <span class="normal">236</span>
 <span class="normal">237</span>
 <span class="normal">238</span>
@@ -1272,7 +1271,8 @@
 <span class="normal">296</span>
 <span class="normal">297</span>
 <span class="normal">298</span>
-<span class="normal">299</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_500k_slab</span><span class="p">(</span><span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset_ss</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset_fs</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="normal">299</span>
+<span class="normal">300</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_500k_slab</span><span class="p">(</span><span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset_ss</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset_fs</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the upper-left corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</span>
 
@@ -1403,14 +1403,34 @@
           </tr>
       </tbody>
     </table>
-        <p>Returns:
-    panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>panel</code></td>            <td>
+                  <code><span title="dict">dict</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
             <details class="quote">
               <summary>Source code in <code>beambusters/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">302</span>
-<span class="normal">303</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">303</span>
 <span class="normal">304</span>
 <span class="normal">305</span>
 <span class="normal">306</span>
@@ -1473,7 +1493,9 @@
 <span class="normal">363</span>
 <span class="normal">364</span>
 <span class="normal">365</span>
-<span class="normal">366</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_500k_slab_inverted</span><span class="p">(</span><span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset_ss</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset_fs</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_500k_slab_inverted</span><span class="p">(</span><span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset_ss</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset_fs</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</span>
 
@@ -1483,6 +1505,7 @@
 <span class="sd">        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.</span>
 
 <span class="sd">        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.</span>
+
 <span class="sd">    Returns:</span>
 <span class="sd">        panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1583,9 +1606,7 @@
 
             <details class="quote">
               <summary>Source code in <code>beambusters/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">369</span>
-<span class="normal">370</span>
-<span class="normal">371</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">371</span>
 <span class="normal">372</span>
 <span class="normal">373</span>
 <span class="normal">374</span>
@@ -1593,7 +1614,9 @@
 <span class="normal">376</span>
 <span class="normal">377</span>
 <span class="normal">378</span>
-<span class="normal">379</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_slab_coordinates_in_hyperslab</span><span class="p">(</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_slab_coordinates_in_hyperslab</span><span class="p">(</span>
     <span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">asic_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">detector_layout</span><span class="p">:</span> <span class="nb">dict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1890,7 +1913,7 @@
     <div class="doc doc-contents ">
 
         <p>This function takes the data in the hyperslab shape and reduce it to the original shape (VDS).</p>
-<p>Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
+<p>Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
 
 
 <p><span class="doc-section-title">Attributes:</span></p>
@@ -1991,7 +2014,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes the data in the hyperslab shape and reduce it to the original shape (VDS).</span>
 
-<span class="sd">    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
+<span class="sd">    Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        data (np.array): Data array in the hyperslab shape.</span>
@@ -2038,30 +2061,12 @@
 
     <div class="doc doc-contents ">
 
-        <p>Creates a dictionary containing all the panels of the detector and their corresponding slow-scan and fast-scan axis limits in the hyperslab.</p>
+        <pre><code>Creates a dictionary containing all the panels of the detector and their corresponding slow-scan and fast-scan axis limits in the hyperslab.
 
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-<th>Name</th>          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-<td><code>jf_4m_in_hyperslab</code></td>            <td>
-                  <code><span title="dict">dict</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+Returns:
+    jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL, see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
+</code></pre>
+<p>.</p>
 
 
             <details class="quote">
@@ -2091,12 +2096,14 @@
 <span class="normal">228</span>
 <span class="normal">229</span>
 <span class="normal">230</span>
-<span class="normal">231</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">slab_to_hyperslab</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="normal">231</span>
+<span class="normal">232</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">slab_to_hyperslab</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a dictionary containing all the panels of the detector and their corresponding slow-scan and fast-scan axis limits in the hyperslab.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL.</span>
+<span class="sd">        jf_4m_in_hyperslab (dict): A dictionary containg the panels of the Jungfrau 4M of the SPB/SFX instrument of the European XFEL, see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
+<span class="sd">.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">jf_4m_in_hyperslab</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">slab_name</span> <span class="o">=</span> <span class="s2">&quot;p1&quot;</span>
@@ -2135,7 +2142,7 @@
     <div class="doc doc-contents ">
 
         <p>Translates the geometry file (CrystFEL format), written for data in the original shape (VDS), to perform the same operations in the panels when using the data in the hyperslab shape.</p>
-<p>Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
+<p>Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
 
 
 <p><span class="doc-section-title">Attributes:</span></p>
@@ -2235,7 +2242,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Translates the geometry file (CrystFEL format), written for data in the original shape (VDS), to perform the same operations in the panels when using the data in the hyperslab shape.</span>
 
-<span class="sd">    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
+<span class="sd">    Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        geometry_filename (str): Path to the geometry file in CrystFEL format.</span>
