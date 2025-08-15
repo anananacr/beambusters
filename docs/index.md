@@ -1,3 +1,5 @@
-Welcome to the Beambusters Documentation!
+<h1><center><span class="type" style="--n:53">Welcome to the beambusters documentation!</span></h1><center>
 
-<img src="https://em-content.zobj.net/source/apple/237/ghost_1f47b.png" width="64" height="64" alt="Ghost">
+<div class="wobble" id="container">
+<img src="assets/icon.png" width="60%" height="64" alt="Ghost" >
+</div>

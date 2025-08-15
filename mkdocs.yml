@@ -3,9 +3,12 @@ repo_url: https://github.com/anananacr/beambusters.git
 repo_name: beambusters
 theme:
   name: material
+  favicon: assets/icon.png
+  logo: assets/icon.png
   palette:
     primary: cyan
-
+extra_css:
+  - stylesheets/typewriter.css
 plugins:
   - mkdocstrings:
       handlers:
