@@ -296,9 +296,10 @@ def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> di
     """
     This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
 
-    slab_name (str): Identification of the panel or slab.
-    offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
-    offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
+    Attributes:
+        slab_name (str): Identification of the panel or slab.
+        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
+        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
 
     Returns:
         panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.
