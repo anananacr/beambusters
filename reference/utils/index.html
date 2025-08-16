@@ -958,8 +958,7 @@
 
             <details class="quote">
               <summary>Source code in <code>beambusters/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">374</span>
-<span class="normal">375</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">375</span>
 <span class="normal">376</span>
 <span class="normal">377</span>
 <span class="normal">378</span>
@@ -979,7 +978,8 @@
 <span class="normal">392</span>
 <span class="normal">393</span>
 <span class="normal">394</span>
-<span class="normal">395</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_simple_vds</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_hdf5_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="normal">395</span>
+<span class="normal">396</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">create_simple_vds</span><span class="p">(</span><span class="n">input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data_hdf5_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function shows an example how to create a file in the VDS format pointing a virtual dataset to a source. For European XFEL users there is a function in the [Extra-data library](https://rtd.xfel.eu/docs/data-analysis-user-documentation/en/latest/software/hdf5-virtualise/#how-to-make-virtual-cxi-data-files) to create VDS files of the measured runs.</span>
 
@@ -1391,9 +1391,53 @@
     <div class="doc doc-contents ">
 
         <p>This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</p>
-<p>slab_name (str): Identification of the panel or slab.
-offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
-offset_fs (int): Number of indices to offset the panel along the fast-scan axis.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="beambusters.utils.get_500k_slab_inverted.slab_name">slab_name</span></code></td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Identification of the panel or slab.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="beambusters.utils.get_500k_slab_inverted.offset_ss">offset_ss</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of indices to offset the panel along the slow-scan axis.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code><span title="beambusters.utils.get_500k_slab_inverted.offset_fs">offset_fs</span></code></td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Number of indices to offset the panel along the fast-scan axis.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     <p><span class="doc-section-title">Returns:</span></p>
@@ -1484,13 +1528,15 @@ offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
 <span class="normal">355</span>
 <span class="normal">356</span>
 <span class="normal">357</span>
-<span class="normal">358</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_500k_slab_inverted</span><span class="p">(</span><span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset_ss</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset_fs</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="normal">358</span>
+<span class="normal">359</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_500k_slab_inverted</span><span class="p">(</span><span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">offset_ss</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset_fs</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</span>
 
-<span class="sd">    slab_name (str): Identification of the panel or slab.</span>
-<span class="sd">    offset_ss (int): Number of indices to offset the panel along the slow-scan axis.</span>
-<span class="sd">    offset_fs (int): Number of indices to offset the panel along the fast-scan axis.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        slab_name (str): Identification of the panel or slab.</span>
+<span class="sd">        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.</span>
+<span class="sd">        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        panel (dict): A dictionary containg the panel identification and its slow-scan and fast-scan limits in the hyperslab.</span>
@@ -1593,8 +1639,7 @@ offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
 
             <details class="quote">
               <summary>Source code in <code>beambusters/utils.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">361</span>
-<span class="normal">362</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">362</span>
 <span class="normal">363</span>
 <span class="normal">364</span>
 <span class="normal">365</span>
@@ -1603,7 +1648,8 @@ offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
 <span class="normal">368</span>
 <span class="normal">369</span>
 <span class="normal">370</span>
-<span class="normal">371</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_slab_coordinates_in_hyperslab</span><span class="p">(</span>
+<span class="normal">371</span>
+<span class="normal">372</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_slab_coordinates_in_hyperslab</span><span class="p">(</span>
     <span class="n">slab_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">asic_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">detector_layout</span><span class="p">:</span> <span class="nb">dict</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
