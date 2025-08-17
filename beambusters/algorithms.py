@@ -15,7 +15,7 @@ def calculate_detector_center_on_a_frame(
     """
     Calculate the detector center on a frame.
 
-    Attributes:
+    Args:
         calibrated_data (np.array): The data in which the center determination will be performed.
 
         memory_cell_id (int): The memory cell id of the frame, only necessary when operating in storage cell mode.

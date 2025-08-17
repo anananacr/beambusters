@@ -24,7 +24,7 @@ def process_file(args: list) -> list:
     """
     Process one event.
 
-    Attributes:
+    Args:
         args (list): A list of arguments containing the data event as np.ndarray, the memory cell id integer, the path of the event obtained from the input list, the configuration file path.
 
     Returns:
@@ -74,7 +74,7 @@ def run_centering_parallel(input_file: str, path_to_config: str):
     """
     Process one HDF5 file. Results will be appended to the HDF5 file given as input file.
 
-    Attributes:
+    Args:
         input_file (str): Full path to the HDF5 file.
 
         path_to_config (str): Path to the YAML configuration file.

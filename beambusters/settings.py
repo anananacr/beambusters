@@ -13,7 +13,7 @@ def read(path: str) -> dict:
     """
     This function reads a YAML configuration file from a specified path and loads it as a dictionary.
 
-    Attributes:
+    Args:
         path (str): The path to the YAML configuration file.
 
     Returns:
@@ -29,7 +29,7 @@ def parse(config: dict) -> dict:
     """
     This function receives the configuration dictionary loaded from the YAML and parse it into the format expected by beambusters.
 
-    Attributes:
+    Args:
         config (dict): A configuration dictionary loaded from the YAML file.
 
     Returns:
@@ -85,7 +85,7 @@ def get_pf8_info(config: dict):
     """
     This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.
 
-    Attributes:
+    Args:
         config (dict): A configuration dictionary in the format expected by beambusters.
 
     Returns:
@@ -107,7 +107,7 @@ def parse_plots_info(config: dict) -> dict:
     """
     This function extracts plot parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary of plot settings.
 
-    Attributes:
+    Args:
         config (dict): A configuration dictionary (in the format expected by beambusters).
 
     Returns:

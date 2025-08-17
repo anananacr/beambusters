@@ -11,7 +11,7 @@ def centering_converged(center: tuple) -> bool:
     """
     This function receives the detector center coordinates and checks if the centering converged.
 
-    Attributes:
+    Args:
         center (tuple): Detector center coordinates determined by onxe of the bblib centering methods.
 
     Returns:
@@ -27,7 +27,7 @@ def list_events(input_file: str, output_file: str, geometry_file: str):
     """
     Expands a list of filenames into a list of individual events. Similar to the [list_events](https://www.desy.de/~twhite/crystfel/manual-list_events.html#:~:text=list_events%20expands%20a%20list%20of,than%20just%20processing%20all%20events.) in CrystFEL.
 
-    Attributes:
+    Args:
         input_file (str): Path to the file list containg the data filename.
         output_file (str): Path to the output file list containing the individual events path.
         geometry_file (str): Path to the geometry file in CrystFEL format.
@@ -62,7 +62,7 @@ def image_expand_frames(data_hdf5_path: str, file_name: str) -> tuple:
     """
     Expands the events of an HDF5 file by specifying the HDF5 path to the data.
 
-    Attributes:
+    Args:
         file_name (str): Path to the HDF5 file.
         data_hdf5_path (str): Path pointing to the data in the HDF5 file.
 
@@ -85,7 +85,7 @@ def expand_data_to_hyperslab(data: np.array, data_format: str) -> np.array:
 
     Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
 
-    Attributes:
+    Args:
         data (np.array): Data array corresponding to one event.
         data_format (str): Data format identification. Option: `vds_spb_jf4m`.
 
@@ -123,7 +123,7 @@ def reduce_hyperslab_to_vds(data: np.array, data_format: str) -> np.array:
 
     Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
 
-    Attributes:
+    Args:
         data (np.array): Data array in the hyperslab shape.
         data_format (str): Data format identification. Option: `vds_spb_jf4m`.
 
@@ -158,7 +158,7 @@ def translate_geom_to_hyperslab(geometry_filename: str) -> str:
 
     Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).
 
-    Attributes:
+    Args:
         geometry_filename (str): Path to the geometry file in CrystFEL format.
 
     Returns:
@@ -230,7 +230,7 @@ def get_500k_slab(slab_name: str, offset_ss: int, offset_fs: int) -> dict:
     """
     This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the upper-left corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
 
-    Attributes:
+    Args:
         slab_name (str): Identification of the panel or slab.
         offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
         offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
@@ -296,7 +296,7 @@ def get_500k_slab_inverted(slab_name: str, offset_ss: int, offset_fs: int) -> di
     """
     This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.
 
-    Attributes:
+    Args:
         slab_name (str): Identification of the panel or slab.
         offset_ss (int): Number of indices to offset the panel along the slow-scan axis.
         offset_fs (int): Number of indices to offset the panel along the fast-scan axis.
@@ -376,7 +376,7 @@ def create_simple_vds(input_file: str, data_hdf5_path: str, output_file: str):
     """
     This function shows an example how to create a file in the VDS format pointing a virtual dataset to a source. For European XFEL users there is a function in the [Extra-data library](https://rtd.xfel.eu/docs/data-analysis-user-documentation/en/latest/software/hdf5-virtualise/#how-to-make-virtual-cxi-data-files) to create VDS files of the measured runs.
 
-    Attributes:
+    Args:
         input_file (str): Path to the source file.
 
         data_hdf5_path (str): HDF5 path to the data in the source file.
