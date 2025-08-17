@@ -688,18 +688,21 @@
         <p>This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.settings.get_pf8_info.config">config</span></code></td>
+            <td>
+                <code>config</code>
+            </td>
             <td>
                   <code><span title="dict">dict</span></code>
             </td>
@@ -707,6 +710,9 @@
               <div class="doc-md-description">
                 <p>A configuration dictionary in the format expected by beambusters.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -761,7 +767,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        config (dict): A configuration dictionary in the format expected by beambusters.</span>
 
 <span class="sd">    Returns:</span>
@@ -797,18 +803,21 @@
         <p>This function receives the configuration dictionary loaded from the YAML and parse it into the format expected by beambusters.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.settings.parse.config">config</span></code></td>
+            <td>
+                <code>config</code>
+            </td>
             <td>
                   <code><span title="dict">dict</span></code>
             </td>
@@ -816,6 +825,9 @@
               <div class="doc-md-description">
                 <p>A configuration dictionary loaded from the YAML file.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -904,7 +916,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function receives the configuration dictionary loaded from the YAML and parse it into the format expected by beambusters.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        config (dict): A configuration dictionary loaded from the YAML file.</span>
 
 <span class="sd">    Returns:</span>
@@ -974,18 +986,21 @@
         <p>This function extracts plot parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary of plot settings.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.settings.parse_plots_info.config">config</span></code></td>
+            <td>
+                <code>config</code>
+            </td>
             <td>
                   <code><span title="dict">dict</span></code>
             </td>
@@ -993,6 +1008,9 @@
               <div class="doc-md-description">
                 <p>A configuration dictionary (in the format expected by beambusters).</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1052,7 +1070,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function extracts plot parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary of plot settings.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        config (dict): A configuration dictionary (in the format expected by beambusters).</span>
 
 <span class="sd">    Returns:</span>
@@ -1093,18 +1111,21 @@
         <p>This function reads a YAML configuration file from a specified path and loads it as a dictionary.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.settings.read.path">path</span></code></td>
+            <td>
+                <code>path</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1112,6 +1133,9 @@
               <div class="doc-md-description">
                 <p>The path to the YAML configuration file.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1160,7 +1184,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function reads a YAML configuration file from a specified path and loads it as a dictionary.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        path (str): The path to the YAML configuration file.</span>
 
 <span class="sd">    Returns:</span>

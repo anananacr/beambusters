@@ -716,18 +716,21 @@
         <p>Process one event.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.main.process_file.args">args</span></code></td>
+            <td>
+                <code>args</code>
+            </td>
             <td>
                   <code><span title="list">list</span></code>
             </td>
@@ -735,6 +738,9 @@
               <div class="doc-md-description">
                 <p>A list of arguments containing the data event as np.ndarray, the memory cell id integer, the path of the event obtained from the input list, the configuration file path.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -814,7 +820,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process one event.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        args (list): A list of arguments containing the data event as np.ndarray, the memory cell id integer, the path of the event obtained from the input list, the configuration file path.</span>
 
 <span class="sd">    Returns:</span>
@@ -875,18 +881,21 @@
         <p>Process one HDF5 file. Results will be appended to the HDF5 file given as input file.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.main.run_centering_parallel.input_file">input_file</span></code></td>
+            <td>
+                <code>input_file</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -895,9 +904,14 @@
                 <p>Full path to the HDF5 file.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.main.run_centering_parallel.path_to_config">path_to_config</span></code></td>
+            <td>
+                <code>path_to_config</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -905,6 +919,9 @@
               <div class="doc-md-description">
                 <p>Path to the YAML configuration file.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1040,7 +1057,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Process one HDF5 file. Results will be appended to the HDF5 file given as input file.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        input_file (str): Full path to the HDF5 file.</span>
 
 <span class="sd">        path_to_config (str): Path to the YAML configuration file.</span>

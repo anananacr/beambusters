@@ -812,18 +812,21 @@
         <p>This function receives the detector center coordinates and checks if the centering converged.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.centering_converged.center">center</span></code></td>
+            <td>
+                <code>center</code>
+            </td>
             <td>
                   <code><span title="tuple">tuple</span></code>
             </td>
@@ -831,6 +834,9 @@
               <div class="doc-md-description">
                 <p>Detector center coordinates determined by onxe of the bblib centering methods.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -879,7 +885,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function receives the detector center coordinates and checks if the centering converged.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        center (tuple): Detector center coordinates determined by onxe of the bblib centering methods.</span>
 
 <span class="sd">    Returns:</span>
@@ -909,18 +915,21 @@
         <p>This function shows an example how to create a file in the VDS format pointing a virtual dataset to a source. For European XFEL users there is a function in the <a href="https://rtd.xfel.eu/docs/data-analysis-user-documentation/en/latest/software/hdf5-virtualise/#how-to-make-virtual-cxi-data-files">Extra-data library</a> to create VDS files of the measured runs.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.create_simple_vds.input_file">input_file</span></code></td>
+            <td>
+                <code>input_file</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -929,9 +938,14 @@
                 <p>Path to the source file.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.create_simple_vds.data_hdf5_path">data_hdf5_path</span></code></td>
+            <td>
+                <code>data_hdf5_path</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -940,9 +954,14 @@
                 <p>HDF5 path to the data in the source file.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.create_simple_vds.output_file">output_file</span></code></td>
+            <td>
+                <code>output_file</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -950,6 +969,9 @@
               <div class="doc-md-description">
                 <p>Path to the VDS file.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -983,7 +1005,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function shows an example how to create a file in the VDS format pointing a virtual dataset to a source. For European XFEL users there is a function in the [Extra-data library](https://rtd.xfel.eu/docs/data-analysis-user-documentation/en/latest/software/hdf5-virtualise/#how-to-make-virtual-cxi-data-files) to create VDS files of the measured runs.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        input_file (str): Path to the source file.</span>
 
 <span class="sd">        data_hdf5_path (str): HDF5 path to the data in the source file.</span>
@@ -1022,18 +1044,21 @@
 <p>Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.expand_data_to_hyperslab.data">data</span></code></td>
+            <td>
+                <code>data</code>
+            </td>
             <td>
                   <code><span title="numpy.array">array</span></code>
             </td>
@@ -1042,9 +1067,14 @@
                 <p>Data array corresponding to one event.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.expand_data_to_hyperslab.data_format">data_format</span></code></td>
+            <td>
+                <code>data_format</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1052,6 +1082,9 @@
               <div class="doc-md-description">
                 <p>Data format identification. Option: <code>vds_spb_jf4m</code>.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1124,7 +1157,7 @@
 
 <span class="sd">    Supported detectors correspond to the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        data (np.array): Data array corresponding to one event.</span>
 <span class="sd">        data_format (str): Data format identification. Option: `vds_spb_jf4m`.</span>
 
@@ -1174,18 +1207,21 @@
         <p>This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the upper-left corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.get_500k_slab.slab_name">slab_name</span></code></td>
+            <td>
+                <code>slab_name</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1194,9 +1230,14 @@
                 <p>Identification of the panel or slab.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.get_500k_slab.offset_ss">offset_ss</span></code></td>
+            <td>
+                <code>offset_ss</code>
+            </td>
             <td>
                   <code><span title="int">int</span></code>
             </td>
@@ -1205,9 +1246,14 @@
                 <p>Number of indices to offset the panel along the slow-scan axis.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.get_500k_slab.offset_fs">offset_fs</span></code></td>
+            <td>
+                <code>offset_fs</code>
+            </td>
             <td>
                   <code><span title="int">int</span></code>
             </td>
@@ -1215,6 +1261,9 @@
               <div class="doc-md-description">
                 <p>Number of indices to offset the panel along the fast-scan axis.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1313,7 +1362,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the upper-left corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        slab_name (str): Identification of the panel or slab.</span>
 <span class="sd">        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.</span>
 <span class="sd">        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.</span>
@@ -1393,18 +1442,21 @@
         <p>This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.get_500k_slab_inverted.slab_name">slab_name</span></code></td>
+            <td>
+                <code>slab_name</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1413,9 +1465,14 @@
                 <p>Identification of the panel or slab.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.get_500k_slab_inverted.offset_ss">offset_ss</span></code></td>
+            <td>
+                <code>offset_ss</code>
+            </td>
             <td>
                   <code><span title="int">int</span></code>
             </td>
@@ -1424,9 +1481,14 @@
                 <p>Number of indices to offset the panel along the slow-scan axis.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.get_500k_slab_inverted.offset_fs">offset_fs</span></code></td>
+            <td>
+                <code>offset_fs</code>
+            </td>
             <td>
                   <code><span title="int">int</span></code>
             </td>
@@ -1434,6 +1496,9 @@
               <div class="doc-md-description">
                 <p>Number of indices to offset the panel along the fast-scan axis.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1533,7 +1598,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function creates a Jungfrau panel of 500k pixels with the first pixel (of the first row) positioned at the bottom-right corner of the slab. The panel can be translated from the origin by specifying offsets along the slow-scan and fast-scan axes.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        slab_name (str): Identification of the panel or slab.</span>
 <span class="sd">        offset_ss (int): Number of indices to offset the panel along the slow-scan axis.</span>
 <span class="sd">        offset_fs (int): Number of indices to offset the panel along the fast-scan axis.</span>
@@ -1680,18 +1745,21 @@
         <p>Expands the events of an HDF5 file by specifying the HDF5 path to the data.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.image_expand_frames.file_name">file_name</span></code></td>
+            <td>
+                <code>file_name</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1700,9 +1768,14 @@
                 <p>Path to the HDF5 file.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.image_expand_frames.data_hdf5_path">data_hdf5_path</span></code></td>
+            <td>
+                <code>data_hdf5_path</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1710,6 +1783,9 @@
               <div class="doc-md-description">
                 <p>Path pointing to the data in the HDF5 file.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1773,7 +1849,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Expands the events of an HDF5 file by specifying the HDF5 path to the data.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        file_name (str): Path to the HDF5 file.</span>
 <span class="sd">        data_hdf5_path (str): Path pointing to the data in the HDF5 file.</span>
 
@@ -1808,18 +1884,21 @@
         <p>Expands a list of filenames into a list of individual events. Similar to the <a href="https://www.desy.de/~twhite/crystfel/manual-list_events.html#:~:text=list_events%20expands%20a%20list%20of,than%20just%20processing%20all%20events.">list_events</a> in CrystFEL.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.list_events.input_file">input_file</span></code></td>
+            <td>
+                <code>input_file</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1828,9 +1907,14 @@
                 <p>Path to the file list containg the data filename.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.list_events.output_file">output_file</span></code></td>
+            <td>
+                <code>output_file</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1839,9 +1923,14 @@
                 <p>Path to the output file list containing the individual events path.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.list_events.geometry_file">geometry_file</span></code></td>
+            <td>
+                <code>geometry_file</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1849,6 +1938,9 @@
               <div class="doc-md-description">
                 <p>Path to the geometry file in CrystFEL format.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -1893,7 +1985,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Expands a list of filenames into a list of individual events. Similar to the [list_events](https://www.desy.de/~twhite/crystfel/manual-list_events.html#:~:text=list_events%20expands%20a%20list%20of,than%20just%20processing%20all%20events.) in CrystFEL.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        input_file (str): Path to the file list containg the data filename.</span>
 <span class="sd">        output_file (str): Path to the output file list containing the individual events path.</span>
 <span class="sd">        geometry_file (str): Path to the geometry file in CrystFEL format.</span>
@@ -1943,18 +2035,21 @@
 <p>Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.reduce_hyperslab_to_vds.data">data</span></code></td>
+            <td>
+                <code>data</code>
+            </td>
             <td>
                   <code><span title="numpy.array">array</span></code>
             </td>
@@ -1963,9 +2058,14 @@
                 <p>Data array in the hyperslab shape.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.reduce_hyperslab_to_vds.data_format">data_format</span></code></td>
+            <td>
+                <code>data_format</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -1973,6 +2073,9 @@
               <div class="doc-md-description">
                 <p>Data format identification. Option: <code>vds_spb_jf4m</code>.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -2042,7 +2145,7 @@
 
 <span class="sd">    Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        data (np.array): Data array in the hyperslab shape.</span>
 <span class="sd">        data_format (str): Data format identification. Option: `vds_spb_jf4m`.</span>
 
@@ -2186,18 +2289,21 @@
 <p>Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (<code>vds_spb_jf4m</code>), see the <a href="https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html">Extra-geom Documentation</a>.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.utils.translate_geom_to_hyperslab.geometry_filename">geometry_filename</span></code></td>
+            <td>
+                <code>geometry_filename</code>
+            </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
@@ -2205,6 +2311,9 @@
               <div class="doc-md-description">
                 <p>Path to the geometry file in CrystFEL format.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -2285,7 +2394,7 @@
 
 <span class="sd">    Supported detector is the Jungfrau 4M of the SPB/SFX instrument of the European XFEL (`vds_spb_jf4m`), see the [Extra-geom Documentation](https://extra-geom.readthedocs.io/en/latest/jungfrau_geometry.html).</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        geometry_filename (str): Path to the geometry file in CrystFEL format.</span>
 
 <span class="sd">    Returns:</span>

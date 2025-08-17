@@ -634,18 +634,21 @@
         <p>Calculate the detector center on a frame.</p>
 
 
-<p><span class="doc-section-title">Attributes:</span></p>
+<p><span class="doc-section-title">Parameters:</span></p>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
           <th>Description</th>
+          <th>Default</th>
         </tr>
       </thead>
       <tbody>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.algorithms.calculate_detector_center_on_a_frame.calibrated_data">calibrated_data</span></code></td>
+            <td>
+                <code>calibrated_data</code>
+            </td>
             <td>
                   <code><span title="numpy.array">array</span></code>
             </td>
@@ -654,9 +657,14 @@
                 <p>The data in which the center determination will be performed.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.algorithms.calculate_detector_center_on_a_frame.memory_cell_id">memory_cell_id</span></code></td>
+            <td>
+                <code>memory_cell_id</code>
+            </td>
             <td>
                   <code><span title="int">int</span></code>
             </td>
@@ -665,9 +673,14 @@
                 <p>The memory cell id of the frame, only necessary when operating in storage cell mode.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.algorithms.calculate_detector_center_on_a_frame.config">config</span></code></td>
+            <td>
+                <code>config</code>
+            </td>
             <td>
                   <code><span title="dict">dict</span></code>
             </td>
@@ -676,9 +689,14 @@
                 <p>A configuration dictionary in the format expected by beambusters.</p>
               </div>
             </td>
+            <td>
+                <em>required</em>
+            </td>
           </tr>
           <tr class="doc-section-item">
-            <td><code><span title="beambusters.algorithms.calculate_detector_center_on_a_frame.PF8Config">PF8Config</span></code></td>
+            <td>
+                <code>PF8Config</code>
+            </td>
             <td>
                   <code><span title="bblib.models.PF8Info">PF8Info</span></code>
             </td>
@@ -686,6 +704,9 @@
               <div class="doc-md-description">
                 <p>A PF8Info object.</p>
               </div>
+            </td>
+            <td>
+                <em>required</em>
             </td>
           </tr>
       </tbody>
@@ -938,7 +959,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculate the detector center on a frame.</span>
 
-<span class="sd">    Attributes:</span>
+<span class="sd">    Args:</span>
 <span class="sd">        calibrated_data (np.array): The data in which the center determination will be performed.</span>
 
 <span class="sd">        memory_cell_id (int): The memory cell id of the frame, only necessary when operating in storage cell mode.</span>
