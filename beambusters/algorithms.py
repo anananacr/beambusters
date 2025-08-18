@@ -22,7 +22,7 @@ def calculate_detector_center_on_a_frame(
 
         config (dict): A configuration dictionary in the format expected by beambusters.
 
-        PF8Config (PF8Info): A PF8Info object.
+        PF8Config (PF8Info): Peakfinder8 parameters.
 
     Returns:
         results (list): A list with the calculated detector center shit in x and y in mm, if it is a hit, if it was pre-centered and if the center was refined.
