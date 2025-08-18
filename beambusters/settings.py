@@ -83,13 +83,13 @@ def parse(config: dict) -> dict:
 
 def get_pf8_info(config: dict):
     """
-    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.
+    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary.
 
     Args:
         config (dict): A configuration dictionary in the format expected by beambusters.
 
     Returns:
-        pf8info (PF8Info): A PF8Info object.
+        pf8info (PF8Info): Peakfinder8 parameters.
     """
     return PF8Info(
         max_num_peaks=config["pf8"]["max_num_peaks"],
