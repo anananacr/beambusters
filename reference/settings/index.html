@@ -685,7 +685,7 @@
 
     <div class="doc doc-contents ">
 
-        <p>This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.</p>
+        <p>This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -734,7 +734,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A PF8Info object.</p>
+                <p>Peakfinder8 parameters.</p>
               </div>
             </td>
           </tr>
@@ -765,13 +765,13 @@
 <span class="normal">102</span>
 <span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">get_pf8_info</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a PF8Info object.</span>
+<span class="sd">    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        config (dict): A configuration dictionary in the format expected by beambusters.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        pf8info (PF8Info): A PF8Info object.</span>
+<span class="sd">        pf8info (PF8Info): Peakfinder8 parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">PF8Info</span><span class="p">(</span>
         <span class="n">max_num_peaks</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;pf8&quot;</span><span class="p">][</span><span class="s2">&quot;max_num_peaks&quot;</span><span class="p">],</span>
