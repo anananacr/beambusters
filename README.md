@@ -1,23 +1,33 @@
 # beambusters
 
-Application developed to refine the detector center of still diffraction patterns for serial crystallography experiments.
+Beambusters is an application developed to determine the detector center directly from still diffraction patterns collected in serial crystallography experiments.
 
-Beambusters uses the methods implemented in bblib to calculate the detector center shift of each diffraction pattern, according to your initial detector geometry.
+Beambusters uses the methods implemented in bblib to calculate the detector center shift in each diffraction pattern, according to your initial detector geometry (CrystFEL format).
 
-Python 3.10
+![Python](https://img.shields.io/badge/-Python-000?&logo=Python) Python 3.10
 
 ## Installation
+To install beambusters, run the following command in a terminal:
+
+```bash
 pip install beambusters
+```
 
 ## Usage
 
-Example:
-beambusters run_centering /path/to/list/file /path/to/config/file
+To run beambusters, use the following command in your terminal:
 
-The config file is a *.yaml file, you can find examples in the doc folder.
+```bash
+beambusters run_centering /path/to/list/file /path/to/config/file
+```
+
+The configuration file uses the YAML format. An example configuration file can be found [here](https://anananacr.github.io/beambusters/example/config/#example).
+
 
 ## Contact
 
-Author: Ana Carolina Rodrigues (2021 - 2024)
+Ana Carolina Rodrigues led the development of Beambusters from 2021 to 2025 at the Deutsches Elektronen-Synchrotron (DESY) in Hamburg, Germany.
 
-Email: sc.anarodrigues@gmail.com
+For questions, please contact:
+
+**Email**: sc.anarodrigues@gmail.com

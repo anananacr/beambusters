@@ -201,5 +201,8 @@ def main():
 
     For more information, type the following command:
 
+    ```bash
     beambusters run_centering --help
+    ```
+
     """
