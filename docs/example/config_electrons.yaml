@@ -3,7 +3,7 @@ geometry_file: /path/to/geom/detector.geom
 chunks: 100
 number_of_processors: 4
 
-burst_mode: 
+burst_mode:
   state: false
   storage_cell_hdf5_path: /entry/data/storage_cell_number
 
@@ -21,12 +21,11 @@ plots:
   axis_lim_auto: true
   xlim_min: 0
   xlim_max: 0
-  ylim_min: 0 
+  ylim_min: 0
   ylim_max: 0
   color_map: viridis
   marker_size: 200
-  
-  
+
 force_center:
   state: true
   anchor_x: true
@@ -37,6 +36,7 @@ force_center:
 search_radius: 8
 
 pf8:
+  min_num_peaks: 1
   max_num_peaks: 10000
   adc_threshold: 0
   minimum_snr: 5
@@ -59,7 +59,7 @@ canny:
 
 hough:
   maximum_rank:
-  outlier_distance: 
+  outlier_distance:
     x: 0
     y: 0
 
@@ -84,7 +84,7 @@ pixels_for_mask_of_bragg_peaks: 8
 skip_centering_methods:
   - minimize_peak_fwhm
   - circle_detection
-  
+
 polarization:
   apply_polarization_correction: false
   axis: x
