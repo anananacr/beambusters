@@ -27,7 +27,7 @@ def read(path: str) -> dict:
 
 def parse(config: dict) -> dict:
     """
-    This function receives the configuration dictionary loaded from the YAML and parse it into the format expected by beambusters.
+    This function receives the configuration dictionary loaded from the YAML and parse it into a flat dictionary.
 
     Args:
         config (dict): A configuration dictionary loaded from the YAML file.
@@ -83,7 +83,7 @@ def parse(config: dict) -> dict:
 
 def get_pf8_info(config: dict):
     """
-    This function takes the peakfinder8 parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary.
+    This function takes the peakfinder8 parameters from a config dictionary and parses them into a PF8Info object.
 
     Args:
         config (dict): A configuration dictionary in the format expected by beambusters.
@@ -105,8 +105,7 @@ def get_pf8_info(config: dict):
 
 def parse_plots_info(config: dict) -> dict:
     """
-    This function extracts plot parameters from a config dictionary (in the format expected by beambusters) and parses them into a dictionary of plot settings.
-
+    This function extracts plot parameters from a configuration dictionary and parses them into a flat dictionary of plot settings.
     Args:
         config (dict): A configuration dictionary (in the format expected by beambusters).
 
