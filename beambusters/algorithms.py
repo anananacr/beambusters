@@ -81,7 +81,7 @@ def calculate_detector_center_on_a_frame(
             config=config, PF8Config=PF8Config, plots_info=plots_info
         )
         detector_center_from_minimize_peak_fwhm = minimize_peak_fwhm_method(
-            data=calibrated_data
+            data=calibrated_data, initial_guess = detector_center_from_circle_detection
         )
     else:
         detector_center_from_minimize_peak_fwhm = [-1, -1]

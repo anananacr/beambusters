@@ -98,6 +98,10 @@ bblib = "2.1.8"
 [tool.poetry.group.docs.dependencies]
 mkdocstrings-python = "^1.16.12"
 
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.4.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
