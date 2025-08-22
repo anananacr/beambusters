@@ -72,7 +72,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 **search_radius**: Search radius used in the FriedelPairs bblib method. Type: float.
 
 **pf8**: peakfinder8 paratemers for Bragg peaks search. For more information, see the [Cheetah Documentation](https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html).
-  **max_num_peaks**: Minimum number of peaks. Type: int.
+  **min_num_peaks**: Minimum number of peaks. Type: int.
 
   **max_num_peaks**: Maximum number of peaks. Type: int.
 
