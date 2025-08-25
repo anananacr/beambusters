@@ -1,4 +1,4 @@
-# Configuration
+# Configuration file
 
 ## Parameters description
 
@@ -124,8 +124,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **hough**:
 
-  **maximum_rank**: Evaluate the ranked solutions of Hough transform output until the
-  maximum ranked position. Type: int.
+  **maximum_rank**: Select the nth peak of the Hough Space, in the order of decreasing voting number. Type: int.
 
   **outlier_distance**: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
 
@@ -152,7 +151,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
   **value**: Polarization fraction in the axis direction. Type: float.
 
 
-## Example
+# Configuration file example
 ```yaml
 geometry_file: /path/to/geom/detector.geom
 output_hdf5_root_path: /entry/data
