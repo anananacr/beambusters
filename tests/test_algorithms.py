@@ -38,14 +38,14 @@ config = {
 			}
 	},
 	"centering_method_for_initial_guess": "circle_detection",
-	"bragg_peaks_positions_for_center_of_mass_calculation": -1,
-	"pixels_for_mask_of_bragg_peaks": 1,
+	"bragg_peaks_for_center_of_mass_calculation": 0,
+	"pixels_for_mask_of_bragg_peaks": 2,
 	"polarization": {
 		"apply_polarization_correction": False,
 		"axis": "x",
 		"value": 0.99
 		},
-	"skip_centering_methods": ["minimize_peak_fwhm"]
+	"skip_centering_methods": [" "]
     }
 
 def test_calculate_detector_center_on_a_frame():

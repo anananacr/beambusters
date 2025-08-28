@@ -77,7 +77,7 @@ reference_center:
 
 centering_method_for_initial_guess: center_of_mass
 
-bragg_peaks_positions_for_center_of_mass_calculation: -1
+bragg_peaks_for_center_of_mass_calculation: -1
 
 pixels_for_mask_of_bragg_peaks: 8
 

@@ -134,7 +134,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **centering_method_for_initial_guess**: Choose the bblib pre-centering method for the initial_guess assignment. The options available are `center_of_mass`, `circle_detection` or `manual_input`. Type: str.
 
-**bragg_peaks_positions_for_center_of_mass_calculation**: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
+**bragg_peaks_for_center_of_mass_calculation**: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
 
 **pixels_for_mask_of_bragg_peaks**: Radius of the Bragg peaks, in pixels, to be masked in the pre-centering step. Type: int.
 
