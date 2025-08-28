@@ -90,7 +90,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
   **max_res**: Maximum resolution region, in pixels. Type: int.
 
-**offset**: Add an osffset to the final calculated detector center.
+**offset**: Add an offset to the final calculated detector center.
 
   **x**: Offset in x direction, in pixels. Type: float.
 
