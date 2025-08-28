@@ -13,8 +13,6 @@ from beambusters import settings
 from multiprocessing import Pool
 import os
 from bblib.models import PF8
-import math
-import hdf5plugin
 import typer
 
 app = typer.Typer()
