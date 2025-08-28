@@ -138,6 +138,9 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **pixels_for_mask_of_bragg_peaks**: Radius of the Bragg peaks, in pixels, to be masked in the pre-centering step. Type: int.
 
+**grid_search_radius**: Radius of the square grid search region (in pixels) around the initial guess
+used for the minimized peak FWHM centering method. Type: int.
+
 **skip_centering_methods**: List of bblib pre-centering methods to be skipped. Options: `center_of_mass`, `circle_detection` , `minimize_peak_fwhm` or `friedel_pairs`. Type: List[str]
 
   - Method label you want to skip. Type: str.
