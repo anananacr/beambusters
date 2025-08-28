@@ -154,7 +154,8 @@ used for the minimized peak FWHM centering method. Type: int.
   **value**: Polarization fraction in the axis direction. Type: float.
 
 
-# Configuration file example
+## Configuration file example
+
 ```yaml
 geometry_file: /path/to/geom/detector.geom
 output_hdf5_root_path: /entry/data
