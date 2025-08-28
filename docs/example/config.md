@@ -90,11 +90,11 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
   **max_res**: Maximum resolution region, in pixels. Type: int.
 
-**offset**: Add an offset to the calculated center. The offset will be applied in the end of every bblib centering method. Set offsets to +0.5 in x and y to shift the detector center coordinates from pixel indices to the pixel center, as expected for CrystFEL.
+**offset**: Add an offset to the final calculated detector center.
 
-  **x**: Offset in x direction, in pixels. Type: int.
+  **x**: Offset in x direction, in pixels. Type: float.
 
-  **y**: Offset in y direction, in pixels. Type: int.
+  **y**: Offset in y direction, in pixels. Type: float.
 
 **peak_region**: Defines the approximate background peak distance from the center of the diffraction pattern, in pixels. This option is used in CircleDetection bblib pre-centering methods.
 
@@ -124,7 +124,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **hough**:
 
-  **maximum_rank**: Select up until the nth peak of the Hough Space, in order of decreasing voting number. Type: int.
+  **maximum_rank**: Test up until the nth peak of the Hough Space, in order of decreasing voting number. Type: int.
 
   **outlier_distance**: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
 
@@ -208,10 +208,6 @@ pf8:
   max_res: 600
 
 starting_frame: 500
-
-offset:
-  x: 0.5
-  y: 0.5
 
 peak_region:
   min: 50

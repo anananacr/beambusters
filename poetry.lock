@@ -28,13 +28,13 @@ files = [
 
 [[package]]
 name = "bblib"
-version = "3.0.0"
+version = "3.1.0"
 description = "beambusters library to refine the detector center for crystallography data processing."
 optional = false
 python-versions = "<4.0,>=3.10"
 files = [
-    {file = "bblib-3.0.0-py3-none-any.whl", hash = "sha256:d4c994fa628a0fd7abfa59e41222d7d43167be387b98b7a665d0fa1f77a06849"},
-    {file = "bblib-3.0.0.tar.gz", hash = "sha256:2eed6afff7d86bdce40d4e37b28920180499564878e7b0cf030413e0c664a9a6"},
+    {file = "bblib-3.1.0-py3-none-any.whl", hash = "sha256:7db41339d5befe78aee7b5b54069355d0948894b1b2c8374e5f0c54fc4f5a555"},
+    {file = "bblib-3.1.0.tar.gz", hash = "sha256:12bde0dc23bbc62d7eb329948af5c0be941e614cc7d974e19b4afe276d2e0da1"},
 ]
 
 [package.dependencies]
@@ -3308,4 +3308,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "ef8affd8d5c1607f0fa2224c76a632178ac4b22fb34117f08ddcae417cdc2635"
+content-hash = "a1a0d1053c9dd793d61c6c079867733ae6cb3b0915b17aa5240c1b1fcad35b3b"
