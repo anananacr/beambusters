@@ -219,7 +219,7 @@ def calculate_detector_center_on_a_frame(
     ]
 
     detector_shift_in_mm = [
-        np.round(-1 * x * 1e3 / PF8Config.pixel_resolution, 4)
+        round(-1 * x * 1e3 / PF8Config.pixel_resolution, 4)
         for x in beam_position_shift_in_pixels
     ]
     detector_shift_x_in_mm = detector_shift_in_mm[0]
