@@ -1138,7 +1138,14 @@
 <span class="normal"><a href="#__codelineno-0-224">224</a></span>
 <span class="normal"><a href="#__codelineno-0-225">225</a></span>
 <span class="normal"><a href="#__codelineno-0-226">226</a></span>
-<span class="normal"><a href="#__codelineno-0-227">227</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">def</span> <span class="nf">calculate_detector_center_on_a_frame</span><span class="p">(</span>
+<span class="normal"><a href="#__codelineno-0-227">227</a></span>
+<span class="normal"><a href="#__codelineno-0-228">228</a></span>
+<span class="normal"><a href="#__codelineno-0-229">229</a></span>
+<span class="normal"><a href="#__codelineno-0-230">230</a></span>
+<span class="normal"><a href="#__codelineno-0-231">231</a></span>
+<span class="normal"><a href="#__codelineno-0-232">232</a></span>
+<span class="normal"><a href="#__codelineno-0-233">233</a></span>
+<span class="normal"><a href="#__codelineno-0-234">234</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">def</span> <span class="nf">calculate_detector_center_on_a_frame</span><span class="p">(</span>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a>    <span class="n">calibrated_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">memory_cell_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">PF8Config</span><span class="p">:</span> <span class="n">PF8Info</span>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1210,7 +1217,7 @@
 </span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a>            <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">PF8Config</span><span class="o">=</span><span class="n">PF8Config</span><span class="p">,</span> <span class="n">plots_info</span><span class="o">=</span><span class="n">plots_info</span>
 </span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a>        <span class="p">)</span>
 </span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a>        <span class="n">detector_center_from_minimize_peak_fwhm</span> <span class="o">=</span> <span class="n">minimize_peak_fwhm_method</span><span class="p">(</span>
-</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a>            <span class="n">data</span><span class="o">=</span><span class="n">calibrated_data</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a>            <span class="n">data</span><span class="o">=</span><span class="n">calibrated_data</span><span class="p">,</span> <span class="n">initial_guess</span> <span class="o">=</span> <span class="n">detector_center_from_circle_detection</span>
 </span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a>        <span class="p">)</span>
 </span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a>    <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a>        <span class="n">detector_center_from_minimize_peak_fwhm</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -1335,25 +1342,32 @@
 </span><span id="__span-0-206"><a id="__codelineno-0-206" name="__codelineno-0-206"></a>    <span class="k">else</span><span class="p">:</span>
 </span><span id="__span-0-207"><a id="__codelineno-0-207" name="__codelineno-0-207"></a>        <span class="n">refined_detector_center</span> <span class="o">=</span> <span class="n">initial_guess</span>
 </span><span id="__span-0-208"><a id="__codelineno-0-208" name="__codelineno-0-208"></a>
-</span><span id="__span-0-209"><a id="__codelineno-0-209" name="__codelineno-0-209"></a>    <span class="n">beam_position_shift_in_pixels</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-0-210"><a id="__codelineno-0-210" name="__codelineno-0-210"></a>        <span class="n">refined_detector_center</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">PF8Config</span><span class="o">.</span><span class="n">detector_center_from_geom</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
-</span><span id="__span-0-211"><a id="__codelineno-0-211" name="__codelineno-0-211"></a>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="__span-0-212"><a id="__codelineno-0-212" name="__codelineno-0-212"></a>    <span class="p">]</span>
-</span><span id="__span-0-213"><a id="__codelineno-0-213" name="__codelineno-0-213"></a>
-</span><span id="__span-0-214"><a id="__codelineno-0-214" name="__codelineno-0-214"></a>    <span class="n">detector_shift_in_mm</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="__span-0-215"><a id="__codelineno-0-215" name="__codelineno-0-215"></a>        <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="o">/</span> <span class="n">PF8Config</span><span class="o">.</span><span class="n">pixel_resolution</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-</span><span id="__span-0-216"><a id="__codelineno-0-216" name="__codelineno-0-216"></a>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">beam_position_shift_in_pixels</span>
-</span><span id="__span-0-217"><a id="__codelineno-0-217" name="__codelineno-0-217"></a>    <span class="p">]</span>
-</span><span id="__span-0-218"><a id="__codelineno-0-218" name="__codelineno-0-218"></a>    <span class="n">detector_shift_x_in_mm</span> <span class="o">=</span> <span class="n">detector_shift_in_mm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="__span-0-219"><a id="__codelineno-0-219" name="__codelineno-0-219"></a>    <span class="n">detector_shift_y_in_mm</span> <span class="o">=</span> <span class="n">detector_shift_in_mm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-0-209"><a id="__codelineno-0-209" name="__codelineno-0-209"></a>    <span class="c1"># Global offset</span>
+</span><span id="__span-0-210"><a id="__codelineno-0-210" name="__codelineno-0-210"></a>    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-0-211"><a id="__codelineno-0-211" name="__codelineno-0-211"></a>        <span class="n">refined_detector_center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+</span><span id="__span-0-212"><a id="__codelineno-0-212" name="__codelineno-0-212"></a>
+</span><span id="__span-0-213"><a id="__codelineno-0-213" name="__codelineno-0-213"></a>    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-0-214"><a id="__codelineno-0-214" name="__codelineno-0-214"></a>        <span class="n">refined_detector_center</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+</span><span id="__span-0-215"><a id="__codelineno-0-215" name="__codelineno-0-215"></a>
+</span><span id="__span-0-216"><a id="__codelineno-0-216" name="__codelineno-0-216"></a>    <span class="n">beam_position_shift_in_pixels</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-0-217"><a id="__codelineno-0-217" name="__codelineno-0-217"></a>        <span class="n">refined_detector_center</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">PF8Config</span><span class="o">.</span><span class="n">detector_center_from_geom</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
+</span><span id="__span-0-218"><a id="__codelineno-0-218" name="__codelineno-0-218"></a>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-0-219"><a id="__codelineno-0-219" name="__codelineno-0-219"></a>    <span class="p">]</span>
 </span><span id="__span-0-220"><a id="__codelineno-0-220" name="__codelineno-0-220"></a>
-</span><span id="__span-0-221"><a id="__codelineno-0-221" name="__codelineno-0-221"></a>    <span class="k">return</span> <span class="p">[</span>
-</span><span id="__span-0-222"><a id="__codelineno-0-222" name="__codelineno-0-222"></a>        <span class="n">detector_shift_x_in_mm</span><span class="p">,</span>
-</span><span id="__span-0-223"><a id="__codelineno-0-223" name="__codelineno-0-223"></a>        <span class="n">detector_shift_y_in_mm</span><span class="p">,</span>
-</span><span id="__span-0-224"><a id="__codelineno-0-224" name="__codelineno-0-224"></a>        <span class="n">is_a_hit</span><span class="p">,</span>
-</span><span id="__span-0-225"><a id="__codelineno-0-225" name="__codelineno-0-225"></a>        <span class="n">pre_centering_flag</span><span class="p">,</span>
-</span><span id="__span-0-226"><a id="__codelineno-0-226" name="__codelineno-0-226"></a>        <span class="n">refined_center_flag</span><span class="p">,</span>
-</span><span id="__span-0-227"><a id="__codelineno-0-227" name="__codelineno-0-227"></a>    <span class="p">]</span>
+</span><span id="__span-0-221"><a id="__codelineno-0-221" name="__codelineno-0-221"></a>    <span class="n">detector_shift_in_mm</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-0-222"><a id="__codelineno-0-222" name="__codelineno-0-222"></a>        <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">1e3</span> <span class="o">/</span> <span class="n">PF8Config</span><span class="o">.</span><span class="n">pixel_resolution</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span id="__span-0-223"><a id="__codelineno-0-223" name="__codelineno-0-223"></a>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">beam_position_shift_in_pixels</span>
+</span><span id="__span-0-224"><a id="__codelineno-0-224" name="__codelineno-0-224"></a>    <span class="p">]</span>
+</span><span id="__span-0-225"><a id="__codelineno-0-225" name="__codelineno-0-225"></a>    <span class="n">detector_shift_x_in_mm</span> <span class="o">=</span> <span class="n">detector_shift_in_mm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-226"><a id="__codelineno-0-226" name="__codelineno-0-226"></a>    <span class="n">detector_shift_y_in_mm</span> <span class="o">=</span> <span class="n">detector_shift_in_mm</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-0-227"><a id="__codelineno-0-227" name="__codelineno-0-227"></a>
+</span><span id="__span-0-228"><a id="__codelineno-0-228" name="__codelineno-0-228"></a>    <span class="k">return</span> <span class="p">[</span>
+</span><span id="__span-0-229"><a id="__codelineno-0-229" name="__codelineno-0-229"></a>        <span class="n">detector_shift_x_in_mm</span><span class="p">,</span>
+</span><span id="__span-0-230"><a id="__codelineno-0-230" name="__codelineno-0-230"></a>        <span class="n">detector_shift_y_in_mm</span><span class="p">,</span>
+</span><span id="__span-0-231"><a id="__codelineno-0-231" name="__codelineno-0-231"></a>        <span class="n">is_a_hit</span><span class="p">,</span>
+</span><span id="__span-0-232"><a id="__codelineno-0-232" name="__codelineno-0-232"></a>        <span class="n">pre_centering_flag</span><span class="p">,</span>
+</span><span id="__span-0-233"><a id="__codelineno-0-233" name="__codelineno-0-233"></a>        <span class="n">refined_center_flag</span><span class="p">,</span>
+</span><span id="__span-0-234"><a id="__codelineno-0-234" name="__codelineno-0-234"></a>    <span class="p">]</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
