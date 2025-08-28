@@ -45,7 +45,6 @@ jeepney = "0.8.0"
 keyring = "24.3.0"
 kiwisolver = "1.4.5"
 lazy-loader = "0.3"
-llvmlite = "0.42.0"
 lxml = "5.1.0"
 markdown-it-py = "3.0.0"
 matplotlib = "3.8.2"
@@ -92,11 +91,20 @@ tzdata = "2024.1"
 urllib3 = "2.2.1"
 virtualenv = "20.25.1"
 zipp = "3.17.0"
-bblib = "2.1.8"
+llvmlite = "^0.44.0"
+bblib = "3.0.0"
 
 
 [tool.poetry.group.docs.dependencies]
 mkdocstrings-python = "^1.16.12"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.4.1"
+
+
+[tool.poetry.group.tests.dependencies]
+pytest-cov = "^6.2.1"
 
 [build-system]
 requires = ["poetry-core"]

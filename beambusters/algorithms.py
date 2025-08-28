@@ -81,7 +81,7 @@ def calculate_detector_center_on_a_frame(
             config=config, PF8Config=PF8Config, plots_info=plots_info
         )
         detector_center_from_minimize_peak_fwhm = minimize_peak_fwhm_method(
-            data=calibrated_data
+            data=calibrated_data, initial_guess=detector_center_from_circle_detection
         )
     else:
         detector_center_from_minimize_peak_fwhm = [-1, -1]
@@ -205,6 +205,13 @@ def calculate_detector_center_on_a_frame(
         refined_center_flag = 1
     else:
         refined_detector_center = initial_guess
+
+    # Global offset
+    if "offset" in config:
+        if "x" in config["offset"]:
+            refined_detector_center[0] += config["offset"]["x"]
+        if "y" in config["offset"]:
+            refined_detector_center[1] += config["offset"]["y"]
 
     beam_position_shift_in_pixels = [
         refined_detector_center[x] - PF8Config.detector_center_from_geom[x]

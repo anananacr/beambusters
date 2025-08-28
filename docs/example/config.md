@@ -1,4 +1,4 @@
-# Configuration
+# Configuration file
 
 ## Parameters description
 
@@ -72,6 +72,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 **search_radius**: Search radius used in the FriedelPairs bblib method. Type: float.
 
 **pf8**: peakfinder8 paratemers for Bragg peaks search. For more information, see the [Cheetah Documentation](https://www.desy.de/~barty/cheetah/Cheetah/SFX_hitfinding.html).
+  **min_num_peaks**: Minimum number of peaks. Type: int.
 
   **max_num_peaks**: Maximum number of peaks. Type: int.
 
@@ -123,8 +124,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **hough**:
 
-  **maximum_rank**: Evaluate the ranked solutions of Hough transform output until the
-  maximum ranked position. Type: int.
+  **maximum_rank**: Select up until the nth peak of the Hough Space, in order of decreasing voting number. Type: int.
 
   **outlier_distance**: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
 
@@ -134,9 +134,12 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **centering_method_for_initial_guess**: Choose the bblib pre-centering method for the initial_guess assignment. The options available are `center_of_mass`, `circle_detection` or `manual_input`. Type: str.
 
-**bragg_peaks_positions_for_center_of_mass_calculation**: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
+**bragg_peaks_for_center_of_mass_calculation**: Choose if Bragg peaks should be masked out (0) from the image in the CenterOfMass bblib method, or use only the Bragg peaks (1), or use the image as it is (-1). Type: int
 
 **pixels_for_mask_of_bragg_peaks**: Radius of the Bragg peaks, in pixels, to be masked in the pre-centering step. Type: int.
+
+**grid_search_radius**: Radius of the square grid search region (in pixels) around the initial guess
+used for the minimized peak FWHM centering method. Type: int.
 
 **skip_centering_methods**: List of bblib pre-centering methods to be skipped. Options: `center_of_mass`, `circle_detection` , `minimize_peak_fwhm` or `friedel_pairs`. Type: List[str]
 
@@ -151,7 +154,8 @@ The `config.yaml` file sets the configuration parameters of beambusters.
   **value**: Polarization fraction in the axis direction. Type: float.
 
 
-## Example
+## Configuration file example
+
 ```yaml
 geometry_file: /path/to/geom/detector.geom
 output_hdf5_root_path: /entry/data
@@ -193,6 +197,7 @@ force_center:
 search_radius: 4.5
 
 pf8:
+  min_num_peaks: 1
   max_num_peaks: 10000
   adc_threshold: 100
   minimum_snr: 5
@@ -233,9 +238,11 @@ hough:
 
 centering_method_for_initial_guess: circle_detection
 
-bragg_peaks_positions_for_center_of_mass_calculation: -1
+bragg_peaks_for_center_of_mass_calculation: -1
 
 pixels_for_mask_of_bragg_peaks: 4
+
+grid_search_radius: 5
 
 skip_centering_methods:
   - center_of_mass

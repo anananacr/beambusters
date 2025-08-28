@@ -1,6 +1,7 @@
 """
 This module defines a Typer App for CLI usage.
 """
+
 import h5py
 import numpy as np
 from beambusters.utils import (
@@ -13,11 +14,10 @@ from beambusters import settings
 from multiprocessing import Pool
 import os
 from bblib.models import PF8
-import math
-import hdf5plugin
 import typer
 
 app = typer.Typer()
+
 
 # Define the function for processing each file
 def process_file(args: list) -> list:
@@ -70,7 +70,6 @@ def process_file(args: list) -> list:
 # Main parallel processing
 @app.command("run_centering")
 def run_centering_parallel(input_file: str, path_to_config: str):
-
     """
     Process one HDF5 file. Results will be appended to the HDF5 file given as input file.
 
@@ -80,7 +79,7 @@ def run_centering_parallel(input_file: str, path_to_config: str):
         path_to_config (str): Path to the YAML configuration file.
     """
     config = settings.read(path_to_config)
-    BeambustersParam = settings.parse(config)
+    # BeambustersParam = settings.parse(config)
     files = open(input_file, "r")
     paths = files.readlines()
     files.close()
