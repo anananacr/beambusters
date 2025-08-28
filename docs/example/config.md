@@ -124,7 +124,7 @@ The `config.yaml` file sets the configuration parameters of beambusters.
 
 **hough**:
 
-  **maximum_rank**: Select up until the nth peak of the Hough Space, in order of decreasing voting number. Type: int.
+  **maximum_rank**: Test up until the nth peak of the Hough Space, in order of decreasing voting number. Type: int.
 
   **outlier_distance**: If the ranked solution (from the most voted to the less voted) is within the outlier shift in x and y this solution is chosen as the detector center.
 
