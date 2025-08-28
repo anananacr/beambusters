@@ -92,7 +92,7 @@ urllib3 = "2.2.1"
 virtualenv = "20.25.1"
 zipp = "3.17.0"
 llvmlite = "^0.44.0"
-bblib = "3.0.0"
+bblib = "3.1.0"
 
 
 [tool.poetry.group.docs.dependencies]
