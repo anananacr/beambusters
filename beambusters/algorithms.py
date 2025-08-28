@@ -206,6 +206,13 @@ def calculate_detector_center_on_a_frame(
     else:
         refined_detector_center = initial_guess
 
+    # Global offset
+    if config["offset"]["x"]!=0:
+        refined_detector_center[0] += config["offset"]["x"]
+
+    if config["offset"]["y"]!=0:
+        refined_detector_center[1] += config["offset"]["y"]
+
     beam_position_shift_in_pixels = [
         refined_detector_center[x] - PF8Config.detector_center_from_geom[x]
         for x in range(2)

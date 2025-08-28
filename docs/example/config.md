@@ -237,9 +237,11 @@ hough:
 
 centering_method_for_initial_guess: circle_detection
 
-bragg_peaks_positions_for_center_of_mass_calculation: -1
+bragg_peaks_for_center_of_mass_calculation: -1
 
 pixels_for_mask_of_bragg_peaks: 4
+
+grid_search_radius: 5
 
 skip_centering_methods:
   - center_of_mass

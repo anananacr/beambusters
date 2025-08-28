@@ -9,8 +9,8 @@ config = {
 	    "state": False
 	},
 	"offset": {
-		"x": 0,
-		"y": 0
+		"x": 0.5,
+		"y": 0.5
 		},
 	"reference_center": {
 		"x": 50,

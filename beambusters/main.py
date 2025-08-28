@@ -80,7 +80,7 @@ def run_centering_parallel(input_file: str, path_to_config: str):
         path_to_config (str): Path to the YAML configuration file.
     """
     config = settings.read(path_to_config)
-    BeambustersParam = settings.parse(config)
+    #BeambustersParam = settings.parse(config)
     files = open(input_file, "r")
     paths = files.readlines()
     files.close()
