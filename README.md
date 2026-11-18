@@ -1,6 +1,6 @@
 # beambusters
 
-[![PyPI pyversions](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/release/python-3100/)
+[![PyPI pyversions](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/release/python-3100/) [![DOI](https://zenodo.org/badge/765163973.svg)](https://doi.org/10.5281/zenodo.24343185)
 
 Beambusters is an application developed to determine the detector center directly from still diffraction patterns collected in serial crystallography experiments.
 
